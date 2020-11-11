@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Porting CESM to Shaheen Documentation &mdash; Porting CESM to Shaheen 0.0.1 documentation</title>
+  <title>Sphinx as a Documentation Tool &mdash; Porting CESM to Shaheen 0.0.1 documentation</title>
   
 
   
@@ -35,8 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Environment" href="shaheen/environment.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -50,7 +49,7 @@
           
 
           
-            <a href="#">
+            <a href="index.html">
           
 
           
@@ -116,7 +115,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">Porting CESM to Shaheen</a>
+          <a href="index.html">Porting CESM to Shaheen</a>
         
       </nav>
 
@@ -145,15 +144,15 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#">Docs</a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Porting CESM to Shaheen Documentation</li>
+      <li>Sphinx as a Documentation Tool</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/README.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -166,24 +165,79 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="porting-cesm-to-shaheen-documentation">
-<h1>Porting CESM to Shaheen Documentation<a class="headerlink" href="#porting-cesm-to-shaheen-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
+  <div class="section" id="sphinx-as-a-documentation-tool">
+<h1>Sphinx as a Documentation Tool<a class="headerlink" href="#sphinx-as-a-documentation-tool" title="Permalink to this headline">¶</a></h1>
+<p>This is created using a documentation generation tool written in python known
+as <a class="reference external" href="https://www.sphinx-doc.org/en/master/">Sphinx</a>.</p>
+<p>If you are a regular python user, and would like to use Sphinx, install it
+using the package management procedure with which you are most comfortable.</p>
+<div class="section" id="installing-conda">
+<h2>Installing Conda<a class="headerlink" href="#installing-conda" title="Permalink to this headline">¶</a></h2>
+<p>If you are novice python user, here are instructions for installing Sphinx
+using the package manager known as <a class="reference external" href="https://docs.conda.io/en/latest/">Conda</a>
+(short for Anaconda) on Mac OSX.</p>
+<p>Open a terminal window and execute these three commands:</p>
+<ol class="arabic simple">
+<li><p>Download the installation script:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh
+</pre></div>
 </div>
-<div class="toctree-wrapper compound">
+<ol class="arabic simple" start="2">
+<li><p>Modify the execution permissions of the recently downloaded script:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod <span class="m">755</span> ./Miniconda3-latest-MacOSX-x86_64.sh
+</pre></div>
 </div>
-<div class="toctree-wrapper compound">
+<ol class="arabic simple" start="3">
+<li><p>Run the installation script and follow its instructions:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./Miniconda3-latest-MacOSX-x86_64.sh
+</pre></div>
 </div>
-<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="downloading-sphinx">
+<h2>Downloading Sphinx<a class="headerlink" href="#downloading-sphinx" title="Permalink to this headline">¶</a></h2>
+<p>Now that Conda is installed, use it to download Sphinx. Close and reopen the
+terminal window to ensure conda is activated.</p>
+<ol class="arabic simple">
+<li><p>Invoke Conda and instruct it to install two packages, Sphinx and the “Read
+the Docs” CSS theme for Sphinx:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install sphinx sphinx-rtd-theme
+</pre></div>
 </div>
 </div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
+<div class="section" id="clone-the-repository">
+<h2>Clone the Repository<a class="headerlink" href="#clone-the-repository" title="Permalink to this headline">¶</a></h2>
+<p>You’re ready to clone the repository:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/johnsonb-ucar/porting-cesm-to-shaheen.git
+<span class="nb">cd</span> porting-cesm-to-shaheen
+</pre></div>
+</div>
+</div>
+<div class="section" id="edit-files-and-remake-the-documentation">
+<h2>Edit Files and Remake the Documentation<a class="headerlink" href="#edit-files-and-remake-the-documentation" title="Permalink to this headline">¶</a></h2>
+<p>The files that comprise the documentation are written in <a class="reference external" href="https://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html">reStructuredText</a> which offers
+a reasonably simple syntax for writing documentation while still accommodating
+the elements needed for technical writing such as equations, references, code
+snippets, tables, etc.</p>
+<p>Find the reStructuredText documents contained in this repository:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>find . -name <span class="s2">&quot;*.rst&quot;</span>
+</pre></div>
+</div>
+<p>Edit them using your favorite text editor and then remake the documentation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make clean
+make html
+</pre></div>
+</div>
+<p>View the remade documentation in your favorite web browser by opening the
+<code class="docutils literal notranslate"><span class="pre">./_build/html/index.html</span></code> using your graphical user interface or via the
+command line:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>open ./_build/html/index.html
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -191,13 +245,6 @@
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="shaheen/environment.html" class="btn btn-neutral float-right" title="Environment" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-    </div>
   
 
   <hr/>

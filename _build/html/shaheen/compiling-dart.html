@@ -1,0 +1,302 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Compiling DART &mdash; Porting CESM to Shaheen 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Libraries" href="../configuration/libraries.html" />
+    <link rel="prev" title="Environment" href="environment.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo-wordmark-dark-dart.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Shaheen</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Compiling DART</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#programming-environment">Programming Environment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cray-programming-environment">Cray Programming Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#intel-programming-environment">Intel Programming Environment</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Configuration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/libraries.html">Libraries</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Performance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../performance/load-balancing-tool.html">Load Balancing Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/case-timing-data.html">Case Timing Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/file-striping.html">File Striping</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Port Validation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../port-validation/ensemble-consistency-tests.html">Ensemble Consistency Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../port-validation/regression-tests.html">Regression Tests</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Porting CESM to Shaheen</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Compiling DART</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/shaheen/compiling-dart.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="compiling-dart">
+<h1>Compiling DART<a class="headerlink" href="#compiling-dart" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="programming-environment">
+<h2>Programming Environment<a class="headerlink" href="#programming-environment" title="Permalink to this headline">¶</a></h2>
+<p>Of the environments available on Shaheen, we are using the Intel programming
+environment, <code class="docutils literal notranslate"><span class="pre">PrgEnv-intel</span></code>, because the new DART algorithms use <code class="docutils literal notranslate"><span class="pre">mkl</span></code>. As
+an alternative, the Cray programming environment, <code class="docutils literal notranslate"><span class="pre">PrgEnv-cray</span></code>, contains the
+<code class="docutils literal notranslate"><span class="pre">cray-libsci</span></code> which provides the same  functionality as mkl. Brian Dobbins
+and his former coworkers in ASAP have working software on NERSC’s Cori system
+(which is a Cray XC40) using <code class="docutils literal notranslate"><span class="pre">PrgEnv-cray</span></code> and <code class="docutils literal notranslate"><span class="pre">cray-libsci</span></code>. However, they
+found that CESM ran ~10-15% faster there using the Intel compilers.</p>
+<p>This DART build, <code class="docutils literal notranslate"><span class="pre">/lustre/project/k1421/DART_beta/</span></code>, does not have any
+<code class="docutils literal notranslate"><span class="pre">mkl</span></code> dependencies so we can configure the build templates.</p>
+<p>Two of these templates to actually work:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">lustre</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">k1421</span><span class="o">/</span><span class="n">DART_beta</span><span class="o">/</span><span class="n">mkmf</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">PrgEnv</span><span class="o">-</span><span class="n">intel</span><span class="o">.</span><span class="n">WORKING</span>
+<span class="o">/</span><span class="n">lustre</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">k1421</span><span class="o">/</span><span class="n">DART_beta</span><span class="o">/</span><span class="n">mkmf</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">PrgEnv</span><span class="o">-</span><span class="n">cray</span><span class="o">.</span><span class="n">WORKING</span>
+</pre></div>
+</div>
+<p>They are both built using <code class="docutils literal notranslate"><span class="pre">mkmf.template.pgi.cray</span></code> as a starting point, since
+it contains the Cray compiler wrappers that we should be using on Shaheen, but
+they have different compiler flags and paths to netCDF.</p>
+<div class="section" id="cray-programming-environment">
+<h3>Cray Programming Environment<a class="headerlink" href="#cray-programming-environment" title="Permalink to this headline">¶</a></h3>
+<p>To build with the Cray compilers using <code class="docutils literal notranslate"><span class="pre">PrgEnv-cray</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ module load cray-netcdf
+$ nc-config --all
+...
+--includedir  /opt/cray/pe/netcdf/4.6.3.2/include
+--libdir      /opt/cray/pe/netcdf/4.6.3.2/CRAYCLANG/9.0/lib
+</pre></div>
+</div>
+<p>Thus, in <code class="docutils literal notranslate"><span class="pre">mkmf.template</span></code> this configuration works:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>INCS = -I/opt/cray/pe/netcdf/4.6.3.2/include
+LIBS = -L/opt/cray/pe/netcdf/4.6.3.2/CRAYCLANG/9.0/lib -lnetcdff -lnetcdf
+FFLAGS  = -O $(INCS)
+LDFLAGS = $(INCS) $(LIBS)
+</pre></div>
+</div>
+<p>The compiler does print out a lot of disconcerting warnings.</p>
+</div>
+<div class="section" id="intel-programming-environment">
+<h3>Intel Programming Environment<a class="headerlink" href="#intel-programming-environment" title="Permalink to this headline">¶</a></h3>
+<p>To build with Intel compilers using <code class="docutils literal notranslate"><span class="pre">PrgEnv-intel</span></code> and <code class="docutils literal notranslate"><span class="pre">mkl</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ module swap PrgEnv-cray PrgEnv-intel
+$ module load cray-netcdf
+$ module unload cray-libsci
+$ nc-config --all
+...
+--includedir  /opt/cray/pe/netcdf/4.6.3.2/include
+--libdir      /opt/cray/pe/netcdf/4.6.3.2/INTEL/19.0/lib
+...
+</pre></div>
+</div>
+<p>In <code class="docutils literal notranslate"><span class="pre">mkmf.template</span></code> this configuration works:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MPIFC = ftn
+MPILD = ftn
+FC = ftn
+LD = ftn
+INCS = -I/opt/cray/pe/netcdf/4.6.3.2/include
+LIBS = -L/opt/cray/pe/netcdf/4.6.3.2/INTEL/19.0/lib -lnetcdff -lnetcdf FFLAGS  = -O -assume buffered_io -xAVX -mkl $(INCS)
+LDFLAGS = $(FFLAGS) $(LIBS)
+</pre></div>
+</div>
+<p>When running <code class="docutils literal notranslate"><span class="pre">quickbuild.csh</span></code> for lorenz_63 and lorenz_96, the compiler
+prints out a perplexing warning:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ifort</span><span class="p">:</span> <span class="n">command</span> <span class="n">line</span> <span class="n">warning</span> <span class="c1">#10121: overriding &#39;-xCORE-AVX2&#39; with &#39;-xAVX&#39;</span>
+</pre></div>
+</div>
+<p>This doesn’t make sense because we’re not using the <code class="docutils literal notranslate"><span class="pre">-xCORE-AVX2</span></code> flag in the
+first place. “AVX” stands for Advanced Vector Extension, which is an extension
+to the x86 instruction set architecture that makes use of the additional
+registers in modern CPUs to handle calculations more efficiently.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../configuration/libraries.html" class="btn btn-neutral float-right" title="Libraries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="environment.html" class="btn btn-neutral float-left" title="Environment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, UCAR
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

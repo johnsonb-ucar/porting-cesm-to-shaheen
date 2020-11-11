@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Load Balancing Tool &mdash; Porting CESM to Shaheen 0.0.1 documentation</title>
+  <title>Case Timing Data &mdash; Porting CESM to Shaheen 0.0.1 documentation</title>
   
 
   
@@ -36,8 +36,8 @@
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Case Timing Data" href="case-timing-data.html" />
-    <link rel="prev" title="Libraries" href="../configuration/libraries.html" /> 
+    <link rel="next" title="File Striping" href="file-striping.html" />
+    <link rel="prev" title="Load Balancing Tool" href="load-balancing-tool.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -95,12 +95,14 @@
 </ul>
 <p class="caption"><span class="caption-text">Performance</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Load Balancing Tool</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#instructions">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="load-balancing-tool.html">Load Balancing Tool</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Case Timing Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#does-init-time-take-longer-for-first-job-in-hybrid-run">Does init time take longer for first job in hybrid run?</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="case-timing-data.html">Case Timing Data</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="file-striping.html">File Striping</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Port Validation</span></p>
@@ -152,13 +154,13 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Load Balancing Tool</li>
+      <li>Case Timing Data</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/performance/load-balancing-tool.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/performance/case-timing-data.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -171,21 +173,22 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="load-balancing-tool">
-<h1>Load Balancing Tool<a class="headerlink" href="#load-balancing-tool" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="case-timing-data">
+<h1>Case Timing Data<a class="headerlink" href="#case-timing-data" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>The load balancing tool attempts to find a reasonable processor element (PE)
-layout for a given compset and resolution.</p>
-</div>
-<div class="section" id="instructions">
-<h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h2>
-<p>In order for the load balancing tool to run correctly, the CIME scripts and
-load balancing tool directories should be added to the PYTHONPATH environmental
-variable.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">CIME_DIR</span><span class="o">=</span>/lustre/project/k1421/cesm2_1_3/cime
-<span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$CIME_DIR</span>/scripts:<span class="nv">$CIME_DIR</span>/tools/load_balancing_tool:<span class="nv">$PYTHONPATH</span>
-</pre></div>
+<p>CIME uses the <a class="reference external" href="https://esmci.github.io/cime/versions/master/html/users_guide/timers.html">General Purpose Timing Library (GPTL)</a>
+to provide detailed timing information.</p>
+<p>Timing files are output to <code class="docutils literal notranslate"><span class="pre">$CASEROOT/timing/$model_timing.$CASE.$datestamp</span></code>.</p>
+<p>The two areas we plan to focus on to increase the model performance is to
+understand the bottlenecks occuring during the <code class="docutils literal notranslate"><span class="pre">Init</span> <span class="pre">Time</span></code> phase of each job.</p>
+<div class="section" id="does-init-time-take-longer-for-first-job-in-hybrid-run">
+<h3>Does init time take longer for first job in hybrid run?<a class="headerlink" href="#does-init-time-take-longer-for-first-job-in-hybrid-run" title="Permalink to this headline">¶</a></h3>
+<p>No. I suspected that the init time might take longer for the first submission
+of a given integration since there may be initialization tasks involved for a
+hybrid run in which continue_run = FALSE but this seems to be fals.</p>
+<p>For the first submission of FHIST_BGC.f09_d025.052.e3 <code class="docutils literal notranslate"><span class="pre">Init</span> <span class="pre">Time</span> <span class="pre">:</span> <span class="pre">539.420</span>
+<span class="pre">seconds</span></code> while in the second submission <code class="docutils literal notranslate"><span class="pre">Init</span> <span class="pre">Time:</span> <span class="pre">562.777</span> <span class="pre">seconds</span></code>.</p>
 </div>
 </div>
 </div>
@@ -198,10 +201,10 @@ variable.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="case-timing-data.html" class="btn btn-neutral float-right" title="Case Timing Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="file-striping.html" class="btn btn-neutral float-right" title="File Striping" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../configuration/libraries.html" class="btn btn-neutral float-left" title="Libraries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="load-balancing-tool.html" class="btn btn-neutral float-left" title="Load Balancing Tool" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

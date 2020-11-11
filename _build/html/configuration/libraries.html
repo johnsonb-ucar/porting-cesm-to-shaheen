@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Load Balancing Tool &mdash; Porting CESM to Shaheen 0.0.1 documentation</title>
+  <title>Libraries &mdash; Porting CESM to Shaheen 0.0.1 documentation</title>
   
 
   
@@ -36,8 +36,8 @@
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Case Timing Data" href="case-timing-data.html" />
-    <link rel="prev" title="Libraries" href="../configuration/libraries.html" /> 
+    <link rel="next" title="Load Balancing Tool" href="../performance/load-balancing-tool.html" />
+    <link rel="prev" title="Compiling DART" href="../shaheen/compiling-dart.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -90,18 +90,17 @@
 <li class="toctree-l1"><a class="reference internal" href="../shaheen/compiling-dart.html">Compiling DART</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Configuration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../configuration/libraries.html">Libraries</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Performance</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Load Balancing Tool</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Libraries</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#instructions">Instructions</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="case-timing-data.html">Case Timing Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="file-striping.html">File Striping</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Performance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../performance/load-balancing-tool.html">Load Balancing Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/case-timing-data.html">Case Timing Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/file-striping.html">File Striping</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Port Validation</span></p>
 <ul>
@@ -152,13 +151,13 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Load Balancing Tool</li>
+      <li>Libraries</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/performance/load-balancing-tool.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/configuration/libraries.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -171,22 +170,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="load-balancing-tool">
-<h1>Load Balancing Tool<a class="headerlink" href="#load-balancing-tool" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="libraries">
+<h1>Libraries<a class="headerlink" href="#libraries" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>The load balancing tool attempts to find a reasonable processor element (PE)
-layout for a given compset and resolution.</p>
-</div>
-<div class="section" id="instructions">
-<h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h2>
-<p>In order for the load balancing tool to run correctly, the CIME scripts and
-load balancing tool directories should be added to the PYTHONPATH environmental
-variable.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">CIME_DIR</span><span class="o">=</span>/lustre/project/k1421/cesm2_1_3/cime
-<span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$CIME_DIR</span>/scripts:<span class="nv">$CIME_DIR</span>/tools/load_balancing_tool:<span class="nv">$PYTHONPATH</span>
-</pre></div>
-</div>
 </div>
 </div>
 
@@ -198,10 +185,10 @@ variable.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="case-timing-data.html" class="btn btn-neutral float-right" title="Case Timing Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../performance/load-balancing-tool.html" class="btn btn-neutral float-right" title="Load Balancing Tool" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../configuration/libraries.html" class="btn btn-neutral float-left" title="Libraries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../shaheen/compiling-dart.html" class="btn btn-neutral float-left" title="Compiling DART" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
