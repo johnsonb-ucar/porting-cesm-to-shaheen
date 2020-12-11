@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,19 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -29,11 +35,6 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="prev" title="Ensemble Consistency Tests" href="ensemble-consistency-tests.html" /> 
@@ -76,6 +77,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -86,27 +88,45 @@
               <p class="caption"><span class="caption-text">Shaheen</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../shaheen/environment.html">Environment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../shaheen/compiling-dart.html">Compiling DART</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shaheen/slurm.html">SLURM</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Configuration</span></p>
+<p class="caption"><span class="caption-text">DART</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../configuration/libraries.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/compiling.html">Compiling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/configuration-notes.html">Configuration Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/generating-the-initial-ensemble.html">Generating the Initial Ensemble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/sampling-error-table.html">Sampling Error Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/recovering-from-failed-assimilation.html">Recovering from a Failed Assimilation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CESM</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/grid-and-compset.html">Grid and Compset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/libraries.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/list-of-attempts.html">List of Attempts</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Performance</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../performance/load-balancing-tool.html">Load Balancing Tool</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../performance/case-timing-data.html">Case Timing Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../performance/file-striping.html">File Striping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/darshan.html">Darshan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/intel-vtune.html">Intel VTune Profiler</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Port Validation</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="ensemble-consistency-tests.html">Ensemble Consistency Tests</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Regression Tests</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Regression Tests</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#building-cprnc">Building cprnc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#edit-config-machines-xml">Edit config_machines.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-the-tests">Run the tests</a></li>
+</ul>
+</li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -145,7 +165,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Regression Tests</li>
     
@@ -168,6 +188,36 @@
             
   <div class="section" id="regression-tests">
 <h1>Regression Tests<a class="headerlink" href="#regression-tests" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="building-cprnc">
+<h2>Building cprnc<a class="headerlink" href="#building-cprnc" title="Permalink to this headline">¶</a></h2>
+<p>In order for the regression tests to work, the <code class="docutils literal notranslate"><span class="pre">cprnc</span></code> tool (which is a
+truncation of the phrase “compare NetCDF”) must be built.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /lustre/project/k1421/cesm2_1_relsd_m5.6/cime/tools/cprnc
+$ <span class="nv">CIMEROOT</span><span class="o">=</span>../.. ../configure --macros-format<span class="o">=</span>Makefile --mpilib<span class="o">=</span>mpi-serial
+$ <span class="nv">CIMEROOT</span><span class="o">=</span>../.. <span class="nb">source</span> ./.env_mach_specific.sh <span class="o">&amp;&amp;</span> make
+</pre></div>
+</div>
+</div>
+<div class="section" id="edit-config-machines-xml">
+<h2>Edit config_machines.xml<a class="headerlink" href="#edit-config-machines-xml" title="Permalink to this headline">¶</a></h2>
+<p>Now we set the path to cprnc within config_machines.xml:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /lustre/project/k1421/CESM/cime/config/cesm/machines
+$ vim config_machines.xml
+&lt;CCSM_CPRNC&gt;/lustre/project/k1421/CESM/cime/tools/cprnc&lt;/CCSM_CPRNC&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-the-tests">
+<h2>Run the tests<a class="headerlink" href="#run-the-tests" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /lustre/project/k1421/CESM/cime/scripts/tests
+$ ./scripts_regression_tests.py
+</pre></div>
+</div>
+<p>It is unclear what constitutes a good result in a regression test. In this post
+by <a class="reference external" href="https://bb.cgd.ucar.edu/cesm/threads/failed-scripts-regression-tests-for-cesm2-on-new-machine.5290/">Zoe Gillett on the DiscussCESM bulletin boards</a> a lot of the regression tests fail and
+Jim Edwards responds that, “If you are satisfied with the integrity of the
+experiments you want to run I think you can call this a good result.”</p>
+</div>
 </div>
 
 
@@ -188,11 +238,19 @@
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2020, UCAR
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -203,7 +261,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

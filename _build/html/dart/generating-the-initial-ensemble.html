@@ -1,0 +1,415 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Generating the Initial Ensemble &mdash; Porting CESM to Shaheen 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Sampling Error Table" href="sampling-error-table.html" />
+    <link rel="prev" title="Configuration Notes" href="configuration-notes.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo-wordmark-dark-dart.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Shaheen</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../shaheen/environment.html">Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shaheen/slurm.html">SLURM</a></li>
+</ul>
+<p class="caption"><span class="caption-text">DART</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="compiling.html">Compiling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration-notes.html">Configuration Notes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Generating the Initial Ensemble</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#perturb-single-instance-program">Perturb Single Instance Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#files-needed">Files Needed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#steps-to-generate-the-necessary-files">Steps to Generate the Necessary Files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#perturb-single-instance">perturb_single_instance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#input-nml">input.nml</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#caminput-nc">caminput.nc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cam-phis-nc">cam_phis.nc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-file-list-txt">output_file_list.txt</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#running-perturb-single-instance">Running perturb_single_instance</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sampling-error-table.html">Sampling Error Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recovering-from-failed-assimilation.html">Recovering from a Failed Assimilation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CESM</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/grid-and-compset.html">Grid and Compset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/libraries.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/list-of-attempts.html">List of Attempts</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Performance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../performance/load-balancing-tool.html">Load Balancing Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/case-timing-data.html">Case Timing Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/file-striping.html">File Striping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/darshan.html">Darshan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/intel-vtune.html">Intel VTune Profiler</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Port Validation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../port-validation/ensemble-consistency-tests.html">Ensemble Consistency Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../port-validation/regression-tests.html">Regression Tests</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Porting CESM to Shaheen</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Generating the Initial Ensemble</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/dart/generating-the-initial-ensemble.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="generating-the-initial-ensemble">
+<h1>Generating the Initial Ensemble<a class="headerlink" href="#generating-the-initial-ensemble" title="Permalink to this headline">¶</a></h1>
+<p>In order to generate the initial 1000-member ensemble we will make infinitesmal
+perturbations to a single initial file from Kevin’s CAM reanalysis and then
+run the integration with filter and adaptive inflation to spread out the
+ensemble. Only the CAM initial files will be perturbed – the hope is that
+filter and adaptive inflation will adjust the remainder of the components.</p>
+<div class="section" id="perturb-single-instance-program">
+<h2>Perturb Single Instance Program<a class="headerlink" href="#perturb-single-instance-program" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">perturb_single_instance</span></code> program in
+<code class="docutils literal notranslate"><span class="pre">/lustre/project/k1421/DART/models/cam-fv/work</span></code> will take a single initial
+file and then will perturb a field within it to generate an initial ensemble.</p>
+</div>
+<div class="section" id="files-needed">
+<h2>Files Needed<a class="headerlink" href="#files-needed" title="Permalink to this headline">¶</a></h2>
+<p>The program needs the following files in order to run:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">input.nml</span></code> - This must contain the <code class="code docutils literal notranslate"><span class="pre">&amp;perturb_single_instance_nml</span></code>
+namelist with proper settings for the program to read.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">campinput.nc</span></code> - A CAM <strong>initial</strong> file – not a restart file – since
+initial files contain the lev and T fields needed for perturbation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cam_phis.nc</span></code> - A CAM file containing the PHIS, or surface geopotential
+field (m <sup>2</sup> /s <sup>2</sup> ), since surface geopotential is needed to
+compute potential temperature.</p></li>
+<li><p><em>(Optional)</em> <code class="docutils literal notranslate"><span class="pre">output_file_list.txt</span></code> - A text file containing the names of the
+perturbed files to be created. These names can be provided in the
+<code class="docutils literal notranslate"><span class="pre">output_files</span></code> field of <code class="docutils literal notranslate"><span class="pre">input.nml</span></code>. However, since we want 1000
+perturbed files it is easier to specify them in a seperate text file and
+setting the <code class="docutils literal notranslate"><span class="pre">output_file_list</span></code> field of <code class="docutils literal notranslate"><span class="pre">input.nml</span></code>.</p></li>
+</ol>
+</div>
+<div class="section" id="steps-to-generate-the-necessary-files">
+<h2>Steps to Generate the Necessary Files<a class="headerlink" href="#steps-to-generate-the-necessary-files" title="Permalink to this headline">¶</a></h2>
+<p>We create an empty directory in which to build our ensemble.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /lustre/scratch/x_johnsobk/archive/f.e21.FHIST_BGC.f09_025.CAM6assim.011/rest
+$ mv  <span class="m">2019</span>-08-05-00000 <span class="m">2019</span>-08-05-00000-original
+$ mkdir <span class="m">2019</span>-08-05-00000
+$ <span class="nb">cd</span> <span class="m">2019</span>-08-05-00000
+</pre></div>
+</div>
+<div class="section" id="perturb-single-instance">
+<h3>perturb_single_instance<a class="headerlink" href="#perturb-single-instance" title="Permalink to this headline">¶</a></h3>
+<p>Then we copy <code class="docutils literal notranslate"><span class="pre">perturb_single_instance</span></code> from the model’s work directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cp /lustre/project/k1421/DART/models/cam-fv/work/perturb_single_instance ./
+</pre></div>
+</div>
+</div>
+<div class="section" id="input-nml">
+<h3>input.nml<a class="headerlink" href="#input-nml" title="Permalink to this headline">¶</a></h3>
+<p>Then we start by configuring <code class="docutils literal notranslate"><span class="pre">input.nml</span></code>, which must contain the
+<code class="docutils literal notranslate"><span class="pre">&amp;perturb_single_instance_nml</span></code> namelist in order for the program to work.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cp /lustre/project/k1421/DART/models/cam-fv/work/input.nml.original ./input.nml
+$ vim input.nml
+</pre></div>
+</div>
+<p>We configure the namelist so that the program builds a 1000-member ensemble,
+looks for an initial file known as <code class="docutils literal notranslate"><span class="pre">caminput.nc</span></code> and a text file containing
+the names of the desired output files known as <code class="docutils literal notranslate"><span class="pre">output_file_list.txt</span></code>.</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="p">&amp;</span><span class="n">perturb_single_instance_nml</span>
+   <span class="n">ens_size</span>               <span class="o">=</span> <span class="mi">1000</span>
+   <span class="n">input_files</span>            <span class="o">=</span> <span class="s1">&#39;caminput.nc&#39;</span>
+   <span class="n">output_files</span>           <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+   <span class="n">output_file_list</span>       <span class="o">=</span> <span class="s1">&#39;output_file_list.txt&#39;</span>
+   <span class="n">perturbation_amplitude</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="o">/</span>
+</pre></div>
+</div>
+<p>An additional file is also specified in the <code class="docutils literal notranslate"><span class="pre">cam_phis_filename</span></code> field of the
+<code class="docutils literal notranslate"><span class="pre">&amp;model_nml</span></code> namelist.</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="p">&amp;</span><span class="n">model_nml</span>
+   <span class="n">cam_template_filename</span>       <span class="o">=</span> <span class="s1">&#39;caminput.nc&#39;</span>
+   <span class="n">cam_phis_filename</span>           <span class="o">=</span> <span class="s1">&#39;cam_phis.nc&#39;</span>
+   <span class="p">...</span>
+<span class="o">/</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="caminput-nc">
+<h3>caminput.nc<a class="headerlink" href="#caminput-nc" title="Permalink to this headline">¶</a></h3>
+<p>We copy one of the initial files from Kevin’s CAM reanalysis.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cp ../2019-08-05-00000-original/f.e21.FHIST_BGC.f09_025.CAM6assim.011.cam_0001.i.2019-08-05-00000.nc ./caminput.nc
+</pre></div>
+</div>
+</div>
+<div class="section" id="cam-phis-nc">
+<h3>cam_phis.nc<a class="headerlink" href="#cam-phis-nc" title="Permalink to this headline">¶</a></h3>
+<p>We need to transfer <code class="docutils literal notranslate"><span class="pre">cam_phis.nc</span></code> from Cheyenne.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sftp &lt;user&gt;@data-access.ucar.edu
+$ get /glade/scratch/raeder/f.e21.FHIST_BGC.f09_025.CAM6assim.011/run/cam_phis.nc
+</pre></div>
+</div>
+</div>
+<div class="section" id="output-file-list-txt">
+<h3>output_file_list.txt<a class="headerlink" href="#output-file-list-txt" title="Permalink to this headline">¶</a></h3>
+<p>Then we write a short python script to generate a list of 1000 filenames to
+insert into <code class="docutils literal notranslate"><span class="pre">output_file_list.txt</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ vim make_list.py
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">make_list.py</span></code> script is very simple.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;f.e21.FHIST_BGC.f09_025.CAM6assim.011.cam_&#39;</span>
+<span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39;.i.2019-08-05-00000.nc&#39;</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;output_file_list.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">iensemble</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1001</span><span class="p">):</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">prefix</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">iensemble</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">+</span><span class="n">suffix</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>When we run it, it generates <code class="docutils literal notranslate"><span class="pre">output_file_list.txt</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python make_list.py
+$ ls -l output_file_list.txt
+-rw-r--r-- <span class="m">1</span> x_johnsobk g-x_johnsobk <span class="m">69000</span> Nov <span class="m">24</span> <span class="m">20</span>:18 output_file_list.txt
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="running-perturb-single-instance">
+<h2>Running perturb_single_instance<a class="headerlink" href="#running-perturb-single-instance" title="Permalink to this headline">¶</a></h2>
+<p>Finally, with all of those files in place, we can run <code class="docutils literal notranslate"><span class="pre">perturb_single_instance</span></code>
+by first starting an interactive job on one of Shaheen’s compute nodes and then
+running the program.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Running <code class="docutils literal notranslate"><span class="pre">perturb_single_instance</span></code> on a login node on Shaheen will crash
+with an error similar to:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Fatal error in MPI_Init: Other MPI error, error stack:
+MPIR_Init_thread<span class="o">(</span><span class="m">537</span><span class="o">)</span>:
+MPID_Init<span class="o">(</span><span class="m">246</span><span class="o">)</span>.......: channel initialization failed
+MPID_Init<span class="o">(</span><span class="m">647</span><span class="o">)</span>.......: PMI2 init failed: <span class="m">1</span> libhugetlbfs
+</pre></div>
+</div>
+</div>
+<p>We use the <code class="docutils literal notranslate"><span class="pre">jinter</span></code> alias that we described in the Aliases section of the
+<a class="reference internal" href="../shaheen/slurm.html"><span class="doc">SLURM</span></a> page to start an interactive job before running the
+program.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ jinter
+srun: job <span class="m">16821392</span> queued and waiting <span class="k">for</span> resources
+srun: job <span class="m">16821392</span> has been allocated resources
+$ ./perturb_single_instance
+...
+--------------------------------------
+Starting ... at YYYY MM DD HH MM <span class="nv">SS</span> <span class="o">=</span>
+                <span class="m">2020</span> <span class="m">11</span> <span class="m">24</span> <span class="m">21</span> <span class="m">54</span> <span class="m">27</span>
+Program perturb_single_instance
+--------------------------------------
+...
+--------------------------------------
+Finished ... at YYYY MM DD HH MM <span class="nv">SS</span> <span class="o">=</span>
+                <span class="m">2020</span> <span class="m">11</span> <span class="m">24</span> <span class="m">22</span>  <span class="m">7</span> <span class="m">10</span>
+Program perturb_single_instance
+--------------------------------------
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sampling-error-table.html" class="btn btn-neutral float-right" title="Sampling Error Table" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="configuration-notes.html" class="btn btn-neutral float-left" title="Configuration Notes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, UCAR
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

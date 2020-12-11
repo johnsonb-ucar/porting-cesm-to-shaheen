@@ -1,0 +1,287 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>SLURM &mdash; Porting CESM to Shaheen 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Compiling" href="../dart/compiling.html" />
+    <link rel="prev" title="Environment" href="environment.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo-wordmark-dark-dart.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Shaheen</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SLURM</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#aliases">Aliases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#job-queue">Job Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#resource-binding">Resource Binding</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">DART</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dart/compiling.html">Compiling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/configuration-notes.html">Configuration Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/generating-the-initial-ensemble.html">Generating the Initial Ensemble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/sampling-error-table.html">Sampling Error Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/recovering-from-failed-assimilation.html">Recovering from a Failed Assimilation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CESM</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/grid-and-compset.html">Grid and Compset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/libraries.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/list-of-attempts.html">List of Attempts</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Performance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../performance/load-balancing-tool.html">Load Balancing Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/case-timing-data.html">Case Timing Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/file-striping.html">File Striping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/darshan.html">Darshan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/intel-vtune.html">Intel VTune Profiler</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Port Validation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../port-validation/ensemble-consistency-tests.html">Ensemble Consistency Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../port-validation/regression-tests.html">Regression Tests</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Porting CESM to Shaheen</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>SLURM</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/shaheen/slurm.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="slurm">
+<h1>SLURM<a class="headerlink" href="#slurm" title="Permalink to this headline">¶</a></h1>
+<p>Shaheen uses the Simple Linux Utility for Resource Management (SLURM) system
+for job scheduling.</p>
+<div class="section" id="aliases">
+<h2>Aliases<a class="headerlink" href="#aliases" title="Permalink to this headline">¶</a></h2>
+<p>Since the status and kill commands for SLURM differ from PBS, it is useful to
+set up common aliases, for example in <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Terminate a job when given its job id</span>
+<span class="nb">alias</span> <span class="nv">jkill</span><span class="o">=</span><span class="s1">&#39;scancel&#39;</span>
+<span class="c1"># Print user&#39;s jobs and status</span>
+<span class="nb">alias</span> <span class="nv">jstat</span><span class="o">=</span><span class="s1">&#39;squeue -u $USER&#39;</span>
+<span class="c1"># Start an interactive session on a compute node</span>
+<span class="nb">alias</span> <span class="nv">jinter</span><span class="o">=</span><span class="s1">&#39;srun -u --pty bash -i&#39;</span>
+<span class="c1"># Print out jobs that have run since a start date</span>
+<span class="nb">alias</span> <span class="nv">jhist</span><span class="o">=</span><span class="s1">&#39;sacct -u $USER --format=&quot;JobID%20,JobName%30,Partition,Account,AllocCPUS,State,ExitCode&quot; -S&#39;</span>
+</pre></div>
+</div>
+<p>The last alias, <code class="docutils literal notranslate"><span class="pre">jhist</span></code>, prints out jobs that have been completed since a
+given start date:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ jhist <span class="m">2020</span>-11-13
+               JobID                        JobName  Partition    Account  AllocCPUS      State ExitCode
+-------------------- ------------------------------ ---------- ---------- ---------- ---------- --------
+            <span class="m">16435549</span> run.FHIST_BGC.f09_d025.084.e03      workq      k1421        <span class="m">768</span>  COMPLETED      <span class="m">0</span>:0
+      <span class="m">16435549</span>.batch                          batch                 k1421         <span class="m">64</span>  COMPLETED      <span class="m">0</span>:0
+          <span class="m">16435549</span>.0                       cesm.exe                 k1421        <span class="m">384</span>  COMPLETED      <span class="m">0</span>:0
+</pre></div>
+</div>
+</div>
+<div class="section" id="job-queue">
+<h2>Job Queue<a class="headerlink" href="#job-queue" title="Permalink to this headline">¶</a></h2>
+<p>The standard job queue on Shaheen is <code class="docutils literal notranslate"><span class="pre">workq</span></code>.</p>
+</div>
+<div class="section" id="resource-binding">
+<h2>Resource Binding<a class="headerlink" href="#resource-binding" title="Permalink to this headline">¶</a></h2>
+<p>SLURM is <a class="reference external" href="https://slurm.schedmd.com/resource_binding.html">highly configurable</a>
+with respect to its ability to bind tasks to various resources such as
+“threads, cores, sockets, NUMA or boards.”</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../dart/compiling.html" class="btn btn-neutral float-right" title="Compiling" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="environment.html" class="btn btn-neutral float-left" title="Environment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, UCAR
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

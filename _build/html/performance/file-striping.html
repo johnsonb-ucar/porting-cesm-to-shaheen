@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,19 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -29,14 +35,9 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Ensemble Consistency Tests" href="../port-validation/ensemble-consistency-tests.html" />
+    <link rel="next" title="Darshan" href="darshan.html" />
     <link rel="prev" title="Case Timing Data" href="case-timing-data.html" /> 
 </head>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -87,25 +89,40 @@
               <p class="caption"><span class="caption-text">Shaheen</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../shaheen/environment.html">Environment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../shaheen/compiling-dart.html">Compiling DART</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shaheen/slurm.html">SLURM</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Configuration</span></p>
+<p class="caption"><span class="caption-text">DART</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../configuration/libraries.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/compiling.html">Compiling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/configuration-notes.html">Configuration Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/generating-the-initial-ensemble.html">Generating the Initial Ensemble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/sampling-error-table.html">Sampling Error Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/recovering-from-failed-assimilation.html">Recovering from a Failed Assimilation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CESM</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/grid-and-compset.html">Grid and Compset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/libraries.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/list-of-attempts.html">List of Attempts</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Performance</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="load-balancing-tool.html">Load Balancing Tool</a></li>
 <li class="toctree-l1"><a class="reference internal" href="case-timing-data.html">Case Timing Data</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">File Striping</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#optimizing-your-i-o-performance">Optimizing your I/O Performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#optimizing-i-o-performance">Optimizing I/O Performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#advice-from-kaust-supercomputing-lab">Advice from KAUST Supercomputing Lab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#best-lfs-stripe-count-for-different-node-counts">Best LFS Stripe Count for Different Node Counts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#striping-commands">Striping Commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#changing-the-striping-of-a-file">Changing the striping of a file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-the-striping-of-a-directory">Setting the striping of a directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#changing-the-striping-of-a-directory">Changing the striping of a directory</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#setting-the-striping-of-a-directory">Setting the striping of a directory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#changing-the-striping-of-a-directory">Changing the striping of a directory</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="darshan.html">Darshan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intel-vtune.html">Intel VTune Profiler</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Port Validation</span></p>
 <ul>
@@ -116,6 +133,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -154,7 +172,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>File Striping</li>
     
@@ -177,10 +195,16 @@
             
   <div class="section" id="file-striping">
 <h1>File Striping<a class="headerlink" href="#file-striping" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="optimizing-i-o-performance">
+<h2>Optimizing I/O Performance<a class="headerlink" href="#optimizing-i-o-performance" title="Permalink to this headline">¶</a></h2>
 <p>Shaheen uses the lustre filesystem, which provides the ability for <a class="reference external" href="https://www.hpc.kaust.edu.sa/content/lustre">file
 striping</a>.</p>
+<p>Some general tips for optimizing I/O performance <a class="reference external" href="https://www.hpc.kaust.edu.sa/tips/optimizing-your-io-performance">include</a>:</p>
+<ul class="simple">
+<li><p>Increasing the stripe count when multiple processes write to a single shared
+file, such as when parallel NetCDF is used</p></li>
+<li><p>Avoiding striping small files</p></li>
+</ul>
 <p>Striping files and directories must be done with care. A note from Shaheen’s
 documentation:</p>
 <div class="admonition note">
@@ -207,18 +231,57 @@ good practice is to have dedicated directories with high stripe counts for
 writing very large files into.</em>
 <em>Another scenario to avoid is having small files with large stripe counts.</em></p>
 </div></blockquote>
-<div class="section" id="optimizing-your-i-o-performance">
-<h3>Optimizing your I/O Performance<a class="headerlink" href="#optimizing-your-i-o-performance" title="Permalink to this headline">¶</a></h3>
-<p>Some general tips for optimizing I/O performance <a class="reference external" href="https://www.hpc.kaust.edu.sa/tips/optimizing-your-io-performance">include</a>:</p>
-<ul class="simple">
-<li><p>Increasing the stripe count when multiple processes write to a single shared
-file, such as when parallel NetCDF is used</p></li>
-<li><p>Avoiding striping small files</p></li>
-</ul>
+</div>
+<div class="section" id="advice-from-kaust-supercomputing-lab">
+<h2>Advice from KAUST Supercomputing Lab<a class="headerlink" href="#advice-from-kaust-supercomputing-lab" title="Permalink to this headline">¶</a></h2>
+<p>We corresponded with <a class="reference external" href="https://twitter.com/mnoukhiya?lang=en">Dr. Bilel Hadri</a>,
+a computational scientist at the KAUST Supercomputing Lab, for advice on
+how to configure the file striping for the forcing and restart files. His
+general suggestions are as follows:</p>
+<blockquote>
+<div><p><em>For the I/O striping, I would suggest to go around 24/48 maximum probably
+only for the large files around 20-34GB, while keeping the default one at 1.
+Make sure to check the striping per file to validate them, since the
+striping is not inherited by the directory only at its creation of the file
+or copied, while when moved the file is keeping its original striping.</em></p>
+</div></blockquote>
+</div>
+<div class="section" id="best-lfs-stripe-count-for-different-node-counts">
+<h2>Best LFS Stripe Count for Different Node Counts<a class="headerlink" href="#best-lfs-stripe-count-for-different-node-counts" title="Permalink to this headline">¶</a></h2>
+<p>This <a class="reference external" href="https://www.hpc.kaust.edu.sa/sites/default/files/files/public/Shaheen_training/171107_IO/IO-Arch.pdf">presentation</a>
+contains a benchmarking graph on slide 13 that shows the optimal stripe count
+is around 100 for processes using more than 500 nodes.</p>
+</div>
+<div class="section" id="striping-commands">
+<h2>Striping Commands<a class="headerlink" href="#striping-commands" title="Permalink to this headline">¶</a></h2>
+<p>Below are sets of commands to change the striping of files and directories.
+Again, once a file has been written with a particular configuration, invoking
+<cite>setstripe</cite> will not change its file striping. A new file must be created with
+the desired striping and the old data must be copied into it.</p>
+<div class="section" id="changing-the-striping-of-a-file">
+<h3>Changing the striping of a file<a class="headerlink" href="#changing-the-striping-of-a-file" title="Permalink to this headline">¶</a></h3>
+<p>If a file has been previously striped, we must create a new file, assign it the
+desired stripe configuration, then copy the contents of the old file into the
+new one.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /lustre/project/k1421/cesm_store/inputdata/atm/cam/tracer_cnst/
+$ mv tracer_cnst_halons_WACCM6_3Dmonthly_L70_1975-2014_c180216.nc tracer_cnst_halons_WACCM6_3Dmonthly_L70_1975-2014_c180216_old.nc
+$ lfs setstripe -c <span class="m">48</span> tracer_cnst_halons_WACCM6_3Dmonthly_L70_1975-2014_c180216.nc
+$ cp tracer_cnst_halons_WACCM6_3Dmonthly_L70_1975-2014_c180216_old.nc tracer_cnst_halons_WACCM6_3Dmonthly_L70_1975-2014_c180216.nc
+</pre></div>
+</div>
+<p>Once this procedure has completed, we see that the file possesses the new file
+striping.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ lfs getstripe tracer_cnst_halons_WACCM6_3Dmonthly_L70_1975-2014_c180216.nc
+lmm_stripe_count:  <span class="m">48</span>
+lmm_stripe_size:   <span class="m">1048576</span>
+lmm_pattern:       raid0
+lmm_layout_gen:    <span class="m">0</span>
+lmm_stripe_offset: <span class="m">84</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="setting-the-striping-of-a-directory">
-<h2>Setting the striping of a directory<a class="headerlink" href="#setting-the-striping-of-a-directory" title="Permalink to this headline">¶</a></h2>
+<h3>Setting the striping of a directory<a class="headerlink" href="#setting-the-striping-of-a-directory" title="Permalink to this headline">¶</a></h3>
 <p>If a directory has not been previously striped, it is straightforward to stripe
 all of the files contained within it:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /lustre/scratch/x_johnsobk/archive/f.e21.FHIST_BGC.f09_025.CAM6assim.011/rest/
@@ -229,7 +292,7 @@ stripe_count:  <span class="m">128</span> stripe_size:   <span class="m">1048576
 </div>
 </div>
 <div class="section" id="changing-the-striping-of-a-directory">
-<h2>Changing the striping of a directory<a class="headerlink" href="#changing-the-striping-of-a-directory" title="Permalink to this headline">¶</a></h2>
+<h3>Changing the striping of a directory<a class="headerlink" href="#changing-the-striping-of-a-directory" title="Permalink to this headline">¶</a></h3>
 <p>If we want to change the striping of a directory that already has a certain
 filestriping configuration:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /lustre/scratch/x_johnsobk/archive/f.e21.FHIST_BGC.f09_025.CAM6assim.011/rest/
@@ -255,6 +318,7 @@ stripe_count:  <span class="m">1</span> stripe_size:   <span class="m">1048576</
 </div>
 </div>
 </div>
+</div>
 
 
            </div>
@@ -264,7 +328,7 @@ stripe_count:  <span class="m">1</span> stripe_size:   <span class="m">1048576</
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../port-validation/ensemble-consistency-tests.html" class="btn btn-neutral float-right" title="Ensemble Consistency Tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="darshan.html" class="btn btn-neutral float-right" title="Darshan" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="case-timing-data.html" class="btn btn-neutral float-left" title="Case Timing Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -276,11 +340,19 @@ stripe_count:  <span class="m">1</span> stripe_size:   <span class="m">1048576</
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2020, UCAR
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -291,7 +363,6 @@ stripe_count:  <span class="m">1</span> stripe_size:   <span class="m">1048576</
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

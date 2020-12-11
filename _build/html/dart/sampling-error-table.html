@@ -1,0 +1,294 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sampling Error Table &mdash; Porting CESM to Shaheen 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Recovering from a Failed Assimilation" href="recovering-from-failed-assimilation.html" />
+    <link rel="prev" title="Generating the Initial Ensemble" href="generating-the-initial-ensemble.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo-wordmark-dark-dart.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Shaheen</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../shaheen/environment.html">Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shaheen/slurm.html">SLURM</a></li>
+</ul>
+<p class="caption"><span class="caption-text">DART</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="compiling.html">Compiling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration-notes.html">Configuration Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generating-the-initial-ensemble.html">Generating the Initial Ensemble</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sampling Error Table</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#gen-sampling-err-table">gen_sampling_err_table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dart-config-template">DART_config.template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="recovering-from-failed-assimilation.html">Recovering from a Failed Assimilation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CESM</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/grid-and-compset.html">Grid and Compset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/libraries.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/list-of-attempts.html">List of Attempts</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Performance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../performance/load-balancing-tool.html">Load Balancing Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/case-timing-data.html">Case Timing Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/file-striping.html">File Striping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/darshan.html">Darshan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/intel-vtune.html">Intel VTune Profiler</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Port Validation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../port-validation/ensemble-consistency-tests.html">Ensemble Consistency Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../port-validation/regression-tests.html">Regression Tests</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Porting CESM to Shaheen</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Sampling Error Table</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/dart/sampling-error-table.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sampling-error-table">
+<h1>Sampling Error Table<a class="headerlink" href="#sampling-error-table" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="gen-sampling-err-table">
+<h2>gen_sampling_err_table<a class="headerlink" href="#gen-sampling-err-table" title="Permalink to this headline">¶</a></h2>
+<p>In order to apply Sampling Error Correction, we use <code class="docutils literal notranslate"><span class="pre">gen_sampling_err_table</span></code>
+to compute the statistics described in Anderson (2012). <a class="footnote-reference brackets" href="#id2" id="id1">1</a></p>
+<p>The table with the error correction values is stored in the netCDF file
+<code class="docutils literal notranslate"><span class="pre">sampling_error_correction_table.nc</span></code> in:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="si">${</span><span class="nv">DARTROOT</span><span class="si">}</span>/assimilation_code/programs/gen_sampling_err_table/work/
+</pre></div>
+</div>
+<p>However, the table typically only contains values for ensemble sizes up to 200
+ensemble members. Thus we edit <code class="docutils literal notranslate"><span class="pre">input.nml</span></code> in the above directory thus we
+edit the following namelist to add ensemble sizes of 250, 500 and 1000:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="p">&amp;</span><span class="n">gen_sampling_error_table_nml</span>
+  <span class="n">ens_sizes</span> <span class="o">=</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">1000</span>
+  <span class="n">debug</span> <span class="o">=</span> <span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="o">/</span>
+</pre></div>
+</div>
+<p>We then run <code class="docutils literal notranslate"><span class="pre">quickbuild.csh</span></code> and <code class="docutils literal notranslate"><span class="pre">submit.csh</span></code> the latter of which simply
+submits a batch job that runs <code class="docutils literal notranslate"><span class="pre">gen_sampling_err_table</span></code> on a compute node.</p>
+<p>The program required 01:53:14 on 8 CPUs to complete and add the correction
+values for the additional ensemble sizes.</p>
+</div>
+<div class="section" id="dart-config-template">
+<h2>DART_config.template<a class="headerlink" href="#dart-config-template" title="Permalink to this headline">¶</a></h2>
+<p>Finally, we need to edit Line 325 of the <code class="docutils literal notranslate"><span class="pre">DART_config.template</span></code> script to
+reflect the fact that we are now able to run ensemble sizes of larger than 200.
+The template is here:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ vim <span class="si">${</span><span class="nv">DARTROOT</span><span class="si">}</span>/models/cam-fv/shell_scripts/cesm2_1/DART_config.template
+</pre></div>
+</div>
+<p>And we change 200 to 1000 here:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="o">(</span> <span class="nv">$num_instances</span> &lt; <span class="m">3</span> <span class="o">||</span> <span class="nv">$num_instances</span> &gt; <span class="m">1000</span> <span class="o">)</span> <span class="k">then</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Anderson, Jeffrey L. (2012) “Localization and Sampling Error Correction in Ensemble Kalman Filter Data Assimilation.” <em>Monthly Weather Review</em> <strong>140</strong>: 2359-2371, doi: 10.1175/MWR-D-11-00013.1.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="recovering-from-failed-assimilation.html" class="btn btn-neutral float-right" title="Recovering from a Failed Assimilation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="generating-the-initial-ensemble.html" class="btn btn-neutral float-left" title="Generating the Initial Ensemble" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, UCAR
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

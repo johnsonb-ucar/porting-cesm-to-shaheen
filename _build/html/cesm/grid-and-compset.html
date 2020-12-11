@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Grid and Compset &mdash; Porting CESM to Shaheen 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Libraries" href="libraries.html" />
+    <link rel="prev" title="Recovering from a Failed Assimilation" href="../dart/recovering-from-failed-assimilation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo-wordmark-dark-dart.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Shaheen</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../shaheen/environment.html">Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shaheen/slurm.html">SLURM</a></li>
+</ul>
+<p class="caption"><span class="caption-text">DART</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dart/compiling.html">Compiling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/configuration-notes.html">Configuration Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/generating-the-initial-ensemble.html">Generating the Initial Ensemble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/sampling-error-table.html">Sampling Error Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/recovering-from-failed-assimilation.html">Recovering from a Failed Assimilation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CESM</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Grid and Compset</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#custom-grid">Custom Grid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compset">Compset</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="libraries.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="list-of-attempts.html">List of Attempts</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Performance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../performance/load-balancing-tool.html">Load Balancing Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/case-timing-data.html">Case Timing Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/file-striping.html">File Striping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/darshan.html">Darshan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/intel-vtune.html">Intel VTune Profiler</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Port Validation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../port-validation/ensemble-consistency-tests.html">Ensemble Consistency Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../port-validation/regression-tests.html">Regression Tests</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Porting CESM to Shaheen</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Grid and Compset</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cesm/grid-and-compset.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="grid-and-compset">
+<h1>Grid and Compset<a class="headerlink" href="#grid-and-compset" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="custom-grid">
+<h2>Custom Grid<a class="headerlink" href="#custom-grid" title="Permalink to this headline">¶</a></h2>
+<p>We’re using the same grid as the <a class="reference external" href="https://rda.ucar.edu/datasets/ds345.0/">DART CAM Reanalysis</a>,
+which is a custom grid created by Kevin Raeder, called <code class="docutils literal notranslate"><span class="pre">f09_d025</span></code>.</p>
+<p>The grid specification is available on GLADE here:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/glade/work/raeder/Models/CAM_init/SST/config_grids+fv1+2deg_oi0.25_gland20.xml
+</pre></div>
+</div>
+<p>The grid has quarter-degree horizontal resolution, so that CAM can be forced with
+the <a class="reference external" href="https://rda.ucar.edu/datasets/ds277.7/">AVHRR quarter-degree SST product</a>.</p>
+</div>
+<div class="section" id="compset">
+<h2>Compset<a class="headerlink" href="#compset" title="Permalink to this headline">¶</a></h2>
+<p>The integration uses an <code class="docutils literal notranslate"><span class="pre">F</span></code> with biogeochemistry. Kevin’s <code class="docutils literal notranslate"><span class="pre">CASEROOT</span></code> on
+GLADE and his <code class="docutils literal notranslate"><span class="pre">README.case</span></code> are:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/glade/work/raeder/Exp/f.e21.FHIST_BGC.f09_025.CAM6assim.011/README.case
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">create_newcase</span></code> command invoked is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">glade</span><span class="o">/</span><span class="n">work</span><span class="o">/</span><span class="n">raeder</span><span class="o">/</span><span class="n">Models</span><span class="o">/</span><span class="n">cesm2_1_relsd_m5</span><span class="o">.</span><span class="mi">6</span><span class="o">/</span><span class="n">cime</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">create_newcase</span> <span class="o">--</span><span class="n">case</span> <span class="o">/</span><span class="n">glade</span><span class="o">/</span><span class="n">work</span><span class="o">/</span><span class="n">raeder</span><span class="o">/</span><span class="n">Exp</span><span class="o">/</span><span class="n">f</span><span class="o">.</span><span class="n">e21</span><span class="o">.</span><span class="n">FHIST_BGC</span><span class="o">.</span><span class="n">f09_025</span><span class="o">.</span><span class="n">CAM6assim</span><span class="o">.</span><span class="mi">011</span> <span class="o">--</span><span class="n">machine</span> <span class="n">cheyenne</span> <span class="o">--</span><span class="n">res</span> <span class="n">f09_d025</span> <span class="o">--</span><span class="n">project</span> <span class="n">NCIS0006</span> <span class="o">--</span><span class="n">queue</span> <span class="n">premium</span> <span class="o">--</span><span class="n">walltime</span> <span class="mi">1</span><span class="p">:</span><span class="mi">00</span> <span class="o">--</span><span class="n">pecount</span> <span class="mi">36</span><span class="n">x1</span> <span class="o">--</span><span class="n">ninst</span> <span class="mi">80</span> <span class="o">--</span><span class="n">compset</span> <span class="n">HIST_CAM60_CLM50</span><span class="o">%</span><span class="n">BGC</span><span class="o">-</span><span class="n">CROP_CICE</span><span class="o">%</span><span class="n">PRES_DOCN</span><span class="o">%</span><span class="n">DOM_MOSART_SGLC_SWAV</span> <span class="o">--</span><span class="n">run</span><span class="o">-</span><span class="n">unsupported</span> <span class="o">--</span><span class="n">multi</span><span class="o">-</span><span class="n">driver</span> <span class="o">--</span><span class="n">gridfile</span> <span class="o">/</span><span class="n">glade</span><span class="o">/</span><span class="n">work</span><span class="o">/</span><span class="n">raeder</span><span class="o">/</span><span class="n">Models</span><span class="o">/</span><span class="n">CAM_init</span><span class="o">/</span><span class="n">SST</span><span class="o">/</span><span class="n">config_grids</span><span class="o">+</span><span class="n">fv1</span><span class="o">+</span><span class="mi">2</span><span class="n">deg_oi0</span><span class="o">.</span><span class="mi">25</span><span class="n">_gland20</span><span class="o">.</span><span class="n">xml</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="libraries.html" class="btn btn-neutral float-right" title="Libraries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../dart/recovering-from-failed-assimilation.html" class="btn btn-neutral float-left" title="Recovering from a Failed Assimilation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, UCAR
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

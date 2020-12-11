@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,19 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -29,15 +35,10 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Case Timing Data" href="case-timing-data.html" />
-    <link rel="prev" title="Libraries" href="../configuration/libraries.html" /> 
+    <link rel="prev" title="List of Attempts" href="../cesm/list-of-attempts.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -87,11 +89,21 @@
               <p class="caption"><span class="caption-text">Shaheen</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../shaheen/environment.html">Environment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../shaheen/compiling-dart.html">Compiling DART</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shaheen/slurm.html">SLURM</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Configuration</span></p>
+<p class="caption"><span class="caption-text">DART</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../configuration/libraries.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/compiling.html">Compiling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/configuration-notes.html">Configuration Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/generating-the-initial-ensemble.html">Generating the Initial Ensemble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/sampling-error-table.html">Sampling Error Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/recovering-from-failed-assimilation.html">Recovering from a Failed Assimilation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CESM</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/grid-and-compset.html">Grid and Compset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/libraries.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/list-of-attempts.html">List of Attempts</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Performance</span></p>
 <ul class="current">
@@ -102,6 +114,8 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="case-timing-data.html">Case Timing Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="file-striping.html">File Striping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="darshan.html">Darshan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intel-vtune.html">Intel VTune Profiler</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Port Validation</span></p>
 <ul>
@@ -112,6 +126,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -150,7 +165,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Load Balancing Tool</li>
     
@@ -180,11 +195,21 @@ layout for a given compset and resolution.</p>
 </div>
 <div class="section" id="instructions">
 <h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h2>
-<p>In order for the load balancing tool to run correctly, the CIME scripts and
-load balancing tool directories should be added to the PYTHONPATH environmental
-variable.</p>
+<p>The instructions for the tool are available in the <a class="reference external" href="https://esmci.github.io/cime/versions/maint-5.6/html/misc_tools/load-balancing-tool.html">CIME documentation</a> In order for the load balancing
+tool to run correctly, the CIME scripts and load balancing tool directories
+should be added to the PYTHONPATH environmental variable.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">CIME_DIR</span><span class="o">=</span>/lustre/project/k1421/cesm2_1_3/cime
 <span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$CIME_DIR</span>/scripts:<span class="nv">$CIME_DIR</span>/tools/load_balancing_tool:<span class="nv">$PYTHONPATH</span>
+</pre></div>
+</div>
+<p>Then run the submit script after specifying a given resolution, compset and
+PEs file.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /lustre/project/k1421/cesm2_1_3/cime/tools/load_balancing_tool
+$ ./load_balancing_submit.py –res &lt;RESOLUTION&gt; –compset &lt;COMPSET&gt; –pesfile &lt;PESFILE&gt;
+</pre></div>
+</div>
+<p>After the jobs finish, run the solver:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./load_balancing_solve.py –total-tasks &lt;N&gt; –blocksize <span class="m">8</span>
 </pre></div>
 </div>
 </div>
@@ -201,7 +226,7 @@ variable.</p>
         <a href="case-timing-data.html" class="btn btn-neutral float-right" title="Case Timing Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../configuration/libraries.html" class="btn btn-neutral float-left" title="Libraries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../cesm/list-of-attempts.html" class="btn btn-neutral float-left" title="List of Attempts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -210,11 +235,19 @@ variable.</p>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2020, UCAR
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -225,7 +258,6 @@ variable.</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

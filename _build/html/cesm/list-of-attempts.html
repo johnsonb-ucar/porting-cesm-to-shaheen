@@ -1,0 +1,1520 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>List of Attempts &mdash; Porting CESM to Shaheen 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Load Balancing Tool" href="../performance/load-balancing-tool.html" />
+    <link rel="prev" title="Libraries" href="libraries.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo-wordmark-dark-dart.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Shaheen</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../shaheen/environment.html">Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shaheen/slurm.html">SLURM</a></li>
+</ul>
+<p class="caption"><span class="caption-text">DART</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dart/compiling.html">Compiling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/configuration-notes.html">Configuration Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/generating-the-initial-ensemble.html">Generating the Initial Ensemble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/sampling-error-table.html">Sampling Error Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dart/recovering-from-failed-assimilation.html">Recovering from a Failed Assimilation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CESM</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="grid-and-compset.html">Grid and Compset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="libraries.html">Libraries</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">List of Attempts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#trial-094">Trial 094</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-093">Trial 093</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-092">Trial 092</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-091">Trial 091</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#result">Result</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-090">Trial 090</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-089">Trial 089</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-088">Trial 088</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-087">Trial 087</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-086">Trial 086</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-085">Trial 085</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-084">Trial 084</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-083">Trial 083</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-082">Trial 082</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-081">Trial 081</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-079">Trial 079</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-078">Trial 078</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#working-version">Working version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#non-working-version">Non-working version</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-077">Trial 077</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-076">Trial 076</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-075">Trial 075</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-074">Trial 074</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-073">Trial 073</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-072">Trial 072</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-071">Trial 071</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-070">Trial 070</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-069">Trial 069</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-068">Trial 068</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-067">Trial 067</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-066">Trial 066</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-065">Trial 065</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-064">Trial 064</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-063">Trial 063</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-062">Trial 062</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-061">Trial 061</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-060">Trial 060</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-059">Trial 059</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-058">Trial 058</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-057">Trial 057</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-056">Trial 056</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-055">Trial 055</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-054">Trial 054</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-049">Trial 049</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-048">Trial 048</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-047">Trial 047</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#last-working-startup-case">Last working startup case</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#attempting-to-clone-kevin-s-cam-reanalysis-on-cheyenne">Attempting to clone Kevin’s CAM Reanalysis on Cheyenne</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#attempting-to-clone-kevin-s-cam-reanalysis-on-shaheen">Attempting to clone Kevin’s CAM Reanalysis on Shaheen</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rebuilding-with-cesm2-1-resl5-6-instead-of-cesm2-1-3">Rebuilding with cesm2.1.resl5.6 instead of cesm2_1_3</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examining-the-cesm-log">Examining the CESM Log</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-046">Trial 046</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-045">Trial 045</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-044">Trial 044</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-043">Trial 043</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-042">Trial 042</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-041">Trial 041</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-040">Trial 040</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-039">Trial 039</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-038">Trial 038</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-037">Trial 037</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-036">Trial 036</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-035">Trial 035</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-034">Trial 034</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-033">Trial 033</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-032">Trial 032</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-031">Trial 031</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-030">Trial 030</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-029">Trial 029</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Performance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../performance/load-balancing-tool.html">Load Balancing Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/case-timing-data.html">Case Timing Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/file-striping.html">File Striping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/darshan.html">Darshan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/intel-vtune.html">Intel VTune Profiler</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Port Validation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../port-validation/ensemble-consistency-tests.html">Ensemble Consistency Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../port-validation/regression-tests.html">Regression Tests</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Porting CESM to Shaheen</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>List of Attempts</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cesm/list-of-attempts.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="list-of-attempts">
+<h1>List of Attempts<a class="headerlink" href="#list-of-attempts" title="Permalink to this headline">¶</a></h1>
+<p>It took very, very many attempts to get a CAM ensemble performing well on
+Shaheen.</p>
+<div class="section" id="trial-094">
+<h2>Trial 094<a class="headerlink" href="#trial-094" title="Permalink to this headline">¶</a></h2>
+<p>Rebuilding with 1000 members in case the efforts to fix the broken
+Trial 090 take much longer than expected.</p>
+</div>
+<div class="section" id="trial-093">
+<h2>Trial 093<a class="headerlink" href="#trial-093" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /lustre/project/k1421/cases/FHIST_BGC.f09_d025.093.e500
+$ ./xmlquery JOB_WALLCLOCK_TIME
+Results in group <span class="k">case</span>.run
+JOB_WALLCLOCK_TIME: <span class="m">12</span>:00:00
+Results in group <span class="k">case</span>.st_archive
+     JOB_WALLCLOCK_TIME: <span class="m">1</span>:00
+$ ./xmlchange --subgroup <span class="k">case</span>.run  <span class="nv">JOB_WALLCLOCK_TIME</span><span class="o">=</span><span class="m">12</span>:00:00
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-092">
+<h2>Trial 092<a class="headerlink" href="#trial-092" title="Permalink to this headline">¶</a></h2>
+<p>To avoid the error in Trial 91, we changed:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>&amp;filter_nml
+…
+single_file_in = .false.
+perturb_from_single_instance = .false.
+…
+/
+making another attempt.</p>
+</div>
+<div class="section" id="trial-091">
+<h2>Trial 091<a class="headerlink" href="#trial-091" title="Permalink to this headline">¶</a></h2>
+<p>Since 090 takes so long to build, this case runs with 100 members to see if the
+copied restart files for ensemble members 81-100 are able to be used without
+issue before we run with 1000 members.</p>
+<div class="section" id="result">
+<h3>Result<a class="headerlink" href="#result" title="Permalink to this headline">¶</a></h3>
+<p>The case runs to completion, however, the assimilation fails perhaps because
+we changed <code class="docutils literal notranslate"><span class="pre">single_file_in</span> <span class="pre">=</span> <span class="pre">.true.</span></code> to get the perturbation working.</p>
+<p>From the log file <code class="docutils literal notranslate"><span class="pre">/lustre/scratch/x_johnsobk/FHIST_BGC.f09_d025.091.e100/run/da.log.17183899.201202-061559</span></code>:</p>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ERROR FROM:
+PE   <span class="m">512</span>: direct_netcdf_mod:
+routine: direct_netcdf_mod:
+message: If using single_file_in/single_file_out <span class="o">=</span> .true.
+message: ... you must have a member dimension in your input/output file.
+Rank <span class="m">512</span> <span class="o">[</span>Wed Dec  <span class="m">2</span> <span class="m">08</span>:08:45 <span class="m">2020</span><span class="o">]</span> <span class="o">[</span>c6-1c2s11n0<span class="o">]</span> application called MPI_Abort<span class="o">(</span><span class="nv">comm</span><span class="o">=</span>0x84000004, <span class="m">99</span><span class="o">)</span> - process <span class="m">512</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="trial-090">
+<h2>Trial 090<a class="headerlink" href="#trial-090" title="Permalink to this headline">¶</a></h2>
+<p>Since we don’t know how long it’ll take to get through the run we change the
+wallclock time to <code class="docutils literal notranslate"><span class="pre">12:00:00</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /lustre/project/k1421/cases/FHIST_BGC.f09_d025.090.e1000
+$ ./xmlquery JOB_WALLCLOCK_TIME
+Results in group <span class="k">case</span>.run
+JOB_WALLCLOCK_TIME: <span class="m">12</span>:00:00
+Results in group <span class="k">case</span>.st_archive
+     JOB_WALLCLOCK_TIME: <span class="m">1</span>:00
+$ ./xmlchange --subgroup <span class="k">case</span>.run  <span class="nv">JOB_WALLCLOCK_TIME</span><span class="o">=</span><span class="m">12</span>:00:00
+</pre></div>
+</div>
+<p>After the error in Trial 091, we change the filter namelist since aren’t using
+perturb_from_single_instance:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="p">&amp;</span><span class="n">filter_nml</span>
+  <span class="p">...</span>
+  <span class="n">single_file_in</span>               <span class="o">=</span> <span class="p">.</span><span class="n">false</span><span class="p">.</span>
+  <span class="n">perturb_from_single_instance</span> <span class="o">=</span> <span class="p">.</span><span class="n">false</span><span class="p">.</span>
+  <span class="p">...</span>
+<span class="o">/</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-089">
+<h2>Trial 089<a class="headerlink" href="#trial-089" title="Permalink to this headline">¶</a></h2>
+<p>Testing how to use <code class="docutils literal notranslate"><span class="pre">.i.</span></code> files in a hybrid run.</p>
+<p>I’m not sure how to use .i. files in a hybrid run rather than .r. files.</p>
+<p>Here is the <a class="reference external" href="https://esmci.github.io/cime/versions/master/html/users_guide/cime-change-namelist.html">relevant page in the CIME documentation</a>.</p>
+<p>To test whether we can do this, change rpointer atm contents to <code class="docutils literal notranslate"><span class="pre">.i.</span></code> rather
+than <code class="docutils literal notranslate"><span class="pre">.r.</span></code> and see if it works in line 1257 of <code class="docutils literal notranslate"><span class="pre">setup_advanced_Rean</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ncdump -h cam_initial_0001.nc
+</pre></div>
+</div>
+<p>shows that the initial file is an <code class="docutils literal notranslate"><span class="pre">'i'</span></code> file rather than an <code class="docutils literal notranslate"><span class="pre">'r'</span></code> file.</p>
+<p>This, and the change from <code class="docutils literal notranslate"><span class="pre">'r'</span></code> to <code class="docutils literal notranslate"><span class="pre">'i'</span></code>, also seems to suggest that it’s
+an initial file: <code class="docutils literal notranslate"><span class="pre">/lustre/scratch/x_johnsobk/FHIST_BGC.f09_d025.088.e03/run/cam_initial_0001.nc</span></code>.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">setup_advanced_Rean</span></code> Line 1283, we’re linking the <code class="docutils literal notranslate"><span class="pre">'i'</span></code> files here.
+Be able to explain what the purpose is of the slwe of rpointer files:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>@ <span class="nv">inst</span><span class="o">=</span><span class="m">1</span>
+   <span class="k">while</span> <span class="o">(</span><span class="se">\$</span>inst &lt;<span class="o">=</span> <span class="nv">$num_instances</span><span class="o">)</span>
+      <span class="nb">set</span> <span class="nv">inst_string</span> <span class="o">=</span> <span class="se">\`</span><span class="nb">printf</span> _%04d <span class="se">\$</span>inst<span class="se">\`</span>
+      <span class="si">${</span><span class="nv">LINK</span><span class="si">}</span> -f <span class="si">${</span><span class="nv">case</span><span class="si">}</span>.cam<span class="se">\$</span><span class="o">{</span>inst_string<span class="o">}</span>.i.<span class="se">\$</span><span class="o">{</span>restart_time<span class="o">}</span>.nc cam_initial<span class="se">\$</span><span class="o">{</span>inst_string<span class="o">}</span>.nc
+   @ inst ++
+end
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-088">
+<h2>Trial 088<a class="headerlink" href="#trial-088" title="Permalink to this headline">¶</a></h2>
+<p>Edit <code class="docutils literal notranslate"><span class="pre">DART_config.template</span></code> to set:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./xmlchange <span class="nv">DATA_ASSIMILATION_ATM</span><span class="o">=</span>TRUE
+...
+<span class="k">if</span> <span class="o">(</span><span class="nv">$?</span>CIMEROOT<span class="o">)</span> ./xmlchange <span class="nv">DATA_ASSIMILATION_SCRIPT</span><span class="o">=</span><span class="si">${</span><span class="nv">CASEROOT</span><span class="si">}</span>/assimilate.csh
+</pre></div>
+</div>
+<p>Do adaptive inflation and run an assimilation cycle.</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="n">inf_flavor</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>Is it worth considering <code class="docutils literal notranslate"><span class="pre">cray-mpich</span></code> versus <code class="docutils literal notranslate"><span class="pre">mpt</span></code>?</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">config_machines.xml</span></code> try adding:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>NCAR_LIBS_PNETCDF=-Wl,-Bstatic -lpnetcdf -Wl,-Bdynamic
+</pre></div>
+</div>
+<p>Add <code class="docutils literal notranslate"><span class="pre">-Wl,-Bstatic</span> <span class="pre">-lpnetcdf</span> <span class="pre">-Wl,-Bdynamic</span></code>.</p>
+</div>
+<div class="section" id="trial-087">
+<h2>Trial 087<a class="headerlink" href="#trial-087" title="Permalink to this headline">¶</a></h2>
+<p>Change to 1 node per instance.</p>
+<p>Compare this with Trial 086. It looks <em>nearly</em> the same for total cost.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setenv</span> <span class="n">timewall</span> <span class="mi">2</span><span class="p">:</span><span class="mi">30</span>
+<span class="n">total</span> <span class="n">pes</span> <span class="n">active</span>           <span class="p">:</span> <span class="mi">96</span>
+<span class="n">mpi</span> <span class="n">tasks</span> <span class="n">per</span> <span class="n">node</span>               <span class="p">:</span> <span class="mi">32</span>
+<span class="n">pe</span> <span class="n">count</span> <span class="k">for</span> <span class="n">cost</span> <span class="n">estimate</span> <span class="p">:</span> <span class="mi">96</span>
+<span class="n">Overall</span> <span class="n">Metrics</span><span class="p">:</span>
+  <span class="n">Model</span> <span class="n">Cost</span><span class="p">:</span>           <span class="mf">51504.09</span>   <span class="n">pe</span><span class="o">-</span><span class="n">hrs</span><span class="o">/</span><span class="n">simulated_year</span>
+  <span class="n">Model</span> <span class="n">Throughput</span><span class="p">:</span>         <span class="mf">0.04</span>   <span class="n">simulated_years</span><span class="o">/</span><span class="n">day</span>
+  <span class="n">Init</span> <span class="n">Time</span>   <span class="p">:</span>    <span class="mf">1837.831</span> <span class="n">seconds</span>
+  <span class="n">Run</span> <span class="n">Time</span>    <span class="p">:</span>    <span class="mf">1322.879</span> <span class="n">seconds</span>     <span class="mf">5291.516</span> <span class="n">seconds</span><span class="o">/</span><span class="n">day</span>
+  <span class="n">Final</span> <span class="n">Time</span>  <span class="p">:</span>       <span class="mf">0.081</span> <span class="n">seconds</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-086">
+<h2>Trial 086<a class="headerlink" href="#trial-086" title="Permalink to this headline">¶</a></h2>
+<p>Changing <code class="docutils literal notranslate"><span class="pre">ESP</span></code> to <code class="docutils literal notranslate"><span class="pre">32</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">total</span> <span class="n">pes</span> <span class="n">active</span>           <span class="p">:</span> <span class="mi">384</span>
+<span class="n">mpi</span> <span class="n">tasks</span> <span class="n">per</span> <span class="n">node</span>               <span class="p">:</span> <span class="mi">32</span>
+<span class="n">pe</span> <span class="n">count</span> <span class="k">for</span> <span class="n">cost</span> <span class="n">estimate</span> <span class="p">:</span> <span class="mi">384</span>
+<span class="n">Overall</span> <span class="n">Metrics</span><span class="p">:</span>
+   <span class="n">Model</span> <span class="n">Cost</span><span class="p">:</span>           <span class="mf">50881.78</span>   <span class="n">pe</span><span class="o">-</span><span class="n">hrs</span><span class="o">/</span><span class="n">simulated_year</span>
+   <span class="n">Model</span> <span class="n">Throughput</span><span class="p">:</span>         <span class="mf">0.18</span>   <span class="n">simulated_years</span><span class="o">/</span><span class="n">day</span>
+   <span class="n">Init</span> <span class="n">Time</span>   <span class="p">:</span>    <span class="mf">1364.705</span> <span class="n">seconds</span>
+   <span class="n">Run</span> <span class="n">Time</span>    <span class="p">:</span>     <span class="mf">326.724</span> <span class="n">seconds</span>     <span class="mf">1306.895</span> <span class="n">seconds</span><span class="o">/</span><span class="n">day</span>
+   <span class="n">Final</span> <span class="n">Time</span>  <span class="p">:</span>       <span class="mf">0.017</span> <span class="n">seconds</span>
+   <span class="n">Actual</span> <span class="n">Ocn</span> <span class="n">Init</span> <span class="n">Wait</span> <span class="n">Time</span>     <span class="p">:</span>       <span class="mf">0.000</span> <span class="n">seconds</span>
+   <span class="n">Estimated</span> <span class="n">Ocn</span> <span class="n">Init</span> <span class="n">Run</span> <span class="n">Time</span>   <span class="p">:</span>       <span class="mf">0.006</span> <span class="n">seconds</span>
+   <span class="n">Estimated</span> <span class="n">Run</span> <span class="n">Time</span> <span class="n">Correction</span> <span class="p">:</span>       <span class="mf">0.006</span> <span class="n">seconds</span>
+   <span class="p">(</span><span class="n">This</span> <span class="n">correction</span> <span class="n">has</span> <span class="n">been</span> <span class="n">applied</span> <span class="n">to</span> <span class="n">the</span> <span class="n">ocean</span> <span class="ow">and</span> <span class="n">total</span> <span class="n">run</span> <span class="n">times</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-085">
+<h2>Trial 085<a class="headerlink" href="#trial-085" title="Permalink to this headline">¶</a></h2>
+<p>Same as Trial 084, except changing:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;binding&quot;</span> <span class="nt">&gt;</span> --cpu_bind=cores<span class="nt">&lt;/arg&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-084">
+<h2>Trial 084<a class="headerlink" href="#trial-084" title="Permalink to this headline">¶</a></h2>
+<p>Same configuration as in Trial 083 except we restripe the forcing files in
+accordance with Bilel Hadri’s recommendations.</p>
+</div>
+<div class="section" id="trial-083">
+<h2>Trial 083<a class="headerlink" href="#trial-083" title="Permalink to this headline">¶</a></h2>
+<p>Same configuration as Trial 082 except all of the restart files are no longer
+striped.</p>
+<p>The first submission takes 00:32:41.</p>
+<p>The second submission with  <code class="docutils literal notranslate"><span class="pre">./case.submit</span> <span class="pre">--skip-preview-namelist</span> <span class="pre">-M</span> <span class="pre">begin,end</span></code>
+takes 00:32:04.</p>
+</div>
+<div class="section" id="trial-082">
+<h2>Trial 082<a class="headerlink" href="#trial-082" title="Permalink to this headline">¶</a></h2>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">config_machines.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;modules</span> <span class="na">mpilib=</span><span class="s">&quot;mpi-serial&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;command</span> <span class="na">name=</span><span class="s">&quot;load&quot;</span><span class="nt">&gt;</span>cray-hdf5/1.10.5.2<span class="nt">&lt;/command&gt;</span>
+   <span class="nt">&lt;command</span> <span class="na">name=</span><span class="s">&quot;load&quot;</span><span class="nt">&gt;</span>cray-netcdf/4.6.3.2<span class="nt">&lt;/command&gt;</span>
+<span class="nt">&lt;/modules&gt;</span>
+<span class="nt">&lt;modules</span> <span class="na">mpilib=</span><span class="s">&quot;!mpi-serial&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;command</span> <span class="na">name=</span><span class="s">&quot;load&quot;</span><span class="nt">&gt;</span>cray-hdf5-parallel/1.10.5.2<span class="nt">&lt;/command&gt;</span>
+   <span class="nt">&lt;command</span> <span class="na">name=</span><span class="s">&quot;load&quot;</span><span class="nt">&gt;</span>cray-parallel-netcdf/1.11.1.1<span class="nt">&lt;/command&gt;</span>
+<span class="nt">&lt;/modules&gt;</span>
+<span class="nt">&lt;env</span> <span class="na">name=</span><span class="s">&quot;NETCDF_PATH&quot;</span><span class="nt">&gt;</span>/opt/cray/pe/netcdf/4.6.3.2/INTEL/19.0<span class="nt">&lt;/env&gt;</span>
+<span class="nt">&lt;env</span> <span class="na">name=</span><span class="s">&quot;PNETCDF_PATH&quot;</span><span class="nt">&gt;</span>/opt/cray/pe/parallel-netcdf/1.11.1.1/INTEL/19.0<span class="nt">&lt;/env&gt;</span>
+</pre></div>
+</div>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">config_compilers.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;SLIBS&gt;</span>
+   <span class="nt">&lt;append&gt;</span> -L$(NETCDF_PATH) -lnetcdff -Wl,--as-needed,-L$(NETCDF_PATH)/lib -lnetcdff -lnetcdf <span class="nt">&lt;/append&gt;</span>
+<span class="nt">&lt;/SLIBS&gt;</span>
+<span class="nt">&lt;MPICC&gt;</span> cc <span class="nt">&lt;/MPICC&gt;</span>
+<span class="nt">&lt;MPICXX&gt;</span> CC <span class="nt">&lt;/MPICXX&gt;</span>
+<span class="nt">&lt;MPIFC&gt;</span> ftn <span class="nt">&lt;/MPIFC&gt;</span>
+<span class="nt">&lt;PIO_FILESYSTEM_HINTS&gt;</span>lustre<span class="nt">&lt;/PIO_FILESYSTEM_HINTS&gt;</span>
+<span class="nt">&lt;NETCDF_PATH&gt;</span>$ENV{NETCDF_PATH}<span class="nt">&lt;/NETCDF_PATH&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-081">
+<h2>Trial 081<a class="headerlink" href="#trial-081" title="Permalink to this headline">¶</a></h2>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">config_machines.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;command</span> <span class="na">name=</span><span class="s">&quot;load&quot;</span><span class="nt">&gt;</span>cray-netcdf/4.6.3.2<span class="nt">&lt;/command&gt;</span>
+<span class="nt">&lt;command</span> <span class="na">name=</span><span class="s">&quot;load&quot;</span><span class="nt">&gt;</span>cray-netcdf-hdf5parallel/4.6.3.2<span class="nt">&lt;/command&gt;</span>
+</pre></div>
+</div>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">config_compilers.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;SLIBS&gt;</span>
+   <span class="nt">&lt;append&gt;</span> -L$(NETCDF_PATH) -lnetcdff -Wl,--as-needed,-L$(NETCDF_PATH)/lib -lnetcdff -lnetcdf <span class="nt">&lt;/append&gt;</span>
+<span class="nt">&lt;/SLIBS&gt;</span>
+<span class="nt">&lt;MPICC&gt;</span> cc <span class="nt">&lt;/MPICC&gt;</span>
+<span class="nt">&lt;MPICXX&gt;</span> CC <span class="nt">&lt;/MPICXX&gt;</span>
+<span class="nt">&lt;MPIFC&gt;</span> ftn <span class="nt">&lt;/MPIFC&gt;</span>
+<span class="nt">&lt;PIO_FILESYSTEM_HINTS&gt;</span>lustre<span class="nt">&lt;/PIO_FILESYSTEM_HINTS&gt;</span>
+<span class="nt">&lt;NETCDF_PATH&gt;</span>$ENV{NETCDF_PATH}<span class="nt">&lt;/NETCDF_PATH&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-079">
+<h2>Trial 079<a class="headerlink" href="#trial-079" title="Permalink to this headline">¶</a></h2>
+<p>Let’s try use the <code class="docutils literal notranslate"><span class="pre">slibs</span></code> tag instead of the parallel netcdf tag.</p>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">config_compilers.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;SLIBS&gt;</span>
+   <span class="nt">&lt;append&gt;</span>-L$(PNETCDF_PATH_KAUST)/lib -lnetcdff_parallel<span class="nt">&lt;/append&gt;</span>
+<span class="nt">&lt;/SLIBS&gt;</span>
+<span class="nt">&lt;MPICC&gt;</span> cc <span class="nt">&lt;/MPICC&gt;</span>
+<span class="nt">&lt;MPICXX&gt;</span> CC <span class="nt">&lt;/MPICXX&gt;</span>
+<span class="nt">&lt;MPIFC&gt;</span> ftn <span class="nt">&lt;/MPIFC&gt;</span>
+<span class="nt">&lt;PIO_FILESYSTEM_HINTS&gt;</span>lustre<span class="nt">&lt;/PIO_FILESYSTEM_HINTS&gt;</span>
+<span class="nt">&lt;NETCDF_PATH&gt;</span>$ENV{NETCDF_PATH_KAUST}<span class="nt">&lt;/NETCDF_PATH&gt;</span>
+</pre></div>
+</div>
+<p>This errors out:</p>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<p>65:  PNETCDF not enabled in the build</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">prefix</span>        <span class="o">-&gt;</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">cray</span><span class="o">/</span><span class="n">pe</span><span class="o">/</span><span class="n">netcdf</span><span class="o">-</span><span class="n">hdf5parallel</span><span class="o">/</span><span class="mf">4.6</span><span class="o">.</span><span class="mf">3.2</span><span class="o">/</span><span class="n">INTEL</span><span class="o">/</span><span class="mf">19.0</span>
+<span class="o">--</span><span class="n">includedir</span>    <span class="o">-&gt;</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">cray</span><span class="o">/</span><span class="n">pe</span><span class="o">/</span><span class="n">netcdf</span><span class="o">/</span><span class="mf">4.6</span><span class="o">.</span><span class="mf">3.2</span><span class="o">/</span><span class="n">include</span>
+<span class="o">--</span><span class="n">libdir</span>        <span class="o">-&gt;</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">cray</span><span class="o">/</span><span class="n">pe</span><span class="o">/</span><span class="n">netcdf</span><span class="o">-</span><span class="n">hdf5parallel</span><span class="o">/</span><span class="mf">4.6</span><span class="o">.</span><span class="mf">3.2</span><span class="o">/</span><span class="n">INTEL</span><span class="o">/</span><span class="mf">19.0</span><span class="o">/</span><span class="n">lib</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Typos in the CIME documentation:
+<a class="reference external" href="https://esmci.github.io/cime/versions/master/html/users_guide/porting-cime.html">https://esmci.github.io/cime/versions/master/html/users_guide/porting-cime.html</a>
+Should be <code class="docutils literal notranslate"><span class="pre">cime/tools/load_balancing_tool</span></code> – no “s”.</p>
+</div>
+</div>
+<div class="section" id="trial-078">
+<h2>Trial 078<a class="headerlink" href="#trial-078" title="Permalink to this headline">¶</a></h2>
+<p>Made these changes to <code class="docutils literal notranslate"><span class="pre">DART_config</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># ./xmlchange DATA_ASSIMILATION_ATM=TRUE</span>
+<span class="c1"># if ($?CIMEROOT) ./xmlchange DATA_ASSIMILATION_SCRIPT=${CASEROOT}/assimilate.csh</span>
+</pre></div>
+</div>
+<p>When we want to run assimilatte, we need to undo this change.</p>
+<p>Changed <code class="docutils literal notranslate"><span class="pre">PNETCDF_PATH_KAUST</span></code> within <code class="docutils literal notranslate"><span class="pre">config_machines.xml</span></code> to:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;env</span> <span class="na">name=</span><span class="s">&quot;PNETCDF_PATH_KAUST&quot;</span><span class="nt">&gt;</span>/opt/cray/pe/netcdf-hdf5parallel/4.6.3.2/INTEL/19.0<span class="nt">&lt;/env&gt;</span>
+</pre></div>
+</div>
+<p>Looking at the pio.bldlogs.</p>
+<div class="section" id="working-version">
+<h3>Working version<a class="headerlink" href="#working-version" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">/lustre/scratch/x_johnsobk/FHIST_BGC.f09_d025.075.e03/bld/pio.bldlog.201027-211925.gz</span></code></p>
+<p>In this working build, these lines are printed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span> <span class="n">Found</span> <span class="n">NetCDF_Fortran</span><span class="p">:</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">cray</span><span class="o">/</span><span class="n">pe</span><span class="o">/</span><span class="n">netcdf</span><span class="o">/</span><span class="mf">4.6</span><span class="o">.</span><span class="mf">3.2</span><span class="o">/</span><span class="n">INTEL</span><span class="o">/</span><span class="mf">19.0</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libnetcdff</span><span class="o">.</span><span class="n">a</span>
+<span class="o">--</span> <span class="n">Found</span> <span class="n">PnetCDF_Fortran</span><span class="p">:</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">cray</span><span class="o">/</span><span class="n">pe</span><span class="o">/</span><span class="n">parallel</span><span class="o">-</span><span class="n">netcdf</span><span class="o">/</span><span class="mf">1.11</span><span class="o">.</span><span class="mf">1.1</span><span class="o">/</span><span class="n">INTEL</span><span class="o">/</span><span class="mf">19.0</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libpnetcdf</span><span class="o">.</span><span class="n">a</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="non-working-version">
+<h3>Non-working version<a class="headerlink" href="#non-working-version" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">/lustre/scratch/x_johnsobk/FHIST_BGC.f09_d025.078.e03/bld/pio.bldlog.201104-002417</span></code></p>
+<p>In this non-working build, this is the final line before a build error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Found NetCDF_Fortran: /opt/cray/pe/netcdf/4.6.3.2/INTEL/19.0/lib/libnetcdff.a
+-- Configuring incomplete, errors occurred!
+</pre></div>
+</div>
+<p>Could the issue be that the library is not called <code class="docutils literal notranslate"><span class="pre">libpnetcdf</span></code> and instead is called
+<code class="docutils literal notranslate"><span class="pre">libnetcdf_parallel</span></code> but <code class="docutils literal notranslate"><span class="pre">-lpnetcdf</span></code> is hard-coded into the makefile?</p>
+</div>
+</div>
+<div class="section" id="trial-077">
+<h2>Trial 077<a class="headerlink" href="#trial-077" title="Permalink to this headline">¶</a></h2>
+<p>This is the same as Trial 075, we’re just rebuilding to sidestep this <a class="reference external" href="https://bb.cgd.ucar.edu/cesm/threads/cesm-defaults-to-using-netcdf-instead-of-pnetcdf.5674/#post-38106">NetCDF
+Issue</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /lustre/project/k1421/cesm_store/inputdata/atm/cam/tracer_cnst/
+$ mv tracer_cnst_halons_WACCM6_3Dmonthly_L70_1975-2014_c180216.nc old_tracer_cnst_halons_WACCM6_3Dmonthly_L70_1975-2014_c180216.nc
+$ nccopy -k cdf5 old_tracer_cnst_halons_WACCM6_3Dmonthly_L70_1975-2014_c180216.nc tracer_cnst_halons_WACCM6_3Dmonthly_L70_1975-2014_c180216.nc
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-076">
+<h2>Trial 076<a class="headerlink" href="#trial-076" title="Permalink to this headline">¶</a></h2>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">config_compilers.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;SLIBS&gt;</span>
+<span class="nt">&lt;append&gt;</span>-L$(NETCDF_PATH_KAUST)/lib -lnetcdff<span class="nt">&lt;/append&gt;</span>
+<span class="nt">&lt;/SLIBS&gt;</span>
+<span class="c">&lt;!--&lt;append&gt;-L$(NETCDF_PATH_KAUST) -lnetcdff, -L$(PNETCDF_PATH_KAUST) -lpnetcdf&lt;/append&gt;--&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-075">
+<h2>Trial 075<a class="headerlink" href="#trial-075" title="Permalink to this headline">¶</a></h2>
+<p>Comment out the append line in <code class="docutils literal notranslate"><span class="pre">config_compilers.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="c">&lt;!--&lt;append&gt;-L$(NETCDF_PATH_KAUST) -lnetcdff, -L$(PNETCDF_PATH_KAUST) -lpnetcdf&lt;/append&gt;--&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">223</span><span class="p">:</span> <span class="n">MOSART</span> <span class="n">decomp</span> <span class="n">info</span> <span class="n">proc</span> <span class="o">=</span>        <span class="mi">95</span> <span class="n">begr</span> <span class="o">=</span>    <span class="mi">192376</span> <span class="n">endr</span> <span class="o">=</span>    <span class="mi">194400</span> <span class="n">numr</span> <span class="o">=</span>      <span class="mi">2025</span>
+<span class="n">srun</span><span class="p">:</span> <span class="n">Job</span> <span class="n">step</span> <span class="n">aborted</span><span class="p">:</span> <span class="n">Waiting</span> <span class="n">up</span> <span class="n">to</span> <span class="mi">302</span> <span class="n">seconds</span> <span class="k">for</span> <span class="n">job</span> <span class="n">step</span> <span class="n">to</span> <span class="n">finish</span><span class="o">.</span>
+<span class="mi">0</span><span class="p">:</span> <span class="n">slurmstepd</span><span class="p">:</span> <span class="n">error</span><span class="p">:</span> <span class="o">***</span> <span class="n">STEP</span> <span class="mf">16076077.0</span> <span class="n">ON</span> <span class="n">nid01376</span> <span class="n">CANCELLED</span> <span class="n">AT</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">28</span><span class="n">T19</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mi">55</span> <span class="n">DUE</span> <span class="n">TO</span> <span class="n">TIME</span> <span class="n">LIMIT</span> <span class="o">***</span>
+<span class="n">srun</span><span class="p">:</span> <span class="n">got</span> <span class="n">SIGCONT</span>
+</pre></div>
+</div>
+<p>The second run completed the atmospheric portion.</p>
+<p>This is the last printed statment in all three rof files is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">001</span>
+<span class="n">hist_htapes_build</span> <span class="n">Successfully</span> <span class="n">initialized</span> <span class="n">MOSART</span> <span class="n">history</span> <span class="n">files</span>
+<span class="o">------------------------------------------------------------</span>
+<span class="p">(</span><span class="n">Rtmini</span><span class="p">)</span>  <span class="n">done</span>
+<span class="n">Snow</span> <span class="n">capping</span> <span class="n">will</span> <span class="n">flow</span> <span class="n">out</span> <span class="ow">in</span> <span class="n">frozen</span> <span class="n">river</span> <span class="n">runoff</span>
+<span class="mi">002</span>
+<span class="n">hist_htapes_build</span> <span class="n">Successfully</span> <span class="n">initialized</span> <span class="n">MOSART</span> <span class="n">history</span> <span class="n">files</span>
+<span class="o">------------------------------------------------------------</span>
+<span class="p">(</span><span class="n">Rtmini</span><span class="p">)</span>  <span class="n">done</span>
+<span class="n">Snow</span> <span class="n">capping</span> <span class="n">will</span> <span class="n">flow</span> <span class="n">out</span> <span class="ow">in</span> <span class="n">frozen</span> <span class="n">river</span> <span class="n">runoff</span>
+<span class="mi">003</span>
+<span class="n">hist_htapes_build</span> <span class="n">Successfully</span> <span class="n">initialized</span> <span class="n">MOSART</span> <span class="n">history</span> <span class="n">files</span>
+<span class="o">------------------------------------------------------------</span>
+<span class="p">(</span><span class="n">Rtmini</span><span class="p">)</span>  <span class="n">done</span>
+<span class="n">Snow</span> <span class="n">capping</span> <span class="n">will</span> <span class="n">flow</span> <span class="n">out</span> <span class="ow">in</span> <span class="n">frozen</span> <span class="n">river</span> <span class="n">runoff</span>
+</pre></div>
+</div>
+<p>Rerunning Trial 075 to see if it hangs at the same spot. Started at 12:42.</p>
+</div>
+<div class="section" id="trial-074">
+<h2>Trial 074<a class="headerlink" href="#trial-074" title="Permalink to this headline">¶</a></h2>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">config_compilers.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;append&gt;</span>-L$(NETCDF_PATH_KAUST) -lnetcdff, -L$(PNETCDF_PATH_KAUST) -lpnetcdf<span class="nt">&lt;/append&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-073">
+<h2>Trial 073<a class="headerlink" href="#trial-073" title="Permalink to this headline">¶</a></h2>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">config_compilers.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>-L$(NETCDF_DIR) -lnetcdff -Wl,--as-needed,-L$(NETCDF_DIR)/lib -lnetcdff -lnetcdf
+<span class="nt">&lt;append&gt;</span>-L$(NETCDF_PATH_KAUST) -lnetcdff -l, -L$(PNETCDF_PATH_KAUST) -lpnetcdf -l<span class="nt">&lt;/append&gt;</span>
+</pre></div>
+</div>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<p>/usr/bin/ld: cannot find -l,</p>
+</div>
+</div>
+<div class="section" id="trial-072">
+<h2>Trial 072<a class="headerlink" href="#trial-072" title="Permalink to this headline">¶</a></h2>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">config_compilers.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;append&gt;</span>-L$(NETCDF_PATH_KAUST)/lib -lnetcdff, -L$(PNETCDF_PATH_KAUST)/lib -lpnetcdf<span class="nt">&lt;/append&gt;</span>
+</pre></div>
+</div>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<p>/usr/bin/ld: cannot find -lnetcdff</p>
+</div>
+</div>
+<div class="section" id="trial-071">
+<h2>Trial 071<a class="headerlink" href="#trial-071" title="Permalink to this headline">¶</a></h2>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">config_compilers.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;append&gt;</span>-L$(NETCDF_PATH_KAUST)/lib -lnetcdff -lnetcdf, -L$(PNETCDF_PATH_KAUST)/lib -lpnetcdf<span class="nt">&lt;/append&gt;</span>
+</pre></div>
+</div>
+<p>..error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">ld</span><span class="p">:</span> <span class="n">cannot</span> <span class="n">find</span> <span class="o">-</span><span class="n">lnetcdf</span><span class="p">,</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-070">
+<h2>Trial 070<a class="headerlink" href="#trial-070" title="Permalink to this headline">¶</a></h2>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">config_compilers.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;append&gt;</span>-L$(NETCDF_PATH_KAUST) -lnetcdff -Wl, -L$(PNETCDF_PATH_KAUST) -lpnetcdf -Wl<span class="nt">&lt;/append&gt;</span>
+</pre></div>
+</div>
+<p>This builds, but we still get an error.</p>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<p>1:   NetCDF: Attempt to use feature that was not turned on when netCDF was built.</p>
+</div>
+<p>Checking the cesm buildlog.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">lpnetcdf</span> <span class="o">-</span><span class="n">Wl</span>  <span class="o">-</span><span class="n">mkl</span><span class="o">=</span><span class="n">cluster</span>  <span class="o">-</span><span class="n">L</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">cray</span><span class="o">/</span><span class="n">pe</span><span class="o">/</span><span class="n">parallel</span><span class="o">-</span><span class="n">netcdf</span><span class="o">/</span><span class="mf">1.11</span><span class="o">.</span><span class="mf">1.1</span><span class="o">/</span><span class="n">INTEL</span><span class="o">/</span><span class="mf">19.0</span><span class="o">/</span><span class="n">lib</span> <span class="o">-</span><span class="n">lpnetcdf</span>   <span class="o">-</span><span class="n">mkl</span>
+<span class="n">ifort</span><span class="p">:</span> <span class="n">command</span> <span class="n">line</span> <span class="n">warning</span> <span class="c1">#10157: ignoring option &#39;-W&#39;; argument is of wrong type</span>
+<span class="n">ifort</span><span class="p">:</span> <span class="n">command</span> <span class="n">line</span> <span class="n">warning</span> <span class="c1">#10121: overriding &#39;-mkl=cluster&#39; with &#39;-mkl&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-069">
+<h2>Trial 069<a class="headerlink" href="#trial-069" title="Permalink to this headline">¶</a></h2>
+<p>Since the compiler so the flag has to match the name of the shared object file
+<code class="docutils literal notranslate"><span class="pre">-lpnetcdf</span></code> should work but not <code class="docutils literal notranslate"><span class="pre">-lpnetcdff</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;SLIBS&gt;
+   &lt;append&gt; -I$(NETCDF_PATH_KAUST)/include, -I$(PNETCDF_PATH_KAUST)/include, -L$(NETCDF_PATH_KAUST)/lib -lnetcdff -lnetcdf, -L$(PNETCDF_PATH_KAUST)/lib -lpnetcdf&lt;/append&gt;
+&lt;/SLIBS&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-068">
+<h2>Trial 068<a class="headerlink" href="#trial-068" title="Permalink to this headline">¶</a></h2>
+<p>Attempting the same configuration as in Trial 067, except comment out
+<code class="docutils literal notranslate"><span class="pre">INC_PNETCDF</span></code> and <code class="docutils literal notranslate"><span class="pre">LIB_PNETCDF</span></code>. The cesm buildlog reads:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">ifort</span><span class="p">:</span> <span class="n">command</span> <span class="n">line</span> <span class="n">warning</span> <span class="c1">#10121: overriding &#39;-mkl=cluster&#39; with &#39;-mkl&#39;</span>
+ <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">ld</span><span class="p">:</span> <span class="n">cannot</span> <span class="n">find</span> <span class="o">-</span><span class="n">lpnetcdff</span>
+ <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">ld</span><span class="p">:</span> <span class="n">cannot</span> <span class="n">find</span> <span class="o">-</span><span class="n">lnetcdf</span><span class="p">,</span>
+ <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">ld</span><span class="p">:</span> <span class="n">cannot</span> <span class="n">find</span> <span class="o">-</span><span class="n">lpnetcdff</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sha1sum</span><span class="p">:</span> <span class="o">/</span><span class="n">lustre</span><span class="o">/</span><span class="n">scratch</span><span class="o">/</span><span class="n">x_johnsobk</span><span class="o">/</span><span class="n">FHIST_BGC</span><span class="o">.</span><span class="n">f09_d025</span><span class="o">.</span><span class="mf">068.e03</span><span class="o">/</span><span class="n">bld</span><span class="o">/</span><span class="n">cesm</span><span class="o">.</span><span class="n">exe</span><span class="p">:</span> <span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="ow">or</span> <span class="n">directory</span>
+</pre></div>
+</div>
+<p>What are the names of the shared files?</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/opt/cray/pe/netcdf/4.6.3.2/INTEL/19.0/lib♡ ls *so
+libbzip2_intel.so  libmisc_intel.so  libnetcdf_c++4_intel.so  libnetcdff_intel.so  libnetcdf_intel.so
+libbzip2.so        libmisc.so        libnetcdf_c++4.so        libnetcdff.so        libnetcdf.so
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/opt/cray/pe/parallel-netcdf/1.11.1.1/INTEL/19.0/lib♡ ls
+libpnetcdf.a        libpnetcdf_intel.so    libpnetcdf_intel.so.3.0.1  libpnetcdf.so.3      pkgconfig
+libpnetcdf_intel.a  libpnetcdf_intel.so.3  libpnetcdf.so              libpnetcdf.so.3.0.1
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-067">
+<h2>Trial 067<a class="headerlink" href="#trial-067" title="Permalink to this headline">¶</a></h2>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">config_machines.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;env</span> <span class="na">name=</span><span class="s">&quot;PNETCDF_PATH_KAUST&quot;</span><span class="nt">&gt;</span>/opt/cray/pe/parallel-netcdf/1.11.1.1/INTEL/19.0<span class="nt">&lt;/env&gt;</span>
+<span class="nt">&lt;env</span> <span class="na">name=</span><span class="s">&quot;INC_PNETCDF_KAUST&quot;</span><span class="nt">&gt;</span>/opt/cray/pe/parallel-netcdf/1.11.1.1/INTEL/19.0/include<span class="nt">&lt;/env&gt;</span>
+<span class="nt">&lt;env</span> <span class="na">name=</span><span class="s">&quot;LIB_PNETCDF_KAUST&quot;</span><span class="nt">&gt;</span>/opt/cray/pe/parallel-netcdf/1.11.1.1/INTEL/19.0/lib<span class="nt">&lt;/env&gt;</span>
+<span class="nt">&lt;SLIBS&gt;</span>
+   <span class="nt">&lt;append&gt;</span> -L$(NETCDF_PATH_KAUST) -lnetcdff -Wl, -L$(PNETCDF_PATH_KAUST) -lpnetcdff -Wl, --as-needed, -               L$(NETCDF_PATH_KAUST)/lib -lnetcdff -lnetcdf, -L$(PNETCDF_PATH_KAUST)/lib -plnetcdff -lpnetcdf<span class="nt">&lt;/append&gt;</span>
+<span class="nt">&lt;/SLIBS&gt;</span>
+<span class="nt">&lt;MPICC&gt;</span> cc <span class="nt">&lt;/MPICC&gt;</span>
+<span class="nt">&lt;MPICXX&gt;</span> CC <span class="nt">&lt;/MPICXX&gt;</span>
+<span class="nt">&lt;MPIFC&gt;</span> ftn <span class="nt">&lt;/MPIFC&gt;</span>
+<span class="nt">&lt;PIO_FILESYSTEM_HINTS&gt;</span>lustre<span class="nt">&lt;/PIO_FILESYSTEM_HINTS&gt;</span>
+<span class="nt">&lt;NETCDF_PATH&gt;</span>$ENV{NETCDF_PATH_KAUST}<span class="nt">&lt;/NETCDF_PATH&gt;</span>
+<span class="nt">&lt;PNETCDF_PATH&gt;</span>$ENV{PNETCDF_PATH_KAUST}<span class="nt">&lt;/PNETCDF_PATH&gt;</span>
+<span class="nt">&lt;INC_PNETCDF&gt;</span>$ENV{INC_PNETCDF_KAUST}<span class="nt">&lt;/INC_PNETCDF&gt;</span>
+<span class="nt">&lt;LIB_PNETCDF&gt;</span>$ENV{LIB_PNETCDF_KAUST}<span class="nt">&lt;/LIB_PNETCDF&gt;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">PIO_CONFIG_ARGS</span></code> sets the <code class="docutils literal notranslate"><span class="pre">PNETCDF_PATH</span></code> argument:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;append&gt;</span> -L$(NETCDF_PATH_KAUST) -lnetcdff -Wl, -L$(PNETCDF_PATH_KAUST) -lpnetcdff -Wl, -L$(NETCDF_PATH_KAUST)/lib -lnetcdff -lnetcdf, -L$(PNETCDF_PATH_KAUST)/lib -lpnetcdff -lpnetcdf<span class="nt">&lt;/append&gt;</span>
+</pre></div>
+</div>
+<p>This errors out when running <code class="docutils literal notranslate"><span class="pre">create_newcase</span></code>…</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Schemas</span> <span class="n">validity</span> <span class="n">error</span> <span class="p">:</span> <span class="n">Element</span> <span class="s1">&#39;INC_PNETCDF&#39;</span><span class="p">:</span> <span class="n">This</span> <span class="n">element</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">expected</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-066">
+<h2>Trial 066<a class="headerlink" href="#trial-066" title="Permalink to this headline">¶</a></h2>
+<p>This fails, too. What should we attempt next do?</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;append&gt;</span> -L$(NETCDF_DIR) -lnetcdff -Wl,-L$(PNETCDF_DIR)/lib -lpnetcdff -lpnetcdf,--as-needed,-L$(NETCDF_DIR)/lib -  lnetcdff -lnetcdf<span class="nt">&lt;/append&gt;</span>
+</pre></div>
+</div>
+<p>I guess the next thing to try is to toggle through differnt compiler flags. It
+might be faster to iterate by building DART rather than building CESM.</p>
+<p>What does the the <code class="docutils literal notranslate"><span class="pre">--as-needed</span></code> flag accomplish?</p>
+</div>
+<div class="section" id="trial-065">
+<h2>Trial 065<a class="headerlink" href="#trial-065" title="Permalink to this headline">¶</a></h2>
+<p>Adding back in the link to <code class="docutils literal notranslate"><span class="pre">-lpnecdff</span></code> in <code class="docutils literal notranslate"><span class="pre">config_compilers.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;SLIBS&gt;</span>
+   <span class="nt">&lt;append&gt;</span> -L$(NETCDF_PATH) -lnetcdff -Wl, --as-needed, -L$(PNETCDF_PATH)/lib -lpnetcdff<span class="nt">&lt;/append&gt;</span>
+<span class="nt">&lt;/SLIBS&gt;</span>
+</pre></div>
+</div>
+<p>This fails to build. Remember:</p>
+<ul class="simple">
+<li><p>The NETCDF_PATH has a library: <code class="docutils literal notranslate"><span class="pre">/opt/cray/pe/netcdf/4.6.3.2/INTEL/19.0/lib</span></code></p></li>
+<li><p>The PNETCDF_PATH also has a library: <code class="docutils literal notranslate"><span class="pre">/opt/cray/pe/parallel-netcdf/1.11.1.1/INTEL/19.0/lib</span></code></p></li>
+</ul>
+<p>What to do next? I think the issue is it’s linking netcdf rather than pnetcdf.</p>
+<p>1. The directory we’re linking to is wrong.
+There’s an L directory and an I directory, right?
+#################################################
+-L goes to the lib directory
+-I goes to the include directory</p>
+</div>
+<div class="section" id="trial-064">
+<h2>Trial 064<a class="headerlink" href="#trial-064" title="Permalink to this headline">¶</a></h2>
+<p>Removed this from <code class="docutils literal notranslate"><span class="pre">config_compilers.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;SLIBS&gt;</span>
+<span class="nt">&lt;append&gt;</span> -L$(NETCDF_PATH) -lnetcdff -Wl, --as-needed, -L$(NETCDF_PATH)/lib -lnetcdff,  -L$(PNETCDF_PATH)/     lib -lnetcdff<span class="nt">&lt;/append&gt;</span>
+<span class="nt">&lt;/SLIBS&gt;</span>
+</pre></div>
+</div>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">:</span>  <span class="n">pio_support</span><span class="p">::</span><span class="n">pio_die</span><span class="p">::</span> <span class="n">myrank</span><span class="o">=</span>          <span class="o">-</span><span class="mi">1</span> <span class="p">:</span> <span class="n">ERROR</span><span class="p">:</span> <span class="n">ionf_mod</span><span class="o">.</span><span class="n">F90</span><span class="p">:</span>         <span class="mi">235</span> <span class="p">:</span>
+<span class="mi">1</span><span class="p">:</span>   <span class="n">NetCDF</span><span class="p">:</span> <span class="n">Attempt</span> <span class="n">to</span> <span class="n">use</span> <span class="n">feature</span> <span class="n">that</span> <span class="n">was</span> <span class="ow">not</span> <span class="n">turned</span> <span class="n">on</span> <span class="n">when</span> <span class="n">netCDF</span> <span class="n">was</span> <span class="n">built</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="trial-063">
+<h2>Trial 063<a class="headerlink" href="#trial-063" title="Permalink to this headline">¶</a></h2>
+<p>How do we tell CESM to trigger which MPI library to use?
+MPI Libs
+<a class="reference external" href="http://www.cesm.ucar.edu/models/cesm1.2/cesm/doc_cesm1_2_1/modelnl/machines.html">http://www.cesm.ucar.edu/models/cesm1.2/cesm/doc_cesm1_2_1/modelnl/machines.html</a>
+!mpi-serial
+/lustre/project/k1421/cases/FHIST_BGC.f09_d025.062.e03♡ ./xmlquery MPILIB
+MPILIB: mpt
+<a class="reference external" href="https://bb.cgd.ucar.edu/cesm/threads/viability-of-running-cesm-on-40-cores.4997/page-2#post-37159">https://bb.cgd.ucar.edu/cesm/threads/viability-of-running-cesm-on-40-cores.4997/page-2#post-37159</a>
+You should build and install netcdf and pnetcdf separately and link both.
+Tried to building with this one:
+&lt;appe:q
+nd&gt; -L$(NETCDF_PATH) -lnetcdff -Wl, –as-needed, -L$(NETCDF_PATH)/lib -lnetcdff,  -L$(PNETCDF_PATH)/lib -      lnetcdff&lt;/append&gt;</p>
+</div>
+<div class="section" id="trial-062">
+<h2>Trial 062<a class="headerlink" href="#trial-062" title="Permalink to this headline">¶</a></h2>
+<p>If that doesn’t work, try linking to <code class="docutils literal notranslate"><span class="pre">PNETCDF</span></code> path in this line of
+<code class="docutils literal notranslate"><span class="pre">config_compilers.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;append&gt;</span> -L$(NETCDF_PATH) -lnetcdff -Wl, --as-needed, -L$(NETCDF_PATH)/lib -lnetcdff<span class="nt">&lt;/append&gt;</span>
+</pre></div>
+</div>
+<p>Okay that fixes the <code class="docutils literal notranslate"><span class="pre">PNETCDF</span> <span class="pre">not</span> <span class="pre">enabled</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">build</span></code> issue.</p>
+<p>Although now we have a different error.</p>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">:</span>  <span class="n">pio_support</span><span class="p">::</span><span class="n">pio_die</span><span class="p">::</span> <span class="n">myrank</span><span class="o">=</span>          <span class="o">-</span><span class="mi">1</span> <span class="p">:</span> <span class="n">ERROR</span><span class="p">:</span> <span class="n">ionf_mod</span><span class="o">.</span><span class="n">F90</span><span class="p">:</span>         <span class="mi">235</span> <span class="p">:</span>
+<span class="mi">1</span><span class="p">:</span>   <span class="n">NetCDF</span><span class="p">:</span> <span class="n">Attempt</span> <span class="n">to</span> <span class="n">use</span> <span class="n">feature</span> <span class="n">that</span> <span class="n">was</span> <span class="ow">not</span> <span class="n">turned</span> <span class="n">on</span> <span class="n">when</span> <span class="n">netCDF</span> <span class="n">was</span> <span class="n">built</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ nc-config --all
+...
+--has-pnetcdf   -&gt; no
+...
+</pre></div>
+</div>
+<p>You have to define an environmental variable that contains the path to the
+<code class="docutils literal notranslate"><span class="pre">PNETCDF</span></code> library in <code class="docutils literal notranslate"><span class="pre">config_machines.xml</span></code>.</p>
+<p>And then reference that environmental variable when assinging a value to the
+<code class="docutils literal notranslate"><span class="pre">PNETCDF_PATH</span></code> key in <code class="docutils literal notranslate"><span class="pre">config_compilers.xml</span></code> but I actually don’t
+understand how the linker is made aware of that value, because the linker is
+only given the serial netcdf path.</p>
+</div>
+<div class="section" id="trial-061">
+<h2>Trial 061<a class="headerlink" href="#trial-061" title="Permalink to this headline">¶</a></h2>
+<p>I’m not sure why we’re getting this error.</p>
+<p>When trying to set:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./xmlchange <span class="nv">PIO_TYPENAME</span><span class="o">=</span>pnetcdf
+Did not find pnetcdf in valid values <span class="k">for</span> PIO_TYPENAME: <span class="o">[</span><span class="s1">&#39;netcdf&#39;</span><span class="o">]</span>
+</pre></div>
+</div>
+<p>Examining <code class="docutils literal notranslate"><span class="pre">config_pio.xml</span></code> but I’m not sure how to interpret the results.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ vim /lustre/project/k1421/cesm2_1_3/cime/config/cesm/machines/config_pio.xml
+</pre></div>
+</div>
+<p>In <code class="docutils literal notranslate"><span class="pre">config_compilers.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;PNETCDF_PATH&gt;</span>$ENV{PARALLEL_NETCDF_DIR}<span class="nt">&lt;/PNETCDF_PATH&gt;</span>
+</pre></div>
+</div>
+<p>The error is from Line 238 of <code class="docutils literal notranslate"><span class="pre">${CIMEROOT}/scripts/lib/CIME/XML/entry_id.py</span></code>
+in the function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">get_valid_value_string</span> <span class="ow">in</span> <span class="s2">&quot;Did not find </span><span class="si">{}</span><span class="s2"> in valid values for </span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>What does the entry for CNL look like?</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;compiler</span> <span class="na">OS=</span><span class="s">&quot;CNL&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;CMAKE_OPTS&gt;</span>
+      <span class="nt">&lt;base&gt;</span> -DCMAKE_SYSTEM_NAME=Catamount<span class="nt">&lt;/base&gt;</span>
+   <span class="nt">&lt;/CMAKE_OPTS&gt;</span>
+   <span class="nt">&lt;CPPDEFS&gt;</span>
+      <span class="nt">&lt;append&gt;</span> -DLINUX <span class="nt">&lt;/append&gt;</span>
+      <span class="nt">&lt;append</span> <span class="na">MODEL=</span><span class="s">&quot;gptl&quot;</span><span class="nt">&gt;</span> -DHAVE_NANOTIME -DBIT64 -DHAVE_VPRINTF -DHAVE_BACKTRACE -DHAVE_SLASHPROC -DHAVE_COMM_F2C -    DHAVE_TIMES -DHAVE_GETTIMEOFDAY  <span class="nt">&lt;/append&gt;</span>
+   <span class="nt">&lt;/CPPDEFS&gt;</span>
+   <span class="nt">&lt;MPICC&gt;</span> cc <span class="nt">&lt;/MPICC&gt;</span>
+   <span class="nt">&lt;MPICXX&gt;</span> CC <span class="nt">&lt;/MPICXX&gt;</span>
+   <span class="nt">&lt;MPIFC&gt;</span> ftn <span class="nt">&lt;/MPIFC&gt;</span>
+   <span class="nt">&lt;NETCDF_PATH&gt;</span>$ENV{NETCDF_DIR}<span class="nt">&lt;/NETCDF_PATH&gt;</span>
+   <span class="nt">&lt;PIO_FILESYSTEM_HINTS&gt;</span>lustre<span class="nt">&lt;/PIO_FILESYSTEM_HINTS&gt;</span>
+   <span class="nt">&lt;PNETCDF_PATH&gt;</span>$ENV{PARALLEL_NETCDF_DIR}<span class="nt">&lt;/PNETCDF_PATH&gt;</span>
+   <span class="nt">&lt;SCC&gt;</span> cc <span class="nt">&lt;/SCC&gt;</span>
+   <span class="nt">&lt;SCXX&gt;</span> CC <span class="nt">&lt;/SCXX&gt;</span>
+   <span class="nt">&lt;SFC&gt;</span> ftn <span class="nt">&lt;/SFC&gt;</span>
+<span class="nt">&lt;/compiler&gt;</span>
+</pre></div>
+</div>
+<p>Edited the shaheen entry in <code class="docutils literal notranslate"><span class="pre">config_compilers.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;PIO_FILESYSTEM_HINTS&gt;</span>lustre<span class="nt">&lt;/PIO_FILESYSTEM_HINTS&gt;</span>
+<span class="nt">&lt;PNETCDF_PATH&gt;</span>$ENV{PNETCDF_PATH}<span class="nt">&lt;/PNETCDF_PATH&gt;</span>
+<span class="nt">&lt;SCC&gt;</span> cc <span class="nt">&lt;/SCC&gt;</span>
+</pre></div>
+</div>
+<p>And added this to <code class="docutils literal notranslate"><span class="pre">config_machines.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;env</span> <span class="na">name=</span><span class="s">&quot;PNETCDF_PATH&quot;</span><span class="nt">&gt;</span>/opt/cray/pe/parallel-netcdf/1.11.1.1/INTEL/19.0<span class="nt">&lt;/env&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-060">
+<h2>Trial 060<a class="headerlink" href="#trial-060" title="Permalink to this headline">¶</a></h2>
+<p>Using <code class="docutils literal notranslate"><span class="pre">/Users/johnsonb/scratch/cheyenne/buildnml</span></code> which is the same as the
+reanalysis, except it has had these lines inserted from cesm2_1_3:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">docn_mode</span> <span class="o">=</span> <span class="n">case</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s2">&quot;DOCN_MODE&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">docn_mode</span> <span class="ow">and</span> <span class="s1">&#39;aqua&#39;</span> <span class="ow">in</span> <span class="n">docn_mode</span><span class="p">:</span>
+    <span class="n">config</span><span class="p">[</span><span class="s1">&#39;aqua_planet_sst_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">docn_mode</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">config</span><span class="p">[</span><span class="s1">&#39;aqua_planet_sst_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span>
+</pre></div>
+</div>
+<p>This crashes, with a warning.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>PNETCDF not enabled in the build.</p>
+</div>
+<p>Is this warning present in Trial 059 as well?</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ vim /lustre/scratch/x_johnsobk/FHIST_BGC.f09_d025.059.e80/run/cesm.log.15958125.201019-232044.gz
+Pattern not found: PNETCDF not enabled in the build
+</pre></div>
+</div>
+<p>According to this <cite>DiscussCESM post &lt;https://bb.cgd.ucar.edu/cesm/threads/using-pnetcdf-for-cesm.3084/&gt;</cite>,
+the message indicates that PNETCDF was not linked with the application.</p>
+</div>
+<div class="section" id="trial-059">
+<h2>Trial 059<a class="headerlink" href="#trial-059" title="Permalink to this headline">¶</a></h2>
+<p>Keeping <code class="docutils literal notranslate"><span class="pre">OMP_STACKSIZE</span></code> and using the old buildnml script.</p>
+<p>..code-block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">env</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;OMP_STACKSIZE&quot;</span><span class="o">&gt;</span><span class="mi">256</span><span class="n">M</span><span class="o">&lt;/</span><span class="n">env</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>This runs properly.</p>
+</div>
+<div class="section" id="trial-058">
+<h2>Trial 058<a class="headerlink" href="#trial-058" title="Permalink to this headline">¶</a></h2>
+<p>Changing <code class="docutils literal notranslate"><span class="pre">OMP_STACKSIZE</span></code>.</p>
+<p>..code-block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">env</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;OMP_STACKSIZE&quot;</span><span class="o">&gt;</span><span class="mi">256</span><span class="n">M</span><span class="o">&lt;/</span><span class="n">env</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Also using Kevin Raeder’s <code class="docutils literal notranslate"><span class="pre">buildnml</span></code> script modification.</p>
+</div>
+<div class="section" id="trial-057">
+<h2>Trial 057<a class="headerlink" href="#trial-057" title="Permalink to this headline">¶</a></h2>
+<p>Changing <code class="docutils literal notranslate"><span class="pre">OMP_STACKSIZE</span></code>.</p>
+<p>..code-block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">env</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;OMP_STACKSIZE&quot;</span><span class="o">&gt;</span><span class="mi">1024</span><span class="n">M</span><span class="o">&lt;/</span><span class="n">env</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Doesn’t seem to affect performance.</p>
+</div>
+<div class="section" id="trial-056">
+<h2>Trial 056<a class="headerlink" href="#trial-056" title="Permalink to this headline">¶</a></h2>
+<p>Changing <code class="docutils literal notranslate"><span class="pre">OMP_STACKSIZE</span></code>.</p>
+<p>..code-block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">env</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;OMP_STACKSIZE&quot;</span><span class="o">&gt;</span><span class="mi">128</span><span class="n">M</span><span class="o">&lt;/</span><span class="n">env</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Doesn’t seem to affect performance.</p>
+</div>
+<div class="section" id="trial-055">
+<h2>Trial 055<a class="headerlink" href="#trial-055" title="Permalink to this headline">¶</a></h2>
+<p>This run timed out with a super user message:</p>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<p>run.FHIST_BGC.f09_d025.055.e80 Ended, Run time 01:00:26</p>
+</div>
+<p>It also sat in the queue for a really long time so maybe there is traffic on
+the interconnects.</p>
+</div>
+<div class="section" id="trial-054">
+<h2>Trial 054<a class="headerlink" href="#trial-054" title="Permalink to this headline">¶</a></h2>
+<p>Toggling settings in <code class="docutils literal notranslate"><span class="pre">config-machines.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;env</span> <span class="na">name=</span><span class="s">&quot;MPI_COMM_MAX&quot;</span><span class="nt">&gt;</span>16383<span class="nt">&lt;/env&gt;</span>
+<span class="nt">&lt;env</span> <span class="na">name=</span><span class="s">&quot;MPI_GROUP_MAX&quot;</span><span class="nt">&gt;</span>1024<span class="nt">&lt;/env&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-049">
+<h2>Trial 049<a class="headerlink" href="#trial-049" title="Permalink to this headline">¶</a></h2>
+<p>Added echo statements to <code class="docutils literal notranslate"><span class="pre">assimilate.csh</span></code>.</p>
+<p>To see what a bash script to submit a SLURM job looks like:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vim /lustre/project/k1421/scripts_logs/run_check_input_data_SMS_Lm13.f10_f10_musgs.I1850Clm50SpG.shaheen_intel.20200612_215255_kuwhyp
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1">#</span>
+<span class="c1">#SBATCH --job-name=run_check_input_data_SMS_Lm13.f10_f10_musgs.I1850Clm50SpG.shaheen_intel.20200612_215255_kuwhyp</span>
+<span class="c1">#SBATCH --output=run_check_input_data_SMS_Lm13.f10_f10_musgs.I1850Clm50SpG.shaheen_intel.20200612_215255_kuwhyp.txt</span>
+<span class="c1">#SBATCH --partition=workq</span>
+<span class="c1">#SBATCH --ntasks=1</span>
+<span class="c1">#SBATCH --time=23:59:00</span>
+<span class="c1">#SBATCH --mem-per-cpu=100</span>
+python run_check_input_data.py SMS_Lm13.f10_f10_musgs.I1850Clm50SpG.shaheen_intel.20200612_215255_kuwhyp
+</pre></div>
+</div>
+<p>Examining <code class="docutils literal notranslate"><span class="pre">assimilate.csh</span></code>, it’s crashing when trying to execute this line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>setenv   NODENAMES $SLURM_NODELIST
+nid00[136-147]: No match.
+</pre></div>
+</div>
+<p>Cross-referencing this with the da.log and the assimilate script:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">lustre</span><span class="o">/</span><span class="n">scratch</span><span class="o">/</span><span class="n">x_johnsobk</span><span class="o">/</span><span class="n">FHIST_BGC</span><span class="o">.</span><span class="n">f09_d025</span><span class="o">.</span><span class="mf">049.e3</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">da</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="mf">15905662.201015</span><span class="o">-</span><span class="mi">053628</span>
+<span class="n">vim</span> <span class="o">/</span><span class="n">lustre</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">k1421</span><span class="o">/</span><span class="n">DART</span><span class="o">/</span><span class="n">models</span><span class="o">/</span><span class="n">cam</span><span class="o">-</span><span class="n">fv</span><span class="o">/</span><span class="n">shell_scripts</span><span class="o">/</span><span class="n">cesm2_1</span><span class="o">/</span><span class="n">assimilate</span><span class="o">.</span><span class="n">csh</span><span class="o">.</span><span class="n">template</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">inf_flavor</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">using</span> <span class="n">namelist</span> <span class="n">values</span><span class="o">.</span>
+<span class="p">[</span>  <span class="n">Thu</span> <span class="n">Oct</span> <span class="mi">15</span> <span class="mi">18</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">59</span> <span class="mi">2020</span><span class="p">]</span> <span class="p">[</span><span class="n">c0</span><span class="o">-</span><span class="mi">0</span><span class="n">c0s9n0</span><span class="p">]</span> <span class="n">Fatal</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">MPI_Init</span><span class="p">:</span> <span class="n">Other</span> <span class="n">MPI</span> <span class="n">error</span><span class="p">,</span> <span class="n">error</span> <span class="n">stack</span><span class="p">:</span>
+<span class="n">MPIR_Init_thread</span><span class="p">(</span><span class="mi">537</span><span class="p">):</span>
+<span class="n">MPID_Init</span><span class="p">(</span><span class="mi">246</span><span class="p">)</span><span class="o">.......</span><span class="p">:</span> <span class="n">channel</span> <span class="n">initialization</span> <span class="n">failed</span>
+<span class="n">cray</span><span class="o">-</span><span class="n">netcdf</span><span class="o">/</span><span class="mf">4.6</span><span class="o">.</span><span class="mf">3.2</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span><span class="n">ERROR</span><span class="p">:</span><span class="mi">150</span><span class="p">:</span> <span class="n">Module</span> <span class="s1">&#39;cray-netcdf/4.6.3.2&#39;</span> <span class="n">conflicts</span> <span class="k">with</span> <span class="n">the</span> <span class="n">currently</span> <span class="n">loaded</span> <span class="n">module</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="s1">&#39;cray-netcdf-hdf5parallel/4.6.3.2&#39;</span>
+<span class="n">ncks</span><span class="p">:</span> <span class="n">Command</span> <span class="ow">not</span> <span class="n">found</span>
+<span class="n">Can</span><span class="s1">&#39;t load parallel netcdf and nco at the same time.</span>
+<span class="n">MPI_COMM_MAX</span><span class="o">=</span><span class="mi">16383</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-048">
+<h2>Trial 048<a class="headerlink" href="#trial-048" title="Permalink to this headline">¶</a></h2>
+<p>After differencing the SourceMod of <code class="docutils literal notranslate"><span class="pre">dyn_comp.F90</span></code> we’re using and the one in
+cesm2_1_3, it might be worth trying to see if swapping out the SourceMod gets
+us to a different point in the compiling before crashing.</p>
+<p>Removing <code class="docutils literal notranslate"><span class="pre">lustre/project/k1421/SourceMods/cesm2_1_3/SourceMods/src.cam/dyn_comp.F90</span></code>.</p>
+<p>This works! The run doesn’t complete, since <code class="docutils literal notranslate"><span class="pre">assimilate.csh</span></code> crashes, but
+this is clear progress. Now what the error log is printing:</p>
+</div>
+<div class="section" id="trial-047">
+<h2>Trial 047<a class="headerlink" href="#trial-047" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is an important debugging trial because we fixed the PE issue in Trial
+46 and can move onto determining why the build mysteriously hangs without
+producing any meaningful error messages.</p>
+</div>
+<p>We focus on determining which task happens right after <code class="docutils literal notranslate"><span class="pre">GSMap</span> <span class="pre">indices</span> <span class="pre">not</span>
+<span class="pre">increasing</span></code>. Change the debug settings, with <code class="docutils literal notranslate"><span class="pre">./xmlchange</span> <span class="pre">DEBUG=TRUE</span></code> and
+<code class="docutils literal notranslate"><span class="pre">./xmlchange</span> <span class="pre">INFO_DBUG=1</span></code>.</p>
+<div class="section" id="last-working-startup-case">
+<h3>Last working startup case<a class="headerlink" href="#last-working-startup-case" title="Permalink to this headline">¶</a></h3>
+<p>The last working startup – not hybrid case is Trial 018:</p>
+<p><code class="docutils literal notranslate"><span class="pre">/lustre/project/k1421/cases/FHIST_BGC.f09_d025.018.e3</span></code></p>
+<p>Its buildlog continues past <code class="docutils literal notranslate"><span class="pre">GSMap</span> <span class="pre">indices</span> <span class="pre">not</span> <span class="pre">increasing</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MCT</span><span class="p">::</span><span class="n">m_Router</span><span class="p">::</span><span class="n">initp_</span><span class="p">:</span> <span class="n">GSMap</span> <span class="n">indices</span> <span class="ow">not</span> <span class="n">increasing</span><span class="o">...</span><span class="n">Will</span> <span class="n">correct</span>
+<span class="mi">0</span><span class="p">:</span> <span class="n">calcsize</span> <span class="n">j</span><span class="p">,</span><span class="n">iq</span><span class="p">,</span><span class="n">jac</span><span class="p">,</span> <span class="n">lsfrm</span><span class="p">,</span><span class="n">lstoo</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">26</span>  <span class="mi">21</span>
+<span class="n">Opened</span> <span class="n">file</span> <span class="n">FHIST_BGC</span><span class="o">.</span><span class="n">f09_d025</span><span class="o">.</span><span class="mf">018.e3</span><span class="o">.</span><span class="n">cam_0001</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="mi">1979</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mf">21600.</span><span class="n">nc</span> <span class="n">to</span> <span class="n">write</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="attempting-to-clone-kevin-s-cam-reanalysis-on-cheyenne">
+<h3>Attempting to clone Kevin’s CAM Reanalysis on Cheyenne<a class="headerlink" href="#attempting-to-clone-kevin-s-cam-reanalysis-on-cheyenne" title="Permalink to this headline">¶</a></h3>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<p>CAM Could not be built
+cat /glade/scratch/johnsonb/FHIST_BGC.f09_d025.001.e3/bld/atm.bldlog.201012-214748</p>
+</div>
+</div>
+<div class="section" id="attempting-to-clone-kevin-s-cam-reanalysis-on-shaheen">
+<h3>Attempting to clone Kevin’s CAM Reanalysis on Shaheen<a class="headerlink" href="#attempting-to-clone-kevin-s-cam-reanalysis-on-shaheen" title="Permalink to this headline">¶</a></h3>
+<p>Working on: <code class="docutils literal notranslate"><span class="pre">/glade/work/johnsonb/DART_Shaheen/models/cam-fv/shell_scripts/cesm2_1/setup_advanced_Rean</span></code>
+Stage directory: <code class="docutils literal notranslate"><span class="pre">/glade/scratch/johnsonb/archive/f.e21.FHIST_BGC.f09_025.CAM6assim.011/rest/2019-08-05-00000</span></code></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gunzip f.e21.FHIST_BGC.f09_025.CAM6assim.011.cam_00<span class="o">[</span><span class="m">45678</span><span class="o">]</span>?.r.2019-08-05-00000.nc.gz
+</pre></div>
+</div>
+<div class="section" id="rebuilding-with-cesm2-1-resl5-6-instead-of-cesm2-1-3">
+<h4>Rebuilding with cesm2.1.resl5.6 instead of cesm2_1_3<a class="headerlink" href="#rebuilding-with-cesm2-1-resl5-6-instead-of-cesm2-1-3" title="Permalink to this headline">¶</a></h4>
+<p>Two candidate source files:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">./components/cam/src/chemistry/modal_aero/modal_aero_gasaerexch.F90</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">./components/cam/src/chemistry/utils/modal_aero_calcsize.F90</span></code></p></li>
+</ol>
+<p>This is the code that prints the relevant statement in the buildlog:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="mi">1016</span>      <span class="k">write</span><span class="p">(</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;(a,3i3,2i4)&#39;</span> <span class="p">)</span> <span class="s1">&#39;calcsize j,iq,jac, lsfrm,lstoo&#39;</span><span class="p">,</span>   <span class="p">&amp;</span>
+<span class="mi">1017</span>      <span class="n">j</span><span class="p">,</span><span class="n">iq</span><span class="p">,</span><span class="n">jac</span><span class="p">,</span> <span class="n">lsfrm</span><span class="p">,</span><span class="n">lstoo</span>
+</pre></div>
+</div>
+<p>This file never gets called: <code class="docutils literal notranslate"><span class="pre">./components/cam/src/chemistry/utils/modal_aero_calcsize.F90</span></code></p>
+<p>Thus it’s actually hanging in: <code class="docutils literal notranslate"><span class="pre">./components/cam/src/dynamics/fv/cd_core.F90</span></code></p>
+<p>We can attempt a case with a different resolution: <code class="docutils literal notranslate"><span class="pre">FHIST_BGC.f19_f19_mg17.001.e3</span></code>.</p>
+<p>However, using the build scripts don’t work because there isn’t a way to get the
+SST flux properly into the coupler.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> activate py27
+<span class="nb">cd</span> /lustre/project/k1421/cesm2_1_3/cime/scripts
+./create_newcase --case /lustre/project/k1421/cases/FHIST_BGC.f19_f19_mg17.002.e3 --machine shaheen --res f19_f19_mg17 --project k1421 --queue workq --walltime <span class="m">1</span>:00:00 --pecount 32x1 --ninst <span class="m">3</span> --compset HIST_CAM60_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV --multi-driver --run-unsupported
+<span class="nb">cd</span> /lustre/project/k1421/cases/FHIST_BGC.f19_f19_mg17.002.e3
+./case.setup
+./case.build
+<span class="nb">cd</span> /lustre/project/k1421/cases/FHIST_BGC.f19_f19_mg17.002.e3
+./case.submit -M begin,end
+</pre></div>
+</div>
+<p>This gives us a “working” start up run with a f19_f19_mg17 grid. It’s useful
+because it provides two clues: where the cesm.log.* fails and where the
+atm_00??.log.* fails.</p>
+</div>
+<div class="section" id="examining-the-cesm-log">
+<h4>Examining the CESM Log<a class="headerlink" href="#examining-the-cesm-log" title="Permalink to this headline">¶</a></h4>
+<p>In a job submission that runs to completion, the CESM log continues past the
+<code class="docutils literal notranslate"><span class="pre">GSMap</span> <span class="pre">indices</span> <span class="pre">not</span> <span class="pre">increasing...Will</span> <span class="pre">correct</span></code> line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">lustre</span><span class="o">/</span><span class="n">scratch</span><span class="o">/</span><span class="n">x_johnsobk</span><span class="o">/</span><span class="n">archive</span><span class="o">/</span><span class="n">FHIST_BGC</span><span class="o">.</span><span class="n">f19_f19_mg17</span><span class="o">.</span><span class="mf">002.e3</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">cesm</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="mf">15883098.201014</span><span class="o">-</span><span class="mf">065036.</span><span class="n">gz</span>
+<span class="n">transitions</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">MCT</span><span class="p">::</span><span class="n">m_Router</span> <span class="n">to</span> <span class="n">the</span> <span class="n">calcsize</span> <span class="n">printouts</span> <span class="n">immediately</span> <span class="n">after</span> <span class="n">it</span><span class="o">.</span>
+<span class="mi">3226</span>  <span class="mi">0</span><span class="p">:</span> <span class="n">MCT</span><span class="p">::</span><span class="n">m_Router</span><span class="p">::</span><span class="n">initp_</span><span class="p">:</span> <span class="n">GSMap</span> <span class="n">indices</span> <span class="ow">not</span> <span class="n">increasing</span><span class="o">...</span><span class="n">Will</span> <span class="n">correct</span>
+<span class="mi">3227</span>  <span class="mi">0</span><span class="p">:</span> <span class="n">MCT</span><span class="p">::</span><span class="n">m_Router</span><span class="p">::</span><span class="n">initp_</span><span class="p">:</span> <span class="n">RGSMap</span> <span class="n">indices</span> <span class="ow">not</span> <span class="n">increasing</span><span class="o">...</span><span class="n">Will</span> <span class="n">correct</span>
+<span class="mi">3228</span>  <span class="mi">0</span><span class="p">:</span> <span class="n">MCT</span><span class="p">::</span><span class="n">m_Router</span><span class="p">::</span><span class="n">initp_</span><span class="p">:</span> <span class="n">RGSMap</span> <span class="n">indices</span> <span class="ow">not</span> <span class="n">increasing</span><span class="o">...</span><span class="n">Will</span> <span class="n">correct</span>
+<span class="mi">3229</span>  <span class="mi">0</span><span class="p">:</span> <span class="n">MCT</span><span class="p">::</span><span class="n">m_Router</span><span class="p">::</span><span class="n">initp_</span><span class="p">:</span> <span class="n">GSMap</span> <span class="n">indices</span> <span class="ow">not</span> <span class="n">increasing</span><span class="o">...</span><span class="n">Will</span> <span class="n">correct</span>
+<span class="mi">3230</span> <span class="mi">64</span><span class="p">:</span> <span class="n">MCT</span><span class="p">::</span><span class="n">m_Router</span><span class="p">::</span><span class="n">initp_</span><span class="p">:</span> <span class="n">GSMap</span> <span class="n">indices</span> <span class="ow">not</span> <span class="n">increasing</span><span class="o">...</span><span class="n">Will</span> <span class="n">correct</span>
+<span class="mi">3231</span> <span class="mi">64</span><span class="p">:</span> <span class="n">MCT</span><span class="p">::</span><span class="n">m_Router</span><span class="p">::</span><span class="n">initp_</span><span class="p">:</span> <span class="n">RGSMap</span> <span class="n">indices</span> <span class="ow">not</span> <span class="n">increasing</span><span class="o">...</span><span class="n">Will</span> <span class="n">correct</span>
+<span class="mi">3232</span> <span class="mi">64</span><span class="p">:</span> <span class="n">MCT</span><span class="p">::</span><span class="n">m_Router</span><span class="p">::</span><span class="n">initp_</span><span class="p">:</span> <span class="n">RGSMap</span> <span class="n">indices</span> <span class="ow">not</span> <span class="n">increasing</span><span class="o">...</span><span class="n">Will</span> <span class="n">correct</span>
+<span class="mi">3233</span> <span class="mi">64</span><span class="p">:</span> <span class="n">MCT</span><span class="p">::</span><span class="n">m_Router</span><span class="p">::</span><span class="n">initp_</span><span class="p">:</span> <span class="n">GSMap</span> <span class="n">indices</span> <span class="ow">not</span> <span class="n">increasing</span><span class="o">...</span><span class="n">Will</span> <span class="n">correct</span>
+<span class="mi">3234</span> <span class="mi">32</span><span class="p">:</span> <span class="n">MCT</span><span class="p">::</span><span class="n">m_Router</span><span class="p">::</span><span class="n">initp_</span><span class="p">:</span> <span class="n">GSMap</span> <span class="n">indices</span> <span class="ow">not</span> <span class="n">increasing</span><span class="o">...</span><span class="n">Will</span> <span class="n">correct</span>
+<span class="mi">3235</span> <span class="mi">32</span><span class="p">:</span> <span class="n">MCT</span><span class="p">::</span><span class="n">m_Router</span><span class="p">::</span><span class="n">initp_</span><span class="p">:</span> <span class="n">RGSMap</span> <span class="n">indices</span> <span class="ow">not</span> <span class="n">increasing</span><span class="o">...</span><span class="n">Will</span> <span class="n">correct</span>
+<span class="mi">3236</span> <span class="mi">32</span><span class="p">:</span> <span class="n">MCT</span><span class="p">::</span><span class="n">m_Router</span><span class="p">::</span><span class="n">initp_</span><span class="p">:</span> <span class="n">RGSMap</span> <span class="n">indices</span> <span class="ow">not</span> <span class="n">increasing</span><span class="o">...</span><span class="n">Will</span> <span class="n">correct</span>
+<span class="mi">3237</span> <span class="mi">32</span><span class="p">:</span> <span class="n">MCT</span><span class="p">::</span><span class="n">m_Router</span><span class="p">::</span><span class="n">initp_</span><span class="p">:</span> <span class="n">GSMap</span> <span class="n">indices</span> <span class="ow">not</span> <span class="n">increasing</span><span class="o">...</span><span class="n">Will</span> <span class="n">correct</span>
+<span class="mi">3238</span>  <span class="mi">0</span><span class="p">:</span> <span class="n">calcsize</span> <span class="n">j</span><span class="p">,</span><span class="n">iq</span><span class="p">,</span><span class="n">jac</span><span class="p">,</span> <span class="n">lsfrm</span><span class="p">,</span><span class="n">lstoo</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">26</span>  <span class="mi">21</span>
+<span class="mi">3239</span>  <span class="mi">0</span><span class="p">:</span> <span class="n">calcsize</span> <span class="n">j</span><span class="p">,</span><span class="n">iq</span><span class="p">,</span><span class="n">jac</span><span class="p">,</span> <span class="n">lsfrm</span><span class="p">,</span><span class="n">lstoo</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">26</span>  <span class="mi">21</span>
+<span class="mi">3240</span>  <span class="mi">0</span><span class="p">:</span> <span class="n">calcsize</span> <span class="n">j</span><span class="p">,</span><span class="n">iq</span><span class="p">,</span><span class="n">jac</span><span class="p">,</span> <span class="n">lsfrm</span><span class="p">,</span><span class="n">lstoo</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">1</span>  <span class="mi">22</span>  <span class="mi">15</span>
+<span class="mi">3241</span>  <span class="mi">0</span><span class="p">:</span> <span class="n">calcsize</span> <span class="n">j</span><span class="p">,</span><span class="n">iq</span><span class="p">,</span><span class="n">jac</span><span class="p">,</span> <span class="n">lsfrm</span><span class="p">,</span><span class="n">lstoo</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">22</span>  <span class="mi">15</span>
+<span class="mi">3242</span>  <span class="mi">0</span><span class="p">:</span> <span class="n">calcsize</span> <span class="n">j</span><span class="p">,</span><span class="n">iq</span><span class="p">,</span><span class="n">jac</span><span class="p">,</span> <span class="n">lsfrm</span><span class="p">,</span><span class="n">lstoo</span>  <span class="mi">1</span>  <span class="mi">3</span>  <span class="mi">1</span>  <span class="mi">24</span>  <span class="mi">17</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">MCT::m_router</span></code> lines are printed from the subroutine <code class="docutils literal notranslate"><span class="pre">initp__(inGSMap,inRGSMap,mycomm,Rout,name</span> <span class="pre">)</span></code>
+in <code class="docutils literal notranslate"><span class="pre">m_Router.F90</span></code>:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="mi">336</span>     <span class="k">if</span><span class="p">(</span><span class="n">myPid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">call </span><span class="n">warn</span><span class="p">(</span><span class="n">myname_</span><span class="p">,</span><span class="s1">&#39;GSMap indices not increasing...Will correct&#39;</span><span class="p">)</span>
+<span class="mi">337</span>     <span class="k">call </span><span class="n">GlobalSegMap_OPoints</span><span class="p">(</span><span class="n">inGSMap</span><span class="p">,</span><span class="n">myPid</span><span class="p">,</span><span class="n">gpoints</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note well, in <code class="docutils literal notranslate"><span class="pre">mct_mod.F90</span></code>, <code class="docutils literal notranslate"><span class="pre">m_router</span></code> undergoes association renaming:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">use </span><span class="n">m_Router</span>             <span class="p">,</span><span class="n">only</span><span class="p">:</span> <span class="n">mct_router</span>             <span class="o">=&gt;</span> <span class="n">Router</span>
+</pre></div>
+</div>
+<p>Additionally, the <code class="docutils literal notranslate"><span class="pre">calcsize</span></code> lines are from <code class="docutils literal notranslate"><span class="pre">modal_aero_calcize.F90</span></code>:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="mi">1016</span>    <span class="k">write</span><span class="p">(</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;(a,3i3,2i4)&#39;</span> <span class="p">)</span> <span class="s1">&#39;calcsize j,iq,jac, lsfrm,lstoo&#39;</span><span class="p">,</span>   <span class="p">&amp;</span>
+<span class="mi">1017</span>    <span class="n">j</span><span class="p">,</span><span class="n">iq</span><span class="p">,</span><span class="n">jac</span><span class="p">,</span> <span class="n">lsfrm</span><span class="p">,</span><span class="n">lstoo</span>
+</pre></div>
+</div>
+<p>Thus the log from a non-working run, <code class="docutils literal notranslate"><span class="pre">/lustre/scratch/x_johnsobk/FHIST_BGC.f09_d025.047.e3/run/atm_0001.log.15874648.201013-170022</span></code>,
+ends here:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="mi">4619</span>  <span class="n">FV</span> <span class="n">subcycling</span> <span class="o">-</span> <span class="n">nv</span><span class="p">,</span> <span class="n">n2</span><span class="p">,</span> <span class="n">nsplit</span><span class="p">,</span> <span class="n">dt</span> <span class="o">=</span>            <span class="mi">2</span>           <span class="mi">1</span>           <span class="mi">4</span>
+<span class="mi">4620</span>    <span class="mi">22</span><span class="mf">5.000000000000</span>
+</pre></div>
+</div>
+<p>Line 4620 is printed from <code class="docutils literal notranslate"><span class="pre">./components/cam/src/dynamics/fv/dyn_comp.F90</span></code>:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="mi">1443</span>          <span class="k">write</span><span class="p">(</span><span class="n">iulog</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;FV subcycling - nv, n2, nsplit, dt = &#39;</span><span class="p">,</span> <span class="n">nv</span><span class="p">,</span> <span class="n">n2</span><span class="p">,</span> <span class="n">nsplit</span><span class="p">,</span> <span class="n">dt</span>
+</pre></div>
+</div>
+<p>The working log, <code class="docutils literal notranslate"><span class="pre">/lustre/scratch/x_johnsobk/archive/FHIST_BGC.f19_f19_mg17.002.e3/logs/atm_0001.log.15883098.201014-065036.gz</span></code>,
+continues:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">4993</span>  <span class="n">FV</span> <span class="n">subcycling</span> <span class="o">-</span> <span class="n">nv</span><span class="p">,</span> <span class="n">n2</span><span class="p">,</span> <span class="n">nsplit</span><span class="p">,</span> <span class="n">dt</span> <span class="o">=</span>            <span class="mi">1</span>           <span class="mi">1</span>           <span class="mi">4</span>
+<span class="mi">4994</span>    <span class="mf">450.000000000000</span>
+<span class="mi">4995</span>  <span class="n">Divergence</span> <span class="n">damping</span><span class="p">:</span> <span class="n">use</span> <span class="mi">4</span><span class="n">th</span> <span class="n">order</span> <span class="n">damping</span>
+</pre></div>
+</div>
+<p>Line 4995 is printed from <code class="docutils literal notranslate"><span class="pre">./components/cam/src/dynamics/fv/cd_core.F90</span></code>:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="mi">545</span> <span class="k">if</span> <span class="p">(</span><span class="n">masterproc</span><span class="p">)</span> <span class="k">write</span><span class="p">(</span><span class="n">iulog</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;Divergence damping: use 4th order damping&#39;</span>
+</pre></div>
+</div>
+<p>So the key is to determine what happens in between Line 1443 of <code class="docutils literal notranslate"><span class="pre">dyn_comp.F90</span></code>
+and the invocation of <code class="docutils literal notranslate"><span class="pre">cd_core</span></code> which is called only once on lone 1862:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="mi">1862</span>                <span class="k">call </span><span class="n">cd_core</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span>   <span class="n">nx</span><span class="p">,</span>     <span class="n">u</span><span class="p">,</span>   <span class="n">v</span><span class="p">,</span>   <span class="n">pt</span><span class="p">,</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="trial-046">
+<h2>Trial 046<a class="headerlink" href="#trial-046" title="Permalink to this headline">¶</a></h2>
+<p>Edited <code class="docutils literal notranslate"><span class="pre">config_machines.xml</span></code> to:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="c">&lt;!-- &lt;MAX_TASKS_PER_NODE&gt;64&lt;/MAX_TASKS_PER_NODE&gt; --&gt;</span>
+<span class="nt">&lt;MAX_TASKS_PER_NODE&gt;</span>32<span class="nt">&lt;/MAX_TASKS_PER_NODE&gt;</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This fixes the PE crash and we now hang at a different point.</p>
+</div>
+</div>
+<div class="section" id="trial-045">
+<h2>Trial 045<a class="headerlink" href="#trial-045" title="Permalink to this headline">¶</a></h2>
+<p>Forgot to build Trial 044 with <code class="docutils literal notranslate"><span class="pre">OMP_STACKSIZE=256MB</span></code>.</p>
+<p>Edited <code class="docutils literal notranslate"><span class="pre">config_machines.xml</span></code> to set <code class="docutils literal notranslate"><span class="pre">OMP_STACKSIZE=256MB</span></code>. Rebuilt the case.</p>
+</div>
+<div class="section" id="trial-044">
+<h2>Trial 044<a class="headerlink" href="#trial-044" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">./xmlchange</span> <span class="pre">ROOTPE_ESP=0,NTHRDS_ESP=$nthreads,NTASKS_ESP=1</span></code></p>
+</div>
+<div class="section" id="trial-043">
+<h2>Trial 043<a class="headerlink" href="#trial-043" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">./xmlchange</span> <span class="pre">NTASKS_PER_INST_ESP=1</span></code></p>
+<p>For some reason that still results in:</p>
+<p><code class="docutils literal notranslate"><span class="pre">NTASKS_PER_INST:</span> <span class="pre">['ATM:128',</span> <span class="pre">'LND:128',</span> <span class="pre">'ICE:128',</span> <span class="pre">'OCN:128',</span> <span class="pre">'ROF:128',</span> <span class="pre">'GLC:128',</span> <span class="pre">'WAV:128',</span> <span class="pre">'ESP:32']</span></code></p>
+</div>
+<div class="section" id="trial-042">
+<h2>Trial 042<a class="headerlink" href="#trial-042" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">./xmlchange</span> <span class="pre">OMP_STACKSIZE=128MB</span></code></p>
+</div>
+<div class="section" id="trial-041">
+<h2>Trial 041<a class="headerlink" href="#trial-041" title="Permalink to this headline">¶</a></h2>
+<p>Attempting to change the stack limit to see if it noticeably affects performance.</p>
+<p><code class="docutils literal notranslate"><span class="pre">./xmlchange</span> <span class="pre">OMP_STACKSIZE=1024MB</span></code></p>
+</div>
+<div class="section" id="trial-040">
+<h2>Trial 040<a class="headerlink" href="#trial-040" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span> <span class="m">128</span>:  Reading zbgc_nml
+   <span class="m">0</span>: MCT::m_Router::initp_: GSMap indices not increasing...Will correct
+   <span class="m">0</span>: MCT::m_Router::initp_: RGSMap indices not increasing...Will correct
+   <span class="m">0</span>: MCT::m_Router::initp_: RGSMap indices not increasing...Will correct
+   <span class="m">0</span>: MCT::m_Router::initp_: GSMap indices not increasing...Will correct
+ <span class="m">128</span>: MCT::m_Router::initp_: GSMap indices not increasing...Will correct
+ <span class="m">256</span>: MCT::m_Router::initp_: GSMap indices not increasing...Will correct
+ <span class="m">128</span>: MCT::m_Router::initp_: RGSMap indices not increasing...Will correct
+ <span class="m">256</span>: MCT::m_Router::initp_: RGSMap indices not increasing...Will correct
+ <span class="m">256</span>: MCT::m_Router::initp_: RGSMap indices not increasing...Will correct
+ <span class="m">128</span>: MCT::m_Router::initp_: RGSMap indices not increasing...Will correct
+ <span class="m">256</span>: MCT::m_Router::initp_: GSMap indices not increasing...Will correct
+ <span class="m">128</span>: MCT::m_Router::initp_: GSMap indices not increasing...Will correct
+ <span class="m">361</span>: forrtl: severe <span class="o">(</span><span class="m">174</span><span class="o">)</span>: SIGSEGV, segmentation fault occurred
+ <span class="m">128</span>: MCT::m_Router::initp_: RGSMap indices not increasing...Will correct
+ <span class="m">256</span>: MCT::m_Router::initp_: GSMap indices not increasing...Will correct
+<span class="m">9583</span> srun: error: nid04049: tasks <span class="m">37</span>-38,40-42,44,48,50-51,54-55,57,61-63: Exited with <span class="nb">exit</span> code <span class="m">174</span>
+<span class="m">9584</span> srun: Terminating job step <span class="m">15810768</span>.0
+<span class="m">9585</span>   <span class="m">0</span>: slurmstepd: error: *** STEP <span class="m">15810768</span>.0 ON nid04048 CANCELLED AT <span class="m">2020</span>-10-08T21:09:34 ***
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-039">
+<h2>Trial 039<a class="headerlink" href="#trial-039" title="Permalink to this headline">¶</a></h2>
+<p>Seems like we should just try this attempt again in case the error was caused
+by running 3 the script times simultaneously.</p>
+</div>
+<div class="section" id="trial-038">
+<h2>Trial 038<a class="headerlink" href="#trial-038" title="Permalink to this headline">¶</a></h2>
+<p>Changing <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">do_clm_interp</span> <span class="pre">=</span> <span class="pre">&quot;true&quot;</span></code>.</p>
+<p>This works! However we should go through the CESM logs to see if it’s hanging
+anywhere.</p>
+</div>
+<div class="section" id="trial-037">
+<h2>Trial 037<a class="headerlink" href="#trial-037" title="Permalink to this headline">¶</a></h2>
+<p>Omitted <code class="docutils literal notranslate"><span class="pre">modules.csh</span></code>.</p>
+<p>Questions:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PIO_TYPENAME</span> <span class="pre">=</span> <span class="pre">'pnetcdf'</span></code>; Do we need to change it to netcdf?</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">do_clm_interp</span> <span class="pre">=</span> <span class="pre">&quot;false&quot;</span></code>; Do we need to change it to true?</p></li>
+</ol>
+<p>Another issue:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/usr/bin/cp: option <span class="s1">&#39;--v&#39;</span> is ambiguous<span class="p">;</span> possibilities: <span class="s1">&#39;--verbose&#39;</span> <span class="s1">&#39;--version&#39;</span>
+Try <span class="s1">&#39;/usr/bin/cp --help&#39;</span> <span class="k">for</span> more information.
+</pre></div>
+</div>
+<p>Edited <code class="docutils literal notranslate"><span class="pre">DART_config</span></code> to omit update_dart_namelists.</p>
+<p>Also copied a file from GLADE:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Fetching /glade/p/cesmdata/cseg/inputdata/atm/cam/tracer_cnst/tracer_cnst_halons_WACCM6_3Dmonthly_L70_1975-2014_c180216.nc to tracer_cnst_halons_WACCM6_3Dmonthly_L70_1975-2014_c180216.nc
+lustre/project/k1421/cesm_store/inputdata/atm/cam/tracer_cnst
+</pre></div>
+</div>
+<p>This gives us an error.</p>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Did you mean to <span class="nb">set</span> <span class="nv">use_init_interp</span> <span class="o">=</span> .true. in user_nl_clm?
+<span class="m">94</span>: <span class="o">(</span>Setting <span class="nv">use_init_interp</span> <span class="o">=</span> .true. is needed when doing a
+<span class="m">94</span>: transient run using an initial conditions file from a non-transient run,
+<span class="m">94</span>: or a non-transient run using an initial conditions file from a transient run,
+<span class="m">94</span>: or when running a resolution or configuration that differs from the initial conditions.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="trial-036">
+<h2>Trial 036<a class="headerlink" href="#trial-036" title="Permalink to this headline">¶</a></h2>
+<p>Changed <code class="docutils literal notranslate"><span class="pre">NTASKS</span></code> for <code class="docutils literal notranslate"><span class="pre">ESP=1</span></code> and set <code class="docutils literal notranslate"><span class="pre">PIO_TYPENAME=netcdf</span></code></p>
+<p>But we still have the same SIGTERM failure. GRRR.</p>
+<p>At least it’s good to report that the Invalid PIO rearranger issue even occurs
+in a working run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ vim /lustre/scratch/x_johnsobk/archive/FHIST_BGC.f09_g17.002.e3/logs/cesm.log.15594937.200910-181624.gz
+<span class="m">0</span>:  Invalid PIO rearranger comm max pend req <span class="o">(</span>comp2io<span class="o">)</span>,            <span class="m">0</span>
+<span class="m">0</span>:  Resetting PIO rearranger comm max pend req <span class="o">(</span>comp2io<span class="o">)</span> to           <span class="m">64</span>
+<span class="m">0</span>:  PIO rearranger options:
+<span class="m">0</span>:    comm <span class="nb">type</span>     <span class="o">=</span>
+</pre></div>
+</div>
+<p>Working on contrasting these two runs, since one works and the other doesn’t</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /lustre/project/k1421/cases/FHIST_BGC.f09_g17.002.e3
+$ ./xmlquery --partial PE
+RUN_TYPE: startup
+$ <span class="nb">cd</span> /lustre/project/k1421/cases/FHIST_BGC.f09_d025.036.e3
+$ ./xmlquery --partial PE
+RUN_TYPE: hybrid
+</pre></div>
+</div>
+<p>The output of these are identical except for <code class="docutils literal notranslate"><span class="pre">RUN_TYPE</span></code>.</p>
+<p>There are two plausible paths:</p>
+<p>1. Go through Kevin’s script here: <code class="docutils literal notranslate"><span class="pre">/lustre/project/k1421/DART_CASES/setup_advanced_Rean.original</span></code>
+and see if we’re missing anything significant. It seems like the stagedir is
+just the full path wehre the restart files are. I think that might be it.</p>
+<p>In line 1295 of <code class="docutils literal notranslate"><span class="pre">setup_advanced_Rean.original</span></code></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="m">1295</span> <span class="si">${</span><span class="nv">LINK</span><span class="si">}</span> -f <span class="si">${</span><span class="nv">stagedir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">refcase</span><span class="si">}</span>.clm2<span class="se">\$</span><span class="o">{</span>inst_string<span class="o">}</span>.r.<span class="si">${</span><span class="nv">init_time</span><span class="si">}</span>.nc  .
+./xmlchange <span class="nv">RUN_REFDIR</span><span class="o">=</span><span class="nv">$stagedir</span>
+</pre></div>
+</div>
+<p>2. Or get Kevin’s setup script working, which might actually only entail
+changing the user_nl text. This might actually be pretty fast.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="m">360</span> <span class="nb">set</span> <span class="nv">user_grid</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">user_grid</span><span class="si">}</span><span class="s2"> --gridfile /glade/work/raeder/Models/CAM_init/SST&quot;</span>
+<span class="m">361</span> <span class="nb">set</span> <span class="nv">user_grid</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">user_grid</span><span class="si">}</span><span class="s2">/config_grids+fv1+2deg_oi0.25_gland20.xml&quot;</span>
+<span class="m">362</span> setenv sst_dataset <span class="se">\</span>
+<span class="m">363</span>    <span class="s2">&quot;/glade/work/raeder/Models/CAM_init/SST/avhrr-only-v2.20110101_cat_20111231_gregorian_c190703.nc&quot;</span>
+</pre></div>
+</div>
+<p>We should only need to change these, right?</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="m">340</span> <span class="nb">set</span> <span class="nv">use_tasks_per_node</span> <span class="o">=</span> <span class="m">36</span>
+...
+<span class="m">959</span>       <span class="nb">set</span> <span class="nv">cesm_data_dir</span> <span class="o">=</span> <span class="s2">&quot;/glade/p/cesmdata/cseg/inputdata/atm&quot;</span>
+<span class="m">960</span>       <span class="nb">set</span> <span class="nv">cesm_chem_dir</span> <span class="o">=</span> <span class="s2">&quot;/gpfs/fs1/p/acom/acom-climate/cmip6inputs/emissions_ssp119&quot;</span>
+<span class="m">961</span>       <span class="nb">set</span> <span class="nv">chem_root</span>     <span class="o">=</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">cesm_chem_dir</span><span class="si">}</span><span class="s2">/emissions-cmip6-ScenarioMIP_IAMC-IMAGE-ssp119-1-1&quot;</span>
+<span class="m">962</span>       <span class="nb">set</span> <span class="nv">chem_dates</span>    <span class="o">=</span> <span class="s2">&quot;175001-210012_0.9x1.25_c20181024&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-035">
+<h2>Trial 035<a class="headerlink" href="#trial-035" title="Permalink to this headline">¶</a></h2>
+<p>Set <code class="docutils literal notranslate"><span class="pre">tasks_per_node=16</span></code> but we still get the segmentation fault. So this might
+be a PE layout issue. We should really be trying to track down what the correct
+layout was for the last working ensemble.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Warning: missing non-idmap ROF2OCN_LIQ_RMAPNAME <span class="k">for</span> ocn_grid, d.25x.25 and rof_grid r05
+Warning: missing non-idmap ROF2OCN_ICE_RMAPNAME <span class="k">for</span> ocn_grid, d.25x.25 and rof_grid r05
+</pre></div>
+</div>
+</div>
+<p>Looking back to <code class="docutils literal notranslate"><span class="pre">/lustre/project/k1421/cases/FHIST_BGC.f09_g17.002.e3</span></code> we see:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>NTASKS_PER_INST: <span class="o">[</span><span class="s1">&#39;ATM:128&#39;</span>, <span class="s1">&#39;LND:128&#39;</span>, <span class="s1">&#39;ICE:128&#39;</span>, <span class="s1">&#39;OCN:128&#39;</span>, <span class="s1">&#39;ROF:128&#39;</span>, <span class="s1">&#39;GLC:128&#39;</span>, <span class="s1">&#39;WAV:128&#39;</span>, <span class="s1">&#39;ESP:1&#39;</span><span class="o">]</span>
+ROOTPE: <span class="o">[</span><span class="s1">&#39;CPL:0&#39;</span>, <span class="s1">&#39;ATM:0&#39;</span>, <span class="s1">&#39;LND:0&#39;</span>, <span class="s1">&#39;ICE:0&#39;</span>, <span class="s1">&#39;OCN:0&#39;</span>, <span class="s1">&#39;ROF:0&#39;</span>, <span class="s1">&#39;GLC:0&#39;</span>, <span class="s1">&#39;WAV:0&#39;</span>, <span class="s1">&#39;ESP:0&#39;</span><span class="o">]</span>
+
+Results in group mach_pes_last
+        COSTPES_PER_NODE: <span class="m">32</span>
+        COST_PES: <span class="m">384</span>
+        MAX_MPITASKS_PER_NODE: <span class="m">32</span>
+        MAX_TASKS_PER_NODE: <span class="m">64</span>
+        TOTALPES: <span class="m">384</span>
+</pre></div>
+</div>
+<p>I checked to see run_domain is the same in the working case and the non-working
+case.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Results in group run_domain
+     ATM2LND_FMAPTYPE: X
+     ATM2LND_SMAPTYPE: X
+     ATM2OCN_FMAPTYPE: X
+     ATM2OCN_SMAPTYPE: X
+     ATM2OCN_VMAPTYPE: X
+     ATM2WAV_SMAPTYPE: Y
+     GLC2ICE_RMAPTYPE: Y
+     GLC2LND_FMAPTYPE: Y
+     GLC2LND_SMAPTYPE: Y
+     GLC2OCN_ICE_RMAPTYPE: Y
+     GLC2OCN_LIQ_RMAPTYPE: Y
+     ICE2WAV_SMAPTYPE: Y
+     LND2ATM_FMAPTYPE: Y
+     LND2ATM_SMAPTYPE: Y
+     LND2GLC_FMAPTYPE: X
+     LND2GLC_SMAPTYPE: X
+     LND2ROF_FMAPTYPE: X
+     OCN2ATM_FMAPTYPE: Y
+     OCN2ATM_SMAPTYPE: Y
+     OCN2WAV_SMAPTYPE: Y
+     ROF2LND_FMAPTYPE: Y
+     ROF2OCN_FMAPTYPE: Y
+     ROF2OCN_ICE_RMAPTYPE: Y
+     ROF2OCN_LIQ_RMAPTYPE: Y
+     WAV2OCN_SMAPTYPE: X
+
+Results in group mach_pes
+        NTASKS_PER_INST: <span class="o">[</span><span class="s1">&#39;ATM:128&#39;</span>, <span class="s1">&#39;LND:128&#39;</span>, <span class="s1">&#39;ICE:128&#39;</span>, <span class="s1">&#39;OCN:128&#39;</span>, <span class="s1">&#39;ROF:128&#39;</span>, <span class="s1">&#39;GLC:128&#39;</span>, <span class="s1">&#39;WAV:128&#39;</span>, <span class="s1">&#39;ESP:1&#39;</span><span class="o">]</span>
+        ROOTPE: <span class="o">[</span><span class="s1">&#39;CPL:0&#39;</span>, <span class="s1">&#39;ATM:0&#39;</span>, <span class="s1">&#39;LND:0&#39;</span>, <span class="s1">&#39;ICE:0&#39;</span>, <span class="s1">&#39;OCN:0&#39;</span>, <span class="s1">&#39;ROF:0&#39;</span>, <span class="s1">&#39;GLC:0&#39;</span>, <span class="s1">&#39;WAV:0&#39;</span>, <span class="s1">&#39;ESP:0&#39;</span><span class="o">]</span>
+
+Results in group mach_pes_last
+        COSTPES_PER_NODE: <span class="m">32</span>
+        COST_PES: <span class="m">384</span>
+        MAX_MPITASKS_PER_NODE: <span class="m">32</span>
+        MAX_TASKS_PER_NODE: <span class="m">64</span>
+        TOTALPES: <span class="m">384</span>
+
+PIO_NETCDF_FORMAT: <span class="o">[</span><span class="s1">&#39;CPL:64bit_offset&#39;</span>, <span class="s1">&#39;ATM:64bit_offset&#39;</span>, <span class="s1">&#39;LND:64bit_offset&#39;</span>, <span class="s1">&#39;ICE:64bit_offset&#39;</span>, <span class="s1">&#39;OCN:64bit_offset&#39;</span>, <span class="s1">&#39;ROF:64bit_offset&#39;</span>, <span class="s1">&#39;GLC:64bit_offset&#39;</span>, <span class="s1">&#39;WAV:64bit_offset&#39;</span>, <span class="s1">&#39;ESP:64bit_offset&#39;</span><span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-034">
+<h2>Trial 034<a class="headerlink" href="#trial-034" title="Permalink to this headline">¶</a></h2>
+<p>In Trial 034 we don’t get the problem encountered in Trial 031 after changing
+<code class="docutils literal notranslate"><span class="pre">PIO_TYPENAME</span></code> to netcdf. However, we still get an error.</p>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">96</span><span class="p">:</span> <span class="n">MCT</span><span class="p">::</span><span class="n">m_Router</span><span class="p">::</span><span class="n">initp_</span><span class="p">:</span> <span class="n">RGSMap</span> <span class="n">indices</span> <span class="ow">not</span> <span class="n">increasing</span><span class="o">...</span><span class="n">Will</span> <span class="n">correct</span>
+<span class="mi">96</span><span class="p">:</span> <span class="n">MCT</span><span class="p">::</span><span class="n">m_Router</span><span class="p">::</span><span class="n">initp_</span><span class="p">:</span> <span class="n">GSMap</span> <span class="n">indices</span> <span class="ow">not</span> <span class="n">increasing</span><span class="o">...</span><span class="n">Will</span> <span class="n">correct</span>
+<span class="mi">52</span><span class="p">:</span> <span class="n">forrtl</span><span class="p">:</span> <span class="n">severe</span> <span class="p">(</span><span class="mi">174</span><span class="p">):</span> <span class="n">SIGSEGV</span><span class="p">,</span> <span class="n">segmentation</span> <span class="n">fault</span> <span class="n">occurred</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="trial-033">
+<h2>Trial 033<a class="headerlink" href="#trial-033" title="Permalink to this headline">¶</a></h2>
+<p>We should build Trial 033 with as a <code class="docutils literal notranslate"><span class="pre">hybrid</span></code> run and comment out
+<code class="docutils literal notranslate"><span class="pre">PIO_TYPENAME</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /lustre/project/k1421/cases/FHIST_BGC.f09_d025.033.e3/
+$ cp /lustre/project/k1421/DART/models/cam-fv/shell_scripts/cesm2_1/assimilate.csh.template assimilate.csh
+$ ./xmlchange <span class="nv">DATA_ASSIMILATION_SCRIPT</span><span class="o">=</span>./assimilate.csh
+$ ./case.submit -M begin,end
+</pre></div>
+</div>
+<p>The two candidate settings for toggling are <code class="docutils literal notranslate"><span class="pre">RUN_TYPE</span></code> AND <code class="docutils literal notranslate"><span class="pre">PIO_TYPENAME</span></code>.</p>
+<p>Check the PIO buildlog for Trials 33 and 32.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Building pio with output to file /lustre/scratch/x_johnsobk/FHIST_BGC.f09_d025.033.e3/bld/pio.bldlog.201007-210614
+</pre></div>
+</div>
+<p>Here’s what the config_machines.xml modules look like:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;modules</span> <span class="na">mpilib=</span><span class="s">&quot;mpi-serial&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;command</span> <span class="na">name=</span><span class="s">&quot;load&quot;</span><span class="nt">&gt;</span>cray-hdf5/1.10.5.2<span class="nt">&lt;/command&gt;</span>
+    <span class="nt">&lt;command</span> <span class="na">name=</span><span class="s">&quot;load&quot;</span><span class="nt">&gt;</span>cray-netcdf/4.6.3.2<span class="nt">&lt;/command&gt;</span>
+<span class="nt">&lt;/modules&gt;</span>
+    <span class="nt">&lt;modules</span> <span class="na">mpilib=</span><span class="s">&quot;!mpi-serial&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;command</span> <span class="na">name=</span><span class="s">&quot;load&quot;</span><span class="nt">&gt;</span>cray-netcdf-hdf5parallel/4.6.3.2<span class="nt">&lt;/command&gt;</span>
+    <span class="nt">&lt;command</span> <span class="na">name=</span><span class="s">&quot;load&quot;</span><span class="nt">&gt;</span>cray-hdf5-parallel/1.10.5.2<span class="nt">&lt;/command&gt;</span>
+    <span class="nt">&lt;command</span> <span class="na">name=</span><span class="s">&quot;load&quot;</span><span class="nt">&gt;</span>cray-parallel-netcdf/1.11.1.1<span class="nt">&lt;/command&gt;</span>
+<span class="nt">&lt;/modules&gt;</span>
+</pre></div>
+</div>
+<p>Maybe we shouldn’t use the restart files for ice_ic?</p>
+</div>
+<div class="section" id="trial-032">
+<h2>Trial 032<a class="headerlink" href="#trial-032" title="Permalink to this headline">¶</a></h2>
+<p>Attempting to use a continue run instead of a hybrid run.</p>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Did not find <span class="k">continue</span> in valid values <span class="k">for</span> RUN_TYPE: <span class="o">[</span><span class="s1">&#39;startup&#39;</span>, <span class="s1">&#39;hybrid&#39;</span>, <span class="s1">&#39;branch&#39;</span><span class="o">]</span>
+<span class="nv">RUN_TYPE</span> <span class="o">=</span> <span class="s1">&#39;continue&#39;</span>
+</pre></div>
+</div>
+</div>
+<p>Aha, <code class="docutils literal notranslate"><span class="pre">continue</span></code> was permitted in CESM1 but isn’t permitted anymore, so this
+doesn’t work.</p>
+<p>We can try a startup run next. Alternatively it could be a <code class="docutils literal notranslate"><span class="pre">PIO_TYPENAME</span></code> issue?</p>
+</div>
+<div class="section" id="trial-031">
+<h2>Trial 031<a class="headerlink" href="#trial-031" title="Permalink to this headline">¶</a></h2>
+<p>Attempted to only change <code class="docutils literal notranslate"><span class="pre">NTASKS_PER_INST_ATM</span></code>.</p>
+<p>Okay this is progress as it results in an error.</p>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="m">130</span>:  aborting in ice-pio_ropen with invalid file
+<span class="m">130</span>:  ERROR: aborting in ice-pio_ropen with invalid file
+</pre></div>
+</div>
+</div>
+<p>Is the abort trap signal related to <a class="reference external" href="https://www.unidata.ucar.edu/support/help/MailArchives/netcdf/msg14310.html">this post</a>?</p>
+<p>In user_nl_cice, and the variable is “ice_ic”. In Kevin’s directory,
+<code class="docutils literal notranslate"><span class="pre">/glade/work/raeder/Exp/f.e21.FHIST_BGC.f09_025.CAM6assim.011</span></code>, it is set as
+<code class="docutils literal notranslate"><span class="pre">ice_ic</span> <span class="pre">=</span> <span class="pre">'Rean_spinup_2010.cice_0001.r.2011-01-01-00000.nc'</span></code></p>
+<p>Hmm…are these files different resolution? Do they need to be both on the
+atmospheric grid, and not the oceanic grid?</p>
+<p>This could be a number of different things:</p>
+<ol class="arabic simple">
+<li><p>The initial condition specified incorrectly? Or is the grid specified incorrectly?</p></li>
+<li><p>What if we just omit ice_ic and see what happens.</p></li>
+</ol>
+<p>This wasn’t a problem before because we were doing a startup run instead of a
+hybrid run.</p>
+</div>
+<div class="section" id="trial-030">
+<h2>Trial 030<a class="headerlink" href="#trial-030" title="Permalink to this headline">¶</a></h2>
+<p>Setting: <code class="docutils literal notranslate"><span class="pre">use_tasks_per_node</span> <span class="pre">=</span> <span class="pre">16</span></code></p>
+<p>Which results in this result for our case on Shaheen.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> <span class="si">${</span><span class="nv">CASEROOT</span><span class="si">}</span>
+$ ./xmlquery NTASKS
+NTASKS: <span class="o">[</span><span class="s1">&#39;CPL:108&#39;</span>, <span class="s1">&#39;ATM:108&#39;</span>, <span class="s1">&#39;LND:108&#39;</span>, <span class="s1">&#39;ICE:108&#39;</span>, <span class="s1">&#39;OCN:108&#39;</span>, <span class="s1">&#39;ROF:108&#39;</span>, <span class="s1">&#39;GLC:108&#39;</span>, <span class="s1">&#39;WAV:108&#39;</span>, <span class="s1">&#39;ESP:36&#39;</span><span class="o">]</span>
+</pre></div>
+</div>
+<p>Comparing it to Kevin’s configuration for the reanlysis on Cheyenne.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /glade/work/raeder/Exp/f.e21.FHIST_BGC.f09_025.CAM6assim.011
+$ ./xmlquery NTASKS_PER_INST
+NTASKS_PER_INST: <span class="o">[</span><span class="s1">&#39;ATM:108&#39;</span>, <span class="s1">&#39;LND:108&#39;</span>, <span class="s1">&#39;ICE:108&#39;</span>, <span class="s1">&#39;OCN:108&#39;</span>, <span class="s1">&#39;ROF:108&#39;</span>, <span class="s1">&#39;GLC:108&#39;</span>, <span class="s1">&#39;WAV:108&#39;</span>, <span class="s1">&#39;ESP:36&#39;</span><span class="o">]</span>
+</pre></div>
+</div>
+<p>So this seems to be the key thing we’re missing.</p>
+</div>
+<div class="section" id="trial-029">
+<h2>Trial 029<a class="headerlink" href="#trial-029" title="Permalink to this headline">¶</a></h2>
+<p>Trying different nodes per instance: <code class="docutils literal notranslate"><span class="pre">tasks_per_node</span> <span class="pre">=</span> <span class="pre">32</span></code> and <code class="docutils literal notranslate"><span class="pre">nodes_per_instance</span> <span class="pre">=</span> <span class="pre">4</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">lustre</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">k1421</span><span class="o">/</span><span class="n">cases</span><span class="o">/</span><span class="n">FHIST_BGC</span><span class="o">.</span><span class="n">f09_d025</span><span class="o">.</span><span class="mf">031.e3</span><span class="o">/</span>
+<span class="n">cp</span> <span class="o">/</span><span class="n">lustre</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">k1421</span><span class="o">/</span><span class="n">DART</span><span class="o">/</span><span class="n">models</span><span class="o">/</span><span class="n">cam</span><span class="o">-</span><span class="n">fv</span><span class="o">/</span><span class="n">shell_scripts</span><span class="o">/</span><span class="n">cesm2_1</span><span class="o">/</span><span class="n">assimilate</span><span class="o">.</span><span class="n">csh</span><span class="o">.</span><span class="n">template</span> <span class="n">assimilate</span><span class="o">.</span><span class="n">csh</span>
+<span class="o">./</span><span class="n">xmlchange</span> <span class="n">DATA_ASSIMILATION_SCRIPT</span><span class="o">=/</span><span class="n">lustre</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">k1421</span><span class="o">/</span><span class="n">cases</span><span class="o">/</span><span class="n">FHIST_BGC</span><span class="o">.</span><span class="n">f09_d025</span><span class="o">.</span><span class="mf">031.e3</span><span class="o">/</span><span class="n">assimilate</span><span class="o">.</span><span class="n">csh</span>
+<span class="o">./</span><span class="n">case</span><span class="o">.</span><span class="n">submit</span> <span class="o">-</span><span class="n">M</span> <span class="n">begin</span><span class="p">,</span><span class="n">end</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../performance/load-balancing-tool.html" class="btn btn-neutral float-right" title="Load Balancing Tool" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="libraries.html" class="btn btn-neutral float-left" title="Libraries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, UCAR
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
