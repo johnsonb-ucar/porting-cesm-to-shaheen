@@ -207,17 +207,29 @@ $ mv cesm.log.17201900.201203-174150 ~/
 <span class="mi">2</span><span class="p">)</span> <span class="n">the</span> <span class="n">assimilation</span> <span class="n">cycle</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">CESM</span> <span class="n">job</span>
 </pre></div>
 </div>
-<p>The task is to rerun <code class="docutils literal notranslate"><span class="pre">assimilate.csh</span></code>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /lustre/project/k1421/cases/FHIST_BGC.f09_d025.090.e1000
-$ ./xmlquery CASEROOT
-CASEROOT: /lustre/project/k1421/cases/FHIST_BGC.f09_d025.090.e1000
-$ ./xmlquery DATA_ASSIMILATION_CYCLES
-DATA_ASSIMILATION_CYCLES: <span class="m">1</span>
-$ csh
-$ csh DART_config
-$ csh ./assimilate.csh /lustre/project/k1421/cases/FHIST_BGC.f09_d025.090.e1000 <span class="m">1</span>
-...
-LAUNCHCMD: Undefined variable.
+<p>To continue past a trival exit such as this one, the task is to rerun
+<code class="docutils literal notranslate"><span class="pre">assimilate.csh</span></code>. This script must be run from a batch job in order for the
+environmental variables to be set properly.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sbatch run_assimilate.csh
+</pre></div>
+</div>
+<p>All <code class="docutils literal notranslate"><span class="pre">run_assimilate.csh</span></code> does is submit a batch job to SLURM in which
+<code class="docutils literal notranslate"><span class="pre">assimilate.csh</span></code> is run and passed two variables, <code class="docutils literal notranslate"><span class="pre">CASEROOT</span></code> and
+<code class="docutils literal notranslate"><span class="pre">DATA_ASSIMILATION_CYCLES</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/csh</span>
+
+<span class="c1">#SBATCH --job-name=run_assimilate</span>
+<span class="c1">#SBATCH --ntasks=320</span>
+<span class="c1">#SBATCH --ntasks-per-node=32</span>
+<span class="c1">#SBATCH --time=04:00:00</span>
+<span class="c1">#SBATCH -A k1421</span>
+<span class="c1">#SBATCH -p workq</span>
+<span class="c1">#SBATCH -e run_assimilate.%j.err</span>
+<span class="c1">#SBATCH -o run_assimilate.%j.out</span>
+
+<span class="o">./</span><span class="n">assimilate</span><span class="o">.</span><span class="n">csh</span> <span class="o">/</span><span class="n">lustre</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">k1421</span><span class="o">/</span><span class="n">cases</span><span class="o">/</span><span class="n">FHIST_BGC</span><span class="o">.</span><span class="n">f09_d025</span><span class="o">.</span><span class="mf">090.e1000</span> <span class="mi">1</span>
+
+<span class="n">exit</span> <span class="mi">0</span>
 </pre></div>
 </div>
 </div>

@@ -104,6 +104,7 @@
 <li class="toctree-l1"><a class="reference internal" href="grid-and-compset.html">Grid and Compset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="libraries.html">Libraries</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">List of Attempts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#trial-095">Trial 095</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#trial-094">Trial 094</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#trial-093">Trial 093</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#trial-092">Trial 092</a></li>
@@ -265,10 +266,29 @@
 <h1>List of Attempts<a class="headerlink" href="#list-of-attempts" title="Permalink to this headline">¶</a></h1>
 <p>It took very, very many attempts to get a CAM ensemble performing well on
 Shaheen.</p>
+<div class="section" id="trial-095">
+<h2>Trial 095<a class="headerlink" href="#trial-095" title="Permalink to this headline">¶</a></h2>
+<p>Building with 500 ensemble members since we will not be able to get through the
+experiment, even with 4 million core hours given the current level of
+performance efficiency.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /lustre/project/k1421/cases/FHIST_BGC.f09_d025.093.e500
+</pre></div>
+</div>
+<p>Also made sure that <code class="docutils literal notranslate"><span class="pre">DEBUG=FALSE</span></code> in <code class="docutils literal notranslate"><span class="pre">setup_advanced_Rean</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># DEBUG = TRUE implies turning on run and compile time debugging.</span>
+<span class="c1"># INFO_DBUG level of debug output, 0=minimum, 1=normal, 2=more, 3=too much.</span>
+<span class="o">./</span><span class="n">xmlchange</span> <span class="n">DEBUG</span><span class="o">=</span><span class="n">FALSE</span>
+<span class="o">./</span><span class="n">xmlchange</span> <span class="n">INFO_DBUG</span><span class="o">=</span><span class="mi">0</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="trial-094">
 <h2>Trial 094<a class="headerlink" href="#trial-094" title="Permalink to this headline">¶</a></h2>
 <p>Rebuilding with 1000 members in case the efforts to fix the broken
 Trial 090 take much longer than expected.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">xmlchange</span> <span class="n">DOUT_S</span><span class="o">=</span><span class="n">TRUE</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="trial-093">
 <h2>Trial 093<a class="headerlink" href="#trial-093" title="Permalink to this headline">¶</a></h2>

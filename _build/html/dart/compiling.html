@@ -96,7 +96,11 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Compiling</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#programming-environment">Programming Environment</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#cray-programming-environment">Cray Programming Environment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#intel-programming-environment">Intel Programming Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#intel-programming-environment">Intel Programming Environment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#best-working-configuration">Best Working Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#original-working-configuration">Original Working Configuration</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -242,18 +246,40 @@ $ nc-config --all
 ...
 </pre></div>
 </div>
-<p>In <code class="docutils literal notranslate"><span class="pre">mkmf.template</span></code> this configuration works:</p>
+<div class="section" id="best-working-configuration">
+<h4>Best Working Configuration<a class="headerlink" href="#best-working-configuration" title="Permalink to this headline">¶</a></h4>
+<p>The following is the best configuration we found for <code class="docutils literal notranslate"><span class="pre">mkmf.template</span></code>. We had
+an earlier working version, described be low in <a class="reference internal" href="#original-working-configuration">Original Working
+Configuration</a> that had a different AVX flag that worked but the
+compiler threw a strange warning.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">mkmf.template</span></code> this configuration works without throwing errors:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MPIFC = ftn
 MPILD = ftn
 FC = ftn
 LD = ftn
 INCS = -I/opt/cray/pe/netcdf/4.6.3.2/include
-LIBS = -L/opt/cray/pe/netcdf/4.6.3.2/INTEL/19.0/lib -lnetcdff -lnetcdf FFLAGS  = -O -assume buffered_io -xAVX -mkl $(INCS)
+LIBS = -L/opt/cray/pe/parallel-netcdf/1.11.1.1/INTEL/19.0/lib -lnetcdff -lnetcdf
+FFLAGS  = -O2 -xCORE-AVX2 -assume buffered_io -mkl $(INCS)
 LDFLAGS = $(FFLAGS) $(LIBS)
 </pre></div>
 </div>
-<p>When running <code class="docutils literal notranslate"><span class="pre">quickbuild.csh</span></code> for lorenz_63 and lorenz_96, the compiler
+</div>
+<div class="section" id="original-working-configuration">
+<h4>Original Working Configuration<a class="headerlink" href="#original-working-configuration" title="Permalink to this headline">¶</a></h4>
+<p>In <code class="docutils literal notranslate"><span class="pre">mkmf.template</span></code> this configuration also works:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MPIFC = ftn
+MPILD = ftn
+FC = ftn
+LD = ftn
+INCS = -I/opt/cray/pe/netcdf/4.6.3.2/include
+LIBS = -L/opt/cray/pe/netcdf/4.6.3.2/INTEL/19.0/lib -lnetcdff -lnetcdf
+FFLAGS  = -O -assume buffered_io -xAVX -mkl $(INCS)
+LDFLAGS = $(FFLAGS) $(LIBS)
+</pre></div>
+</div>
+<p>But when running <code class="docutils literal notranslate"><span class="pre">quickbuild.csh</span></code> for lorenz_63 and lorenz_96, the compiler
 prints out a perplexing warning:</p>
+<p>:: code-block:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ifort</span><span class="p">:</span> <span class="n">command</span> <span class="n">line</span> <span class="n">warning</span> <span class="c1">#10121: overriding &#39;-xCORE-AVX2&#39; with &#39;-xAVX&#39;</span>
 </pre></div>
 </div>
@@ -261,6 +287,7 @@ prints out a perplexing warning:</p>
 first place. “AVX” stands for Advanced Vector Extension, which is an extension
 to the x86 instruction set architecture that makes use of the additional
 registers in modern CPUs to handle calculations more efficiently.</p>
+</div>
 </div>
 </div>
 </div>
