@@ -37,8 +37,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Load Balancing Tool" href="../performance/load-balancing-tool.html" />
-    <link rel="prev" title="Libraries" href="libraries.html" /> 
+    <link rel="next" title="cime_comp_mod.F90" href="cime-comp-mod.html" />
+    <link rel="prev" title="Macros.make" href="macros-make.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -99,11 +99,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../dart/sampling-error-table.html">Sampling Error Table</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dart/recovering-from-failed-assimilation.html">Recovering from a Failed Assimilation</a></li>
 </ul>
+<p class="caption"><span class="caption-text">Diagnostics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../diagnostics/obs-diag.html">obs_diag</a></li>
+</ul>
 <p class="caption"><span class="caption-text">CESM</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="grid-and-compset.html">Grid and Compset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="libraries.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="macros-make.html">Macros.make</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">List of Attempts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#trial-102">Trial 102</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-101">Trial 101</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-100">Trial 100</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-099">Trial 099</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-098">Trial 098</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#trial-095">Trial 095</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#trial-094">Trial 094</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#trial-093">Trial 093</a></li>
@@ -140,7 +150,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#trial-068">Trial 068</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#trial-067">Trial 067</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#trial-066">Trial 066</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#trial-065">Trial 065</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trial-065">Trial 065</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#spitballing-ideas">Spitballing ideas</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#trial-064">Trial 064</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#trial-063">Trial 063</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#trial-062">Trial 062</a></li>
@@ -184,6 +197,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#trial-029">Trial 029</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="cime-comp-mod.html">cime_comp_mod.F90</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-machines.html">config_machines.xml</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Performance</span></p>
 <ul>
@@ -266,6 +281,117 @@
 <h1>List of Attempts<a class="headerlink" href="#list-of-attempts" title="Permalink to this headline">¶</a></h1>
 <p>It took very, very many attempts to get a CAM ensemble performing well on
 Shaheen.</p>
+<div class="section" id="trial-102">
+<h2>Trial 102<a class="headerlink" href="#trial-102" title="Permalink to this headline">¶</a></h2>
+<p>While we’re waiting, why don’t we try to build with just the serial NetCDF
+library in <code class="docutils literal notranslate"><span class="pre">cray-netcdf-hdf5parallel</span></code> to see if that’s faster.</p>
+<p>Removed this line from <code class="docutils literal notranslate"><span class="pre">config_machines.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;env</span> <span class="na">name=</span><span class="s">&quot;PNETCDF_PATH&quot;</span><span class="nt">&gt;</span>/opt/cray/pe/netcdf-hdf5parallel/4.6.3.2/INTEL/19.0<span class="nt">&lt;/env&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-101">
+<h2>Trial 101<a class="headerlink" href="#trial-101" title="Permalink to this headline">¶</a></h2>
+<p>Tried various configurations of the linker flag in the Makefile:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>312 SLIBS += -L$(LIB_PNETCDF) -lnetcdff_parallel
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>312 SLIBS += -L$(LIB_PNETCDF) -lnetcdff_parallel -lnetcdf_parallel
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>312 SLIBS += -L$(LIB_PNETCDF) -lpnetcdf
+</pre></div>
+</div>
+<p>These all error out.</p>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-- Configuring incomplete, errors occurred!
+See also &quot;/lustre/scratch/x_johnsobk/FHIST_BGC.f09_d025.101.e0003/bld/intel/mpt/nodebug/nothreads/pio/pio1/CMakeFiles/CMakeOutput.log&quot;.
+gmake: Leaving directory &#39;/lustre/scratch/x_johnsobk/FHIST_BGC.f09_d025.101.e0003/bld/intel/mpt/nodebug/nothreads/pio/pio1&#39;
+cat: Filepath: No such file or directory
+cat: Srcfiles: No such file or directory
+Building PIO with netcdf support
+CMake Error at /sw/xc40cle7/cmake/3.13.4/sles15_gcc7.4.1/install/share/cmake-3.13/Modules/FindPackageHandleStandardArgs.cmake:137 (message):
+Could NOT find PnetCDF_Fortran (missing: PnetCDF_Fortran_LIBRARY
+PnetCDF_Fortran_INCLUDE_DIR)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="trial-100">
+<h2>Trial 100<a class="headerlink" href="#trial-100" title="Permalink to this headline">¶</a></h2>
+<p>Trial 099 showed us that we can’t simply remove NetCDF from the build. Let’s try
+to get the build to compile with <code class="docutils literal notranslate"><span class="pre">netcdf-hdf5parallel</span></code>. We tried this earlier
+and couldn’t get the linking flag to work. Brian Dobbins suggested editing the
+makefile.</p>
+<p>This attempt requires us to make several changes to <code class="docutils literal notranslate"><span class="pre">config_machines.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;modules</span> <span class="na">mpilib=</span><span class="s">&quot;!mpi-serial&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;command</span> <span class="na">name=</span><span class="s">&quot;load&quot;</span><span class="nt">&gt;</span>cray-netcdf-hdf5parallel/4.6.3.2<span class="nt">&lt;/command&gt;</span>
+<span class="nt">&lt;/modules&gt;</span>
+
+<span class="nt">&lt;environment_variables&gt;</span>
+   <span class="nt">&lt;env</span> <span class="na">name=</span><span class="s">&quot;PNETCDF_PATH&quot;</span><span class="nt">&gt;</span>/opt/cray/pe/netcdf-hdf5parallel/4.6.3.2/INTEL/19.0<span class="nt">&lt;/env&gt;</span>
+<span class="nt">&lt;/environment_variables&gt;</span>
+</pre></div>
+</div>
+<p>Without changing the makefile, we get the following error.</p>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>– Configuring incomplete, errors occurred!
+See also “/lustre/scratch/x_johnsobk/FHIST_BGC.f09_d025.100.e0003/bld/intel/mpt/nodebug/nothreads/pio/pio1/CMakeFiles/CMakeOutput.log”.
+gmake: Leaving directory ‘/lustre/scratch/x_johnsobk/FHIST_BGC.f09_d025.100.e0003/bld/intel/mpt/nodebug/nothreads/pio/pio1’</p>
+</div>
+<p>Thus we attempt to edit <code class="docutils literal notranslate"><span class="pre">/lustre/project/k1421/cesm2_1_3/cime/scripts/Tools/Makefile</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>312    SLIBS += -L$(LIB_PNETCDF) -lpnetcdf
+</pre></div>
+</div>
+<p>to reflect the name of the static library:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>312 SLIBS += -L$(LIB_PNETCDF) -lnetcdff_parallel
+</pre></div>
+</div>
+<p>Even attempted to make a spoof directory:</p>
+<p>&lt;env name=”PNETCDF_PATH”&gt;”/lustre/project/k1421/netcdf-hdf5parallel/4.6.3.2/INTEL/19.0&lt;/env&gt;</p>
+<p>with symbolic links:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ln -s /opt/cray/pe/netcdf-hdf5parallel/4.6.3.2/INTEL/19.0/lib/libnetcdff_parallel.a lpnetcdff.a
+$ ln -s /opt/cray/pe/netcdf-hdf5parallel/4.6.3.2/INTEL/19.0/lib/libnetcdf_parallel.a lpnetcdf.a
+</pre></div>
+</div>
+<p>None of this works.</p>
+</div>
+<div class="section" id="trial-099">
+<h2>Trial 099<a class="headerlink" href="#trial-099" title="Permalink to this headline">¶</a></h2>
+<p>Commenting out <code class="docutils literal notranslate"><span class="pre">NETCDF_PATH</span></code> from <code class="docutils literal notranslate"><span class="pre">config_machines.xml</span></code> to see if that
+affects the initialization time. We are trying to test the idea that only
+allowing the build to use parallel netCDF might work better.</p>
+<p>Also <strong>removing</strong> these lines from <code class="docutils literal notranslate"><span class="pre">config_compilers.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;SLIBS&gt;</span>
+   <span class="nt">&lt;append&gt;</span> -L$(NETCDF_PATH) -lnetcdff -Wl,--as-needed,-L$(NETCDF_PATH)/lib -lnetcdff -lnetcdf <span class="nt">&lt;/append&gt;</span>
+<span class="nt">&lt;/SLIBS&gt;</span>
+<span class="nt">&lt;NETCDF_PATH&gt;</span>$ENV{NETCDF_PATH}<span class="nt">&lt;/NETCDF_PATH&gt;</span>
+</pre></div>
+</div>
+<p>This errors out.</p>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<p>NETCDF not found: Define NETCDF_PATH or NETCDF_C_PATH and NETCDF_FORTRAN_PATH</p>
+</div>
+</div>
+<div class="section" id="trial-098">
+<h2>Trial 098<a class="headerlink" href="#trial-098" title="Permalink to this headline">¶</a></h2>
+<p>Changing <code class="docutils literal notranslate"><span class="pre">MAX_TASKS_PER_NODE</span></code> back to 32 since we haven’t figured out how
+it’s used in <code class="docutils literal notranslate"><span class="pre">setup_advanced_Rean</span></code> and why it’s doubling the requested nodes.</p>
+<p>Building a 3 member ensemble for determining a baseline for Init Time.</p>
+<p>An example timing file from ensemble member 0003 is here:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ vim /lustre/project/k1421/cases/FHIST_BGC.f09_d025.098.e0003/timing/cesm_timing_0003.FHIST_BGC.f09_d025.098.e0003.17867122.201223-212516
+Init Time   :    1375.139 seconds
+Run Time    :     266.362 seconds     1065.447 seconds/day
+</pre></div>
+</div>
+<p>The Init Time of <code class="docutils literal notranslate"><span class="pre">1375.139</span> <span class="pre">seconds</span></code> is our benchmark for improvement.</p>
+</div>
 <div class="section" id="trial-095">
 <h2>Trial 095<a class="headerlink" href="#trial-095" title="Permalink to this headline">¶</a></h2>
 <p>Building with 500 ensemble members since we will not be able to get through the
@@ -770,11 +896,14 @@ might be faster to iterate by building DART rather than building CESM.</p>
 <li><p>The PNETCDF_PATH also has a library: <code class="docutils literal notranslate"><span class="pre">/opt/cray/pe/parallel-netcdf/1.11.1.1/INTEL/19.0/lib</span></code></p></li>
 </ul>
 <p>What to do next? I think the issue is it’s linking netcdf rather than pnetcdf.</p>
-<p>1. The directory we’re linking to is wrong.
-There’s an L directory and an I directory, right?
-#################################################
--L goes to the lib directory
--I goes to the include directory</p>
+<div class="section" id="spitballing-ideas">
+<h3>Spitballing ideas<a class="headerlink" href="#spitballing-ideas" title="Permalink to this headline">¶</a></h3>
+<p>The directory we’re linking to is wrong.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-L</span></code> goes to the lib directory</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-I</span></code> goes to the include directory</p></li>
+</ul>
+</div>
 </div>
 <div class="section" id="trial-064">
 <h2>Trial 064<a class="headerlink" href="#trial-064" title="Permalink to this headline">¶</a></h2>
@@ -1489,10 +1618,10 @@ NTASKS_PER_INST: <span class="o">[</span><span class="s1">&#39;ATM:108&#39;</spa
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../performance/load-balancing-tool.html" class="btn btn-neutral float-right" title="Load Balancing Tool" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="cime-comp-mod.html" class="btn btn-neutral float-right" title="cime_comp_mod.F90" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="libraries.html" class="btn btn-neutral float-left" title="Libraries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="macros-make.html" class="btn btn-neutral float-left" title="Macros.make" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

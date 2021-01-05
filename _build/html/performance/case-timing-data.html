@@ -99,11 +99,18 @@
 <li class="toctree-l1"><a class="reference internal" href="../dart/sampling-error-table.html">Sampling Error Table</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dart/recovering-from-failed-assimilation.html">Recovering from a Failed Assimilation</a></li>
 </ul>
+<p class="caption"><span class="caption-text">Diagnostics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../diagnostics/obs-diag.html">obs_diag</a></li>
+</ul>
 <p class="caption"><span class="caption-text">CESM</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../cesm/grid-and-compset.html">Grid and Compset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cesm/libraries.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/macros-make.html">Macros.make</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cesm/list-of-attempts.html">List of Attempts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/cime-comp-mod.html">cime_comp_mod.F90</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/config-machines.html">config_machines.xml</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Performance</span></p>
 <ul class="current">
@@ -113,6 +120,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#does-init-time-take-longer-for-first-job-in-hybrid-run">Does init time take longer for first job in hybrid run?</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#major-issue-init-time">Major Issue: Init Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#previously-encountered-problem">Previously Encountered Problem</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="file-striping.html">File Striping</a></li>
@@ -204,6 +213,37 @@ of a given integration since there may be initialization tasks involved for a
 hybrid run in which continue_run = FALSE but this seems to be fals.</p>
 <p>For the first submission of FHIST_BGC.f09_d025.052.e3 <code class="docutils literal notranslate"><span class="pre">Init</span> <span class="pre">Time</span> <span class="pre">:</span> <span class="pre">539.420</span>
 <span class="pre">seconds</span></code> while in the second submission <code class="docutils literal notranslate"><span class="pre">Init</span> <span class="pre">Time:</span> <span class="pre">562.777</span> <span class="pre">seconds</span></code>.</p>
+</div>
+</div>
+<div class="section" id="major-issue-init-time">
+<h2>Major Issue: Init Time<a class="headerlink" href="#major-issue-init-time" title="Permalink to this headline">¶</a></h2>
+<p>It’s unclear how to disassemble the <code class="docutils literal notranslate"><span class="pre">Init</span> <span class="pre">Time</span></code> statistic to determine what
+is causing the initialization to be so slow.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd /lustre/project/k1421/cesm2_1_3/cime
+$ grep -Rl &quot;Init Time&quot; ./
+./doc/source/users_guide/timers.rst
+./tools/load_balancing_tool/tests/timing/timing_2
+./tools/load_balancing_tool/tests/timing/timing_3
+./tools/load_balancing_tool/tests/timing/timing_1
+./scripts/lib/CIME/get_timing.py
+</pre></div>
+</div>
+<p>It looks like <code class="docutils literal notranslate"><span class="pre">get_timing.py</span></code> is the best candidate to look through for the
+relevant code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nmax</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gettime</span><span class="p">(</span><span class="s1">&#39; CPL:INIT &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+<span class="o">...</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;    Init Time   :  </span><span class="si">{:10.3f}</span><span class="s2"> seconds </span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nmax</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="previously-encountered-problem">
+<h2>Previously Encountered Problem<a class="headerlink" href="#previously-encountered-problem" title="Permalink to this headline">¶</a></h2>
+<p>In
+<code class="docutils literal notranslate"><span class="pre">_create_component_modelio_namelists</span></code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is the file to look in to see what is taking so long.
+/lustre/scratch/x_johnsobk/FHIST_BGC.f09_d025.095.e500/run/cpl_0229.log.17860564.201220-165938.gz</p>
 </div>
 </div>
 </div>

@@ -93,6 +93,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#aliases">Aliases</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#job-queue">Job Queue</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#resource-binding">Resource Binding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#node-configuration">Node Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#default-settings">Default Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analogs-for-cheyenne">Analogs for Cheyenne</a></li>
 </ul>
 </li>
 </ul>
@@ -104,11 +107,18 @@
 <li class="toctree-l1"><a class="reference internal" href="../dart/sampling-error-table.html">Sampling Error Table</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dart/recovering-from-failed-assimilation.html">Recovering from a Failed Assimilation</a></li>
 </ul>
+<p class="caption"><span class="caption-text">Diagnostics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../diagnostics/obs-diag.html">obs_diag</a></li>
+</ul>
 <p class="caption"><span class="caption-text">CESM</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../cesm/grid-and-compset.html">Grid and Compset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cesm/libraries.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/macros-make.html">Macros.make</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cesm/list-of-attempts.html">List of Attempts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/cime-comp-mod.html">cime_comp_mod.F90</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cesm/config-machines.html">config_machines.xml</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Performance</span></p>
 <ul>
@@ -207,12 +217,12 @@ set up common aliases, for example in <code class="docutils literal notranslate"
 </div>
 <p>The last alias, <code class="docutils literal notranslate"><span class="pre">jhist</span></code>, prints out jobs that have been completed since a
 given start date:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ jhist <span class="m">2020</span>-11-13
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ jhist 2020-11-13
                JobID                        JobName  Partition    Account  AllocCPUS      State ExitCode
 -------------------- ------------------------------ ---------- ---------- ---------- ---------- --------
-            <span class="m">16435549</span> run.FHIST_BGC.f09_d025.084.e03      workq      k1421        <span class="m">768</span>  COMPLETED      <span class="m">0</span>:0
-      <span class="m">16435549</span>.batch                          batch                 k1421         <span class="m">64</span>  COMPLETED      <span class="m">0</span>:0
-          <span class="m">16435549</span>.0                       cesm.exe                 k1421        <span class="m">384</span>  COMPLETED      <span class="m">0</span>:0
+            16435549 run.FHIST_BGC.f09_d025.084.e03      workq      k1421        768  COMPLETED      0:0
+      16435549.batch                          batch                 k1421         64  COMPLETED      0:0
+          16435549.0                       cesm.exe                 k1421        384  COMPLETED      0:0
 </pre></div>
 </div>
 </div>
@@ -225,6 +235,97 @@ given start date:</p>
 <p>SLURM is <a class="reference external" href="https://slurm.schedmd.com/resource_binding.html">highly configurable</a>
 with respect to its ability to bind tasks to various resources such as
 “threads, cores, sockets, NUMA or boards.”</p>
+</div>
+<div class="section" id="node-configuration">
+<h2>Node Configuration<a class="headerlink" href="#node-configuration" title="Permalink to this headline">¶</a></h2>
+<p>To see the configuration of Shaheen’s Cray XC40 nodes, invoking
+<code class="docutils literal notranslate"><span class="pre">scontrol</span> <span class="pre">show</span> <span class="pre">nodes</span></code> will print out the node configuration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ scontrol show nodes
+NodeName=nid07679 Arch=x86_64 CoresPerSocket=16
+CPUAlloc=64 CPUTot=64 CPULoad=64.00
+AvailableFeatures=(null)
+ActiveFeatures=(null)
+Gres=craynetwork:4
+NodeAddr=nid07679 NodeHostName=nid07679 Version=20.02.6
+OS=Linux 4.12.14-150.17_5.0.91-cray_ari_c #1 SMP Wed May 27 02:24:01 UTC 2020 (6b16d42)
+RealMemory=128803 AllocMem=128448 FreeMem=123036 Sockets=2 Boards=1
+State=ALLOCATED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+Partitions=workq,72hours
+BootTime=2020-12-03T10:05:38 SlurmdStartTime=2020-12-03T10:22:30
+CfgTRES=cpu=64,mem=128803M,billing=64
+AllocTRES=cpu=64,mem=128448M
+CapWatts=n/a
+CurrentWatts=47 AveWatts=0
+ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+</pre></div>
+</div>
+<p>When counting CPUs per node, there are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Sockets=2</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CoresPerSocket=16</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ThreadsPerCore=2</span></code></p></li>
+</ul>
+<p>Thus <code class="docutils literal notranslate"><span class="pre">cpu=64</span></code>. Should we set: <code class="docutils literal notranslate"><span class="pre">--ntasks-per-node=32</span></code> or
+<code class="docutils literal notranslate"><span class="pre">--ntasks-per-node=64</span></code>?</p>
+</div>
+<div class="section" id="default-settings">
+<h2>Default Settings<a class="headerlink" href="#default-settings" title="Permalink to this headline">¶</a></h2>
+<p>To see the default settings for SLURM, invoking the <code class="docutils literal notranslate"><span class="pre">scontrol</span> <span class="pre">show</span> <span class="pre">config</span></code>
+command will print all of the settings:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ scontrol show config
+...
+DefMemPerCPU            = 2007
+...
+MaxTasksPerNode         = 512
+...
+</pre></div>
+</div>
+<p>We see, for example, that <code class="docutils literal notranslate"><span class="pre">DefMemPerCPU</span> <span class="pre">=</span> <span class="pre">2007</span></code> (which is reported in
+megabytes, <code class="docutils literal notranslate"><span class="pre">M</span></code>) and there are 64 cpu/node, thus the memory per node is
+<code class="docutils literal notranslate"><span class="pre">2007M*64=128448M</span></code> which is consisent with the printout of
+<code class="docutils literal notranslate"><span class="pre">scontrol</span> <span class="pre">show</span> <span class="pre">nodes</span></code> above.</p>
+</div>
+<div class="section" id="analogs-for-cheyenne">
+<h2>Analogs for Cheyenne<a class="headerlink" href="#analogs-for-cheyenne" title="Permalink to this headline">¶</a></h2>
+<p>While Cheyenne uses PBS rather than SLURM it’s usefult to have their settings
+as well. The analagous command for <code class="docutils literal notranslate"><span class="pre">scontrol</span> <span class="pre">show</span> <span class="pre">nodes</span></code> is <code class="docutils literal notranslate"><span class="pre">pbsnodes</span> <span class="pre">-a</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pbsnodes -a
+r8i5n1
+Mom = r8i5n1.ib0.cheyenne.ucar.edu
+ntype = PBS
+state = free
+pcpus = 72
+resources_available.arch = linux
+resources_available.host = r8i5n1
+resources_available.iru = r8i5
+resources_available.iru2 = r8i4i5
+resources_available.mem = 131567260kb
+resources_available.ncpus = 72
+resources_available.nodetype = largemem
+resources_available.Qlist = system,special,ampsrt,capability,premium,regular,standby,economy,small
+resources_available.rack = r8
+resources_available.rack16 = r1r2r3r4r5r6r7r8r9r10r11r12r13r14r15r16
+resources_available.rack2 = r15r16
+resources_available.rack4 = r13r14r15r16
+resources_available.rack8 = r9r10r11r12r13r14r15r16
+resources_available.switch = r8i5a0s0
+resources_available.switchblade = r8i5s0
+resources_available.vnode = r8i5n1
+resources_assigned.accelerator_memory = 0kb
+resources_assigned.hbmem = 0kb
+resources_assigned.mem = 0kb
+resources_assigned.naccelerators = 0
+resources_assigned.ncpus = 0
+resources_assigned.vmem = 0kb
+comment =
+resv_enable = True
+sharing = default_shared
+license = l
+last_state_change_time = Mon Dec 21 17:14:09 2020
+last_used_time = Mon Dec 21 17:14:09 2020
+</pre></div>
+</div>
+<p>We haven’t been able to find the analagous command for <code class="docutils literal notranslate"><span class="pre">scontrol</span> <span class="pre">show</span> <span class="pre">config</span></code>.</p>
 </div>
 </div>
 
