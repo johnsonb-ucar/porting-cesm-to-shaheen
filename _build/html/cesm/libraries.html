@@ -37,7 +37,7 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Macros.make" href="macros-make.html" />
+    <link rel="next" title="List of Attempts" href="list-of-attempts.html" />
     <link rel="prev" title="Grid and Compset" href="grid-and-compset.html" /> 
 </head>
 
@@ -108,9 +108,15 @@
 <li class="toctree-l1"><a class="reference internal" href="grid-and-compset.html">Grid and Compset</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Libraries</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#parallel-netcdf-string">Parallel NetCDF String</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#instructions-regarding-macros-make">Instructions Regarding Macros.make</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#attempting-to-build-a-case-using-macros-make">Attempting to Build a Case Using Macros.make</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#config-machines-xml">config_machines.xml</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setup-case">Setup Case</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#edit-macros-make">Edit Macros.make</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="macros-make.html">Macros.make</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="list-of-attempts.html">List of Attempts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cime-comp-mod.html">cime_comp_mod.F90</a></li>
 <li class="toctree-l1"><a class="reference internal" href="config-machines.html">config_machines.xml</a></li>
@@ -209,7 +215,11 @@ the static library is:</p>
 </pre></div>
 </div>
 <p>I attempted to rewrite the compiler link flag in <code class="docutils literal notranslate"><span class="pre">${CIMEROOT}/scripts/Tools/Makefile</span></code>
-but perhaps did not rewrite the flag correctly. Brian Dobbins suggests:</p>
+but perhaps did not rewrite the flag correctly.</p>
+</div>
+<div class="section" id="instructions-regarding-macros-make">
+<h2>Instructions Regarding Macros.make<a class="headerlink" href="#instructions-regarding-macros-make" title="Permalink to this headline">¶</a></h2>
+<p>Brian Dobbins suggests:</p>
 <blockquote>
 <div><p>You should just be able to modify (as a test) the Macros.make file in a case
 directory and add something like:</p>
@@ -229,6 +239,105 @@ libraries, too.  For example, on the cloud config, I use:</p>
 </div>
 </div></blockquote>
 </div>
+<div class="section" id="attempting-to-build-a-case-using-macros-make">
+<h2>Attempting to Build a Case Using Macros.make<a class="headerlink" href="#attempting-to-build-a-case-using-macros-make" title="Permalink to this headline">¶</a></h2>
+<p>We’ll try to build a case using Brian’s instructions. The first step is editing
+<code class="docutils literal notranslate"><span class="pre">config_machines.xml</span></code>.</p>
+<div class="section" id="config-machines-xml">
+<h3>config_machines.xml<a class="headerlink" href="#config-machines-xml" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ vim /lustre/project/k1421/cesm2_1_3/cime/config/cesm/machines/config_machines.xml
+</pre></div>
+</div>
+<p>Edit the module loaded when the mpi library is not mpi-serial.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;modules</span> <span class="na">mpilib=</span><span class="s">&quot;!mpi-serial&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;command</span> <span class="na">name=</span><span class="s">&quot;load&quot;</span><span class="nt">&gt;</span>cray-netcdf-hdf5parallel/4.6.3.2<span class="nt">&lt;/command&gt;</span>
+<span class="nt">&lt;/modules&gt;</span>
+[...]
+<span class="nt">&lt;environment_variables&gt;</span>
+   <span class="nt">&lt;env</span> <span class="na">name=</span><span class="s">&quot;PNETCDF_PATH&quot;</span><span class="nt">&gt;</span>/opt/cray/pe/netcdf-hdf5parallel/4.6.3.2/INTEL/19.0<span class="nt">&lt;/env&gt;</span>
+<span class="nt">&lt;/environment_variables&gt;</span>
+</pre></div>
+</div>
+<p>Again, if we examine the parallel netCDF libraries:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ls /opt/cray/pe/netcdf-hdf5parallel/4.6.3.2/INTEL/19.0/lib
+[...]
+libnetcdff_parallel.a
+</pre></div>
+</div>
+<p>We see that the linker flag should be <code class="docutils literal notranslate"><span class="pre">-lnetcdff_parallel</span></code>.</p>
+</div>
+<div class="section" id="setup-case">
+<h3>Setup Case<a class="headerlink" href="#setup-case" title="Permalink to this headline">¶</a></h3>
+<p>We’re trying to follow Brian Dobbins’ instructions about using <code class="docutils literal notranslate"><span class="pre">Macros.make</span></code>
+to change the compiler flags in order to use a different parallel netCDF
+library.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ source activate py27
+$ cd /lustre/project/k1421/cesm2_1_3/cime/scripts/
+$ ./create_newcase --case /lustre/project/k1421/cases/FHIST.f09_f09_mg17.001 --compset FHIST --res f09_f09_mg17 --machine shaheen --project k1421 --run-unsupported --ninst 3 --multi-driver --walltime 2:00:00
+[...]
+Creating Case directory /lustre/project/k1421/cases/FHIST.f09_f09_mg17.001
+$ cd /lustre/project/k1421/cases/FHIST.f09_f09_mg17.001
+$ ./case.setup
+</pre></div>
+</div>
+</div>
+<div class="section" id="edit-macros-make">
+<h3>Edit Macros.make<a class="headerlink" href="#edit-macros-make" title="Permalink to this headline">¶</a></h3>
+<p>After <code class="docutils literal notranslate"><span class="pre">case.setup</span></code> is run the <code class="docutils literal notranslate"><span class="pre">Macros.make</span></code> file is available in the
+<code class="docutils literal notranslate"><span class="pre">$CASEROOT</span></code> directory. According to the instructions from Brian reposted
+above, we should edit the <code class="docutils literal notranslate"><span class="pre">Macros.make</span></code> to add the <code class="docutils literal notranslate"><span class="pre">-lnetcdff_parallel</span></code>
+flag:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>ifeq ($(MPILIB),mvapich2)
+  SLIBS := $(SLIBS)  -lnetcdff_parallel -mkl=cluster
+endif
+ifeq ($(MPILIB),mpich2)
+  SLIBS := $(SLIBS)  -lnetcdff_parallel -mkl=cluster
+endif
+ifeq ($(MPILIB),mpt)
+  SLIBS := $(SLIBS)  -lnetcdff_parallel -mkl=cluster
+endif
+ifeq ($(MPILIB),openmpi)
+  SLIBS := $(SLIBS)  -lnetcdff_parallel -mkl=cluster
+endif
+ifeq ($(MPILIB),mpich)
+  SLIBS := $(SLIBS)  -lnetcdff_parallel -mkl=cluster
+endif
+ifeq ($(MPILIB),mvapich)
+  SLIBS := $(SLIBS)  -lnetcdff_parallel -mkl=cluster
+endif
+ifeq ($(MPILIB),impi)
+  SLIBS := $(SLIBS)  -lnetcdff_parallel -mkl=cluster
+endif
+</pre></div>
+</div>
+<p>After editing <code class="docutils literal notranslate"><span class="pre">Macros.make</span></code> we attempt to build the case:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ case.build
+[...]
+ERROR: /lustre/project/k1421/cesm2_1_3/cime/src/build_scripts/buildlib.pio
+FAILED, cat /lustre/scratch/x_johnsobk/FHIST.f09_f09_mg17.001/bld/pio.bldlog.210106-234616
+cat /lustre/scratch/x_johnsobk/FHIST.f09_f09_mg17.001/bld/pio.bldlog.210106-234616
+</pre></div>
+</div>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<p>In spite of following the instructions, this procedure still results in the
+same error that we arrived at while attempting to edit the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>
+directly. Here we reprint the relevant section of
+<code class="docutils literal notranslate"><span class="pre">/lustre/scratch/x_johnsobk/FHIST.f09_f09_mg17.001/bld/pio.bldlog.210106-234616</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Configuring incomplete, errors occurred!
+See also &quot;/lustre/scratch/x_johnsobk/FHIST.f09_f09_mg17.001/bld/intel/mpt/nodebug/nothreads/pio/pio1/CMakeFiles/CMakeOutput.log&quot;.
+gmake: Leaving directory &#39;/lustre/scratch/x_johnsobk/FHIST.f09_f09_mg17.001/bld/intel/mpt/nodebug/nothreads/pio/pio1&#39;
+cat: Filepath: No such file or directory
+cat: Srcfiles: No such file or directory
+Building PIO with netcdf support
+CMake Error at /sw/xc40cle7/cmake/3.13.4/sles15_gcc7.4.1/install/share/cmake-3.13/Modules/FindPackageHandleStandardArgs.cmake:137 (message):
+Could NOT find PnetCDF_Fortran (missing: PnetCDF_Fortran_LIBRARY
+PnetCDF_Fortran_INCLUDE_DIR)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 </div>
 
 
@@ -239,7 +348,7 @@ libraries, too.  For example, on the cloud config, I use:</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="macros-make.html" class="btn btn-neutral float-right" title="Macros.make" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="list-of-attempts.html" class="btn btn-neutral float-right" title="List of Attempts" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="grid-and-compset.html" class="btn btn-neutral float-left" title="Grid and Compset" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
